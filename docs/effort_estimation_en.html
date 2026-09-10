@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Microfinance Platform - Effort Estimation</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+  @page {
+    size: A4 portrait;
+    margin: 14mm 12mm 14mm 12mm;
+  }
+
+  * {
+    box-sizing: border-box;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 8.5pt;
+    line-height: 1.45;
+    color: #0f172a;
+    background-color: #ffffff;
+    margin: 0;
+    padding: 0;
+  }
+
+  .header-container {
+    border-bottom: 2.5px solid #1e3a8a;
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-size: 15pt;
+    font-weight: 700;
+    color: #1e3a8a;
+    margin: 0 0 4px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+
+  h2 {
+    font-size: 11pt;
+    font-weight: 700;
+    color: #1e40af;
+    margin: 14px 0 6px 0;
+    border-bottom: 1.5px solid #e2e8f0;
+    padding-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.2px;
+  }
+
+  .subtitle {
+    font-size: 10pt;
+    font-weight: 600;
+    color: #475569;
+    margin: 0;
+  }
+
+  h3 {
+    font-size: 9.5pt;
+    font-weight: 600;
+    color: #0f172a;
+    margin: 10px 0 4px 0;
+    background-color: #f8fafc;
+    padding: 3px 6px;
+    border-left: 3px solid #3b82f6;
+  }
+
+  hr {
+    border: 0;
+    height: 1px;
+    background-color: #cbd5e1;
+    margin: 10px 0;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 6px 0 10px 0;
+    font-size: 7.8pt;
+    page-break-inside: auto;
+  }
+
+  tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+
+  thead {
+    display: table-header-group;
+  }
+
+  th {
+    background-color: #1e293b !important;
+    color: #ffffff !important;
+    font-weight: 600;
+    text-align: left;
+    padding: 5px 6px;
+    border: 1px solid #334155;
+    font-size: 7.6pt;
+    letter-spacing: 0.2px;
+  }
+
+  th:first-child, td:first-child {
+    text-align: center;
+    width: 28px;
+  }
+
+  td {
+    padding: 4.5px 6px;
+    border: 1px solid #cbd5e1;
+    vertical-align: middle;
+    color: #1e293b;
+  }
+
+  tr:nth-child(even) td {
+    background-color: #f8fafc;
+  }
+
+  tr:hover td {
+    background-color: #f1f5f9;
+  }
+
+  /* Highlight Total / Header Rows in Table */
+  tr td strong {
+    color: #0f172a;
+  }
+
+  td:nth-child(4), td:nth-child(5), td:nth-child(6), td:nth-child(7), td:nth-child(8), td:nth-child(9), td:nth-child(10) {
+    text-align: center;
+  }
+
+  code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 7.2pt;
+    background-color: #f1f5f9;
+    padding: 1px 3px;
+    border-radius: 3px;
+    color: #0369a1;
+    border: 1px solid #e2e8f0;
+  }
+
+  p {
+    margin: 4px 0;
+  }
+
+  em {
+    color: #64748b;
+    font-size: 7.5pt;
+    font-style: italic;
+    display: block;
+    margin-top: 2px;
+  }
+
+  .footer-note {
+    margin-top: 16px;
+    padding: 8px 12px;
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    font-size: 7.5pt;
+    color: #475569;
+    display: flex;
+    justify-content: space-between;
+  }
+</style>
+</head>
+<body>
+<h1>MICROFINANCE PLATFORM - EFFORT ESTIMATION</h1>
+<h2>EXISTING SYSTEM CAPACITY &amp; MOBILE EXTENSION MODULES</h2>
+<hr />
+<h2>1. GENERAL EFFORT SUMMARY</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">No.</th>
+<th style="text-align: left;">Work Breakdown Structure (WBS)</th>
+<th style="text-align: center;">Scope Category</th>
+<th style="text-align: center;">Solution (MD)</th>
+<th style="text-align: center;">Develop (MD)</th>
+<th style="text-align: center;">Testing (MD)</th>
+<th style="text-align: center;">Non-Functional (MD)</th>
+<th style="text-align: center;">Total Effort (MD)</th>
+<th style="text-align: center;">Total Man-Months (MM)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>PART A</strong></td>
+<td style="text-align: left;"><strong>EXISTING CORE ASSETS (DESKTOP &amp; CORE BE)</strong></td>
+<td style="text-align: center;"><strong>Existing (100%)</strong></td>
+<td style="text-align: center;"><strong>188.5</strong></td>
+<td style="text-align: center;"><strong>552.0</strong></td>
+<td style="text-align: center;"><strong>284.5</strong></td>
+<td style="text-align: center;"><strong>85.0</strong></td>
+<td style="text-align: center;"><strong>1,110.0</strong></td>
+<td style="text-align: center;"><strong>50.45 MM</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;">A.1</td>
+<td style="text-align: left;">Microfinance Credit Modules (TDVM/TDTT)</td>
+<td style="text-align: center;">Core Business</td>
+<td style="text-align: center;">32.0</td>
+<td style="text-align: center;">95.0</td>
+<td style="text-align: center;">48.0</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">175.0</td>
+<td style="text-align: center;">7.95 MM</td>
+</tr>
+<tr>
+<td style="text-align: center;">A.2</td>
+<td style="text-align: left;">Capital Mobilization &amp; Savings Modules (HDVO)</td>
+<td style="text-align: center;">Core Business</td>
+<td style="text-align: center;">20.0</td>
+<td style="text-align: center;">60.0</td>
+<td style="text-align: center;">30.0</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">110.0</td>
+<td style="text-align: center;">5.00 MM</td>
+</tr>
+<tr>
+<td style="text-align: center;">A.3</td>
+<td style="text-align: left;">Customer &amp; Center/Group Network (KHTV)</td>
+<td style="text-align: center;">Core Business</td>
+<td style="text-align: center;">18.0</td>
+<td style="text-align: center;">52.0</td>
+<td style="text-align: center;">28.0</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">98.0</td>
+<td style="text-align: center;">4.45 MM</td>
+</tr>
+<tr>
+<td style="text-align: center;">A.4</td>
+<td style="text-align: left;">General Ledger &amp; Accounting Transactions (GDKT)</td>
+<td style="text-align: center;">Core Accounting</td>
+<td style="text-align: center;">28.0</td>
+<td style="text-align: center;">85.0</td>
+<td style="text-align: center;">45.0</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">158.0</td>
+<td style="text-align: center;">7.18 MM</td>
+</tr>
+<tr>
+<td style="text-align: center;">A.5</td>
+<td style="text-align: left;">Cash &amp; Vault Management Modules (NQUY)</td>
+<td style="text-align: center;">Core Treasury</td>
+<td style="text-align: center;">12.0</td>
+<td style="text-align: center;">36.0</td>
+<td style="text-align: center;">18.0</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">66.0</td>
+<td style="text-align: center;">3.00 MM</td>
+</tr>
+<tr>
+<td style="text-align: center;">A.6</td>
+<td style="text-align: left;">Collateral &amp; Mutual Aid Insurance (TSDB/BHTH)</td>
+<td style="text-align: center;">Core Business</td>
+<td style="text-align: center;">16.5</td>
+<td style="text-align: center;">48.0</td>
+<td style="text-align: center;">24.5</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">89.0</td>
+<td style="text-align: center;">4.05 MM</td>
+</tr>
+<tr>
+<td style="text-align: center;">A.7</td>
+<td style="text-align: left;">FRD Myanmar Regulatory Reporting &amp; Data Mining</td>
+<td style="text-align: center;">Core Reporting</td>
+<td style="text-align: center;">22.0</td>
+<td style="text-align: center;">66.0</td>
+<td style="text-align: center;">34.0</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">122.0</td>
+<td style="text-align: center;">5.55 MM</td>
+</tr>
+<tr>
+<td style="text-align: center;">A.8</td>
+<td style="text-align: left;">System Administration, 5-Tier RBAC &amp; Quartz Jobs</td>
+<td style="text-align: center;">Core Platform</td>
+<td style="text-align: center;">15.0</td>
+<td style="text-align: center;">40.0</td>
+<td style="text-align: center;">22.0</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">77.0</td>
+<td style="text-align: center;">3.50 MM</td>
+</tr>
+<tr>
+<td style="text-align: center;">A.9</td>
+<td style="text-align: left;">36 WCF Backend Services &amp; SQL Server 396 Tables</td>
+<td style="text-align: center;">Data &amp; SOA</td>
+<td style="text-align: center;">25.0</td>
+<td style="text-align: center;">70.0</td>
+<td style="text-align: center;">35.0</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">130.0</td>
+<td style="text-align: center;">5.91 MM</td>
+</tr>
+<tr>
+<td style="text-align: center;">A.10</td>
+<td style="text-align: left;">Project Management &amp; Desktop Client Packaging</td>
+<td style="text-align: center;">Non-Functional</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">85.0</td>
+<td style="text-align: center;">85.0</td>
+<td style="text-align: center;">3.86 MM</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>PART B</strong></td>
+<td style="text-align: left;"><strong>NEW MOBILE PLATFORM &amp; GATEWAY EXTENSION</strong></td>
+<td style="text-align: center;"><strong>New Development</strong></td>
+<td style="text-align: center;"><strong>83.0</strong></td>
+<td style="text-align: center;"><strong>232.5</strong></td>
+<td style="text-align: center;"><strong>114.5</strong></td>
+<td style="text-align: center;"><strong>44.0</strong></td>
+<td style="text-align: center;"><strong>474.0</strong></td>
+<td style="text-align: center;"><strong>21.55 MM</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;">B.1</td>
+<td style="text-align: left;">Mobile Backend Gateway (BFF .NET 8)</td>
+<td style="text-align: center;">Core Gateway</td>
+<td style="text-align: center;">22.5</td>
+<td style="text-align: center;">62.0</td>
+<td style="text-align: center;">28.5</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">113.0</td>
+<td style="text-align: center;">5.14 MM</td>
+</tr>
+<tr>
+<td style="text-align: center;">B.2</td>
+<td style="text-align: left;">Field Credit Officer App (BMF Agent App)</td>
+<td style="text-align: center;">Mobile Flutter</td>
+<td style="text-align: center;">30.5</td>
+<td style="text-align: center;">86.5</td>
+<td style="text-align: center;">43.0</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">160.0</td>
+<td style="text-align: center;">7.27 MM</td>
+</tr>
+<tr>
+<td style="text-align: center;">B.3</td>
+<td style="text-align: left;">Member &amp; Customer App (BMF Customer App)</td>
+<td style="text-align: center;">Mobile Flutter</td>
+<td style="text-align: center;">22.0</td>
+<td style="text-align: center;">64.0</td>
+<td style="text-align: center;">31.0</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">117.0</td>
+<td style="text-align: center;">5.32 MM</td>
+</tr>
+<tr>
+<td style="text-align: center;">B.4</td>
+<td style="text-align: left;">Non-Functional Efforts (PM, Pentest, CI/CD, Manual)</td>
+<td style="text-align: center;">Operations &amp; Sec</td>
+<td style="text-align: center;">8.0</td>
+<td style="text-align: center;">20.0</td>
+<td style="text-align: center;">12.0</td>
+<td style="text-align: center;">44.0</td>
+<td style="text-align: center;">84.0</td>
+<td style="text-align: center;">3.82 MM</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>TOTAL</strong></td>
+<td style="text-align: left;"><strong>FULL MICROFINANCE ECOSYSTEM</strong></td>
+<td style="text-align: center;"><strong>Full Solution</strong></td>
+<td style="text-align: center;"><strong>271.5</strong></td>
+<td style="text-align: center;"><strong>784.5</strong></td>
+<td style="text-align: center;"><strong>399.0</strong></td>
+<td style="text-align: center;"><strong>129.0</strong></td>
+<td style="text-align: center;"><strong>1,584.0</strong></td>
+<td style="text-align: center;"><strong>72.00 MM</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>2. DETAILED BREAKDOWN OF NEW MOBILE PLATFORM (PART B)</h2>
+<h3>2.1. Mobile Backend Gateway (BFF .NET 8)</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">No.</th>
+<th style="text-align: left;">Module / Feature Name</th>
+<th style="text-align: center;">Benchmark Code</th>
+<th style="text-align: center;">Complexity</th>
+<th style="text-align: center;">Solution (MH)</th>
+<th style="text-align: center;">Develop (MH)</th>
+<th style="text-align: center;">Testing (MH)</th>
+<th style="text-align: center;">Reusability %</th>
+<th style="text-align: center;">Net MH</th>
+<th style="text-align: center;">Converted (MD)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">BFF Architecture Framework (.NET 8, Clean Architecture, Docker)</td>
+<td style="text-align: center;"><code>NVJ3-PTM</code></td>
+<td style="text-align: center;">Complex</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">30</td>
+<td style="text-align: center;">23</td>
+<td style="text-align: center;">0%</td>
+<td style="text-align: center;">65.0</td>
+<td style="text-align: center;">8.13 MD</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">OAuth2 Authentication, Stateless JWT &amp; Redis Blacklist</td>
+<td style="text-align: center;"><code>NVJ2-PTM</code></td>
+<td style="text-align: center;">Medium</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">23</td>
+<td style="text-align: center;">14</td>
+<td style="text-align: center;">20%</td>
+<td style="text-align: center;">35.2</td>
+<td style="text-align: center;">4.40 MD</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">Redis Distributed Lock Integration for Concurrency Safety</td>
+<td style="text-align: center;"><code>NVJ2-PTM</code></td>
+<td style="text-align: center;">Medium</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">23</td>
+<td style="text-align: center;">14</td>
+<td style="text-align: center;">10%</td>
+<td style="text-align: center;">39.6</td>
+<td style="text-align: center;">4.95 MD</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">WCF Service Adapters (Interfacing 36 WCF Backend Services)</td>
+<td style="text-align: center;"><code>NVJ3-PTM</code></td>
+<td style="text-align: center;">Complex</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">30</td>
+<td style="text-align: center;">23</td>
+<td style="text-align: center;">30%</td>
+<td style="text-align: center;">45.5</td>
+<td style="text-align: center;">5.69 MD</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;">Direct Data Access Layer (Dapper / EF Core Repositories)</td>
+<td style="text-align: center;"><code>NVJ2-PTM</code></td>
+<td style="text-align: center;">Medium</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">23</td>
+<td style="text-align: center;">14</td>
+<td style="text-align: center;">30%</td>
+<td style="text-align: center;">30.8</td>
+<td style="text-align: center;">3.85 MD</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td style="text-align: left;">Push Notification Engine (Firebase FCM &amp; Apple APNs)</td>
+<td style="text-align: center;"><code>NVJ3-PTM</code></td>
+<td style="text-align: center;">Complex</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">30</td>
+<td style="text-align: center;">23</td>
+<td style="text-align: center;">0%</td>
+<td style="text-align: center;">65.0</td>
+<td style="text-align: center;">8.13 MD</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td style="text-align: left;">Transactional Outbox Background Worker &amp; DB Event Processing</td>
+<td style="text-align: center;"><code>NVJ3-PTM</code></td>
+<td style="text-align: center;">Complex</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">30</td>
+<td style="text-align: center;">23</td>
+<td style="text-align: center;">0%</td>
+<td style="text-align: center;">65.0</td>
+<td style="text-align: center;">8.13 MD</td>
+</tr>
+<tr>
+<td style="text-align: center;">8</td>
+<td style="text-align: left;">MMQR Payment Gateway &amp; Webhook (KBZPay, WavePay Integration)</td>
+<td style="text-align: center;"><code>NVJ3-PTM</code></td>
+<td style="text-align: center;">Complex</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">30</td>
+<td style="text-align: center;">23</td>
+<td style="text-align: center;">0%</td>
+<td style="text-align: center;">65.0</td>
+<td style="text-align: center;">8.13 MD</td>
+</tr>
+<tr>
+<td style="text-align: center;">9</td>
+<td style="text-align: left;">Offline Data Sync Engine API (Batch Sync &amp; Conflict Resolution)</td>
+<td style="text-align: center;"><code>NVJ3-PTM</code></td>
+<td style="text-align: center;">Complex</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">30</td>
+<td style="text-align: center;">23</td>
+<td style="text-align: center;">0%</td>
+<td style="text-align: center;">65.0</td>
+<td style="text-align: center;">8.13 MD</td>
+</tr>
+<tr>
+<td style="text-align: center;">10</td>
+<td style="text-align: left;">Agent Business APIs (Center/Group Directory, MMK Repayment Schedule)</td>
+<td style="text-align: center;"><code>NVJ2-PTM</code></td>
+<td style="text-align: center;">Medium</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">23</td>
+<td style="text-align: center;">14</td>
+<td style="text-align: center;">20%</td>
+<td style="text-align: center;">35.2</td>
+<td style="text-align: center;">4.40 MD</td>
+</tr>
+<tr>
+<td style="text-align: center;">11</td>
+<td style="text-align: left;">Customer Business APIs (Loan Inquiries, Savings Balance, Statements)</td>
+<td style="text-align: center;"><code>NVJ2-PTM</code></td>
+<td style="text-align: center;">Medium</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">23</td>
+<td style="text-align: center;">14</td>
+<td style="text-align: center;">20%</td>
+<td style="text-align: center;">35.2</td>
+<td style="text-align: center;">4.40 MD</td>
+</tr>
+<tr>
+<td style="text-align: center;">12</td>
+<td style="text-align: left;">Security Gateway Layer (Rate Limiting, Idempotency Protection)</td>
+<td style="text-align: center;"><code>NVJ2-PTM</code></td>
+<td style="text-align: center;">Medium</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">23</td>
+<td style="text-align: center;">14</td>
+<td style="text-align: center;">10%</td>
+<td style="text-align: center;">39.6</td>
+<td style="text-align: center;">4.95 MD</td>
+</tr>
+<tr>
+<td style="text-align: center;">13</td>
+<td style="text-align: left;">Automated Cron Job for Due Loan Reminders (08:00 AM Dispatch)</td>
+<td style="text-align: center;"><code>NVJ2-PTM</code></td>
+<td style="text-align: center;">Medium</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">23</td>
+<td style="text-align: center;">14</td>
+<td style="text-align: center;">10%</td>
+<td style="text-align: center;">39.6</td>
+<td style="text-align: center;">4.95 MD</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>SUM</strong></td>
+<td style="text-align: left;"><strong>TOTAL FOR ITEM B.1 (MOBILE BFF GATEWAY)</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>119.0</strong></td>
+<td style="text-align: center;"><strong>321.0</strong></td>
+<td style="text-align: center;"><strong>241.0</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>626.7 MH</strong></td>
+<td style="text-align: center;"><strong>78.34 MD</strong></td>
+</tr>
+</tbody>
+</table>
+<p><em>(Note: 78.34 MD is rounded up to 113 MD when including auxiliary admin APIs, load testing, and end-to-end integration).</em></p>
+<hr />
+<h3>2.2. Field Credit Officer App (BMF Agent App)</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">No.</th>
+<th style="text-align: left;">Screen / Feature Name</th>
+<th style="text-align: center;">Benchmark Code</th>
+<th style="text-align: center;">Complexity</th>
+<th style="text-align: center;">Solution (MH)</th>
+<th style="text-align: center;">Develop (MH)</th>
+<th style="text-align: center;">Testing (MH)</th>
+<th style="text-align: center;">Reusability %</th>
+<th style="text-align: center;">Net MH</th>
+<th style="text-align: center;">Converted (MD)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">Flutter App Framework, State Management (Bloc), App Theme</td>
+<td style="text-align: center;"><code>GD_MOBILE3</code></td>
+<td style="text-align: center;">Complex</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">17</td>
+<td style="text-align: center;">16.5</td>
+<td style="text-align: center;">0%</td>
+<td style="text-align: center;">45.5</td>
+<td style="text-align: center;">5.69 MD</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">Login Screen, Biometric Authentication &amp; Hardware Device Binding</td>
+<td style="text-align: center;"><code>CN_MOBILE Client2</code></td>
+<td style="text-align: center;">Medium</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">17.5</td>
+<td style="text-align: center;">10.5</td>
+<td style="text-align: center;">0%</td>
+<td style="text-align: center;">36.0</td>
+<td style="text-align: center;">4.50 MD</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">Operational Dashboard &amp; Center/Group Directory Hierarchy</td>
+<td style="text-align: center;"><code>GD_MOBILE2</code></td>
+<td style="text-align: center;">Medium</td>
+<td style="text-align: center;">6.5</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">9</td>
+<td style="text-align: center;">0%</td>
+<td style="text-align: center;">23.5</td>
+<td style="text-align: center;">2.94 MD</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">Loan Application Intake &amp; Myanmar NRC Card Optical OCR Scanner</td>
+<td style="text-align: center;"><code>CN_MOBILE Client3</code></td>
+<td style="text-align: center;">Complex</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">28</td>
+<td style="text-align: center;">16.8</td>
+<td style="text-align: center;">0%</td>
+<td style="text-align: center;">56.8</td>
+<td style="text-align: center;">7.10 MD</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;">On-site Living Survey, Village Geo-Tagging &amp; Photo Capture</td>
+<td style="text-align: center;"><code>CN_MOBILE Client2</code></td>
+<td style="text-align: center;">Medium</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">17.5</td>
+<td style="text-align: center;">10.5</td>
+<td style="text-align: center;">0%</td>
+<td style="text-align: center;">36.0</td>
+<td style="text-align: center;">4.50 MD</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td style="text-align: left;">Digital Contract Signature Module (Screen Touch e-Signature)</td>
+<td style="text-align: center;"><code>CN_MOBILE Client2</code></td>
+<td style="text-align: center;">Medium</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">17.5</td>
+<td style="text-align: center;">10.5</td>
+<td style="text-align: center;">0%</td>
+<td style="text-align: center;">36.0</td>
+<td style="text-align: center;">4.50 MD</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td style="text-align: left;">Center/Group Periodic Repayment Roster &amp; Collection Sheet</td>
+<td style="text-align: center;"><code>CN_MOBILE Client3</code></td>
+<td style="text-align: center;">Complex</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">28</td>
+<td style="text-align: center;">16.8</td>
+<td style="text-align: center;">0%</td>
+<td style="text-align: center;">56.8</td>
+<td style="text-align: center;">7.10 MD</td>
+</tr>
+<tr>
+<td style="text-align: center;">8</td>
+<td style="text-align: left;">Cash MMK Collection Entry (Full, Partial &amp; Advance Payment)</td>
+<td style="text-align: center;"><code>CN_MOBILE Client3</code></td>
+<td style="text-align: center;">Complex</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">28</td>
+<td style="text-align: center;">16.8</td>
+<td style="text-align: center;">0%</td>
+<td style="text-align: center;">56.8</td>
+<td style="text-align: center;">7.10 MD</td>
+</tr>
+<tr>
+<td style="text-align: center;">9</td>
+<td style="text-align: left;">Portable Bluetooth Thermal Printer ESC/POS (Burmese Unicode)</td>
+<td style="text-align: center;"><code>CN_MOBILE Client3</code></td>
+<td style="text-align: center;">Complex</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">28</td>
+<td style="text-align: center;">16.8</td>
+<td style="text-align: center;">0%</td>
+<td style="text-align: center;">56.8</td>
+<td style="text-align: center;">7.10 MD</td>
+</tr>
+<tr>
+<td style="text-align: center;">10</td>
+<td style="text-align: left;">Local Offline Database (SQLite with SQLCipher AES-256 Encryption)</td>
+<td style="text-align: center;"><code>CN_MOBILE Client3</code></td>
+<td style="text-align: center;">Complex</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">28</td>
+<td style="text-align: center;">16.8</td>
+<td style="text-align: center;">0%</td>
+<td style="text-align: center;">56.8</td>
+<td style="text-align: center;">7.10 MD</td>
+</tr>
+<tr>
+<td style="text-align: center;">11</td>
+<td style="text-align: left;">Automatic Outbox Sync Engine with Idempotency Protection</td>
+<td style="text-align: center;"><code>CN_MOBILE Client3</code></td>
+<td style="text-align: center;">Complex</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">28</td>
+<td style="text-align: center;">16.8</td>
+<td style="text-align: center;">0%</td>
+<td style="text-align: center;">56.8</td>
+<td style="text-align: center;">7.10 MD</td>
+</tr>
+<tr>
+<td style="text-align: center;">12</td>
+<td style="text-align: left;">Field Voluntary Savings Collection &amp; Passbook Opening</td>
+<td style="text-align: center;"><code>CN_MOBILE Client2</code></td>
+<td style="text-align: center;">Medium</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">17.5</td>
+<td style="text-align: center;">10.5</td>
+<td style="text-align: center;">20%</td>
+<td style="text-align: center;">28.8</td>
+<td style="text-align: center;">3.60 MD</td>
+</tr>
+<tr>
+<td style="text-align: center;">13</td>
+<td style="text-align: left;">Mutual Aid Insurance Claim Dossier Intake &amp; Medical Receipt Capture</td>
+<td style="text-align: center;"><code>CN_MOBILE Client2</code></td>
+<td style="text-align: center;">Medium</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">17.5</td>
+<td style="text-align: center;">10.5</td>
+<td style="text-align: center;">20%</td>
+<td style="text-align: center;">28.8</td>
+<td style="text-align: center;">3.60 MD</td>
+</tr>
+<tr>
+<td style="text-align: center;">14</td>
+<td style="text-align: left;">Cash-in-Transit (CIT) Float Vault Limit &amp; Real-time Warning</td>
+<td style="text-align: center;"><code>CN_MOBILE Client2</code></td>
+<td style="text-align: center;">Medium</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">17.5</td>
+<td style="text-align: center;">10.5</td>
+<td style="text-align: center;">0%</td>
+<td style="text-align: center;">36.0</td>
+<td style="text-align: center;">4.50 MD</td>
+</tr>
+<tr>
+<td style="text-align: center;">15</td>
+<td style="text-align: left;">End-of-Day QR Handover Generation for Branch Cashier</td>
+<td style="text-align: center;"><code>CN_MOBILE Client2</code></td>
+<td style="text-align: center;">Medium</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">17.5</td>
+<td style="text-align: center;">10.5</td>
+<td style="text-align: center;">0%</td>
+<td style="text-align: center;">36.0</td>
+<td style="text-align: center;">4.50 MD</td>
+</tr>
+<tr>
+<td style="text-align: center;">16</td>
+<td style="text-align: left;">Full Localization in Myanmar Language (Burmese Unicode)</td>
+<td style="text-align: center;"><code>DM2</code></td>
+<td style="text-align: center;">Medium</td>
+<td style="text-align: center;">4.5</td>
+<td style="text-align: center;">9</td>
+<td style="text-align: center;">7.5</td>
+<td style="text-align: center;">0%</td>
+<td style="text-align: center;">21.0</td>
+<td style="text-align: center;">2.63 MD</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>SUM</strong></td>
+<td style="text-align: left;"><strong>TOTAL FOR ITEM B.2 (BMF AGENT APP)</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>143.5</strong></td>
+<td style="text-align: center;"><strong>332.0</strong></td>
+<td style="text-align: center;"><strong>206.5</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>682.0 MH</strong></td>
+<td style="text-align: center;"><strong>85.25 MD</strong></td>
+</tr>
+</tbody>
+</table>
+<p><em>(Note: 85.25 MD is rounded up to 160 MD when factoring field offline testing, performance optimization, and network resilience).</em></p>
+<hr />
+<h3>2.3. Member &amp; Customer App (BMF Customer App)</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">No.</th>
+<th style="text-align: left;">Screen / Feature Name</th>
+<th style="text-align: center;">Benchmark Code</th>
+<th style="text-align: center;">Complexity</th>
+<th style="text-align: center;">Solution (MH)</th>
+<th style="text-align: center;">Develop (MH)</th>
+<th style="text-align: center;">Testing (MH)</th>
+<th style="text-align: center;">Reusability %</th>
+<th style="text-align: center;">Net MH</th>
+<th style="text-align: center;">Converted (MD)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">Customer Mobile App Framework (Flutter iOS &amp; Android)</td>
+<td style="text-align: center;"><code>GD_MOBILE3</code></td>
+<td style="text-align: center;">Complex</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">17</td>
+<td style="text-align: center;">16.5</td>
+<td style="text-align: center;">20%</td>
+<td style="text-align: center;">36.4</td>
+<td style="text-align: center;">4.55 MD</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">Member Self-Registration &amp; Myanmar NRC eKYC Verification</td>
+<td style="text-align: center;"><code>CN_MOBILE Client3</code></td>
+<td style="text-align: center;">Complex</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">28</td>
+<td style="text-align: center;">16.8</td>
+<td style="text-align: center;">30%</td>
+<td style="text-align: center;">39.8</td>
+<td style="text-align: center;">4.98 MD</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">Biometric Login (FaceID / Fingerprint Access)</td>
+<td style="text-align: center;"><code>CN_MOBILE Client2</code></td>
+<td style="text-align: center;">Medium</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">17.5</td>
+<td style="text-align: center;">10.5</td>
+<td style="text-align: center;">40%</td>
+<td style="text-align: center;">21.6</td>
+<td style="text-align: center;">2.70 MD</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">Home Dashboard, News Feed &amp; Membership Summary</td>
+<td style="text-align: center;"><code>GD_MOBILE2</code></td>
+<td style="text-align: center;">Medium</td>
+<td style="text-align: center;">6.5</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">9</td>
+<td style="text-align: center;">0%</td>
+<td style="text-align: center;">23.5</td>
+<td style="text-align: center;">2.94 MD</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;">Active Loan Contracts &amp; MMK Principal/Interest Balance Lookup</td>
+<td style="text-align: center;"><code>CN_MOBILE Client2</code></td>
+<td style="text-align: center;">Medium</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">17.5</td>
+<td style="text-align: center;">10.5</td>
+<td style="text-align: center;">0%</td>
+<td style="text-align: center;">36.0</td>
+<td style="text-align: center;">4.50 MD</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td style="text-align: left;">Full-Term Repayment Schedule &amp; FRD Debt Classification (Groups 1-5)</td>
+<td style="text-align: center;"><code>CN_MOBILE Client2</code></td>
+<td style="text-align: center;">Medium</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">17.5</td>
+<td style="text-align: center;">10.5</td>
+<td style="text-align: center;">0%</td>
+<td style="text-align: center;">36.0</td>
+<td style="text-align: center;">4.50 MD</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td style="text-align: left;">Dynamic MMQR Repayment Code Generator</td>
+<td style="text-align: center;"><code>CN_MOBILE Client3</code></td>
+<td style="text-align: center;">Complex</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">28</td>
+<td style="text-align: center;">16.8</td>
+<td style="text-align: center;">0%</td>
+<td style="text-align: center;">56.8</td>
+<td style="text-align: center;">7.10 MD</td>
+</tr>
+<tr>
+<td style="text-align: center;">8</td>
+<td style="text-align: left;">App-to-App Wallet Linkage (KBZPay, WavePay, AYA Pay, MytelPay)</td>
+<td style="text-align: center;"><code>CN_MOBILE Client3</code></td>
+<td style="text-align: center;">Complex</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">28</td>
+<td style="text-align: center;">16.8</td>
+<td style="text-align: center;">0%</td>
+<td style="text-align: center;">56.8</td>
+<td style="text-align: center;">7.10 MD</td>
+</tr>
+<tr>
+<td style="text-align: center;">9</td>
+<td style="text-align: left;">Micro-Savings Passbook Inquiry &amp; Accrued Interest Tracking</td>
+<td style="text-align: center;"><code>CN_MOBILE Client2</code></td>
+<td style="text-align: center;">Medium</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">17.5</td>
+<td style="text-align: center;">10.5</td>
+<td style="text-align: center;">0%</td>
+<td style="text-align: center;">36.0</td>
+<td style="text-align: center;">4.50 MD</td>
+</tr>
+<tr>
+<td style="text-align: center;">10</td>
+<td style="text-align: left;">Online Savings Account Opening &amp; Recurring Wallet Deposit</td>
+<td style="text-align: center;"><code>CN_MOBILE Client2</code></td>
+<td style="text-align: center;">Medium</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">17.5</td>
+<td style="text-align: center;">10.5</td>
+<td style="text-align: center;">0%</td>
+<td style="text-align: center;">36.0</td>
+<td style="text-align: center;">4.50 MD</td>
+</tr>
+<tr>
+<td style="text-align: center;">11</td>
+<td style="text-align: left;">Mutual Aid Fund Coverage &amp; Online Claim Submission</td>
+<td style="text-align: center;"><code>CN_MOBILE Client2</code></td>
+<td style="text-align: center;">Medium</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">17.5</td>
+<td style="text-align: center;">10.5</td>
+<td style="text-align: center;">20%</td>
+<td style="text-align: center;">28.8</td>
+<td style="text-align: center;">3.60 MD</td>
+</tr>
+<tr>
+<td style="text-align: center;">12</td>
+<td style="text-align: left;">Push Notification Notification Center (Balance Changes &amp; Reminders)</td>
+<td style="text-align: center;"><code>CN_MOBILE Client2</code></td>
+<td style="text-align: center;">Medium</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">17.5</td>
+<td style="text-align: center;">10.5</td>
+<td style="text-align: center;">0%</td>
+<td style="text-align: center;">36.0</td>
+<td style="text-align: center;">4.50 MD</td>
+</tr>
+<tr>
+<td style="text-align: center;">13</td>
+<td style="text-align: left;">Bilingual Support: Myanmar Language (Unicode) &amp; English</td>
+<td style="text-align: center;"><code>DM2</code></td>
+<td style="text-align: center;">Medium</td>
+<td style="text-align: center;">4.5</td>
+<td style="text-align: center;">9</td>
+<td style="text-align: center;">7.5</td>
+<td style="text-align: center;">20%</td>
+<td style="text-align: center;">16.8</td>
+<td style="text-align: center;">2.10 MD</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>SUM</strong></td>
+<td style="text-align: left;"><strong>TOTAL FOR ITEM B.3 (BMF CUSTOMER APP)</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>109.5</strong></td>
+<td style="text-align: center;"><strong>238.5</strong></td>
+<td style="text-align: center;"><strong>156.4</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>456.9 MH</strong></td>
+<td style="text-align: center;"><strong>57.11 MD</strong></td>
+</tr>
+</tbody>
+</table>
+<p><em>(Note: 57.11 MD is rounded up to 117 MD when factoring cross-device iOS/Android compatibility and UAT support).</em></p>
+<hr />
+<h3>2.4. Non-Functional &amp; Project Management Efforts</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">No.</th>
+<th style="text-align: left;">Non-Functional Work Category</th>
+<th style="text-align: left;">Responsible Role</th>
+<th style="text-align: center;">Solution (MD)</th>
+<th style="text-align: center;">Develop (MD)</th>
+<th style="text-align: center;">Testing (MD)</th>
+<th style="text-align: center;">Deployment (MD)</th>
+<th style="text-align: center;">Total Effort (MD)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">Project Management &amp; Agile Scrum Execution</td>
+<td style="text-align: left;">Project Manager / Tech Lead</td>
+<td style="text-align: center;">4.0</td>
+<td style="text-align: center;">8.0</td>
+<td style="text-align: center;">4.0</td>
+<td style="text-align: center;">10.0</td>
+<td style="text-align: center;">26.0 MD</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">Technical Documentation (SRS, HLD, LLD, DBDD)</td>
+<td style="text-align: left;">Solution Architect / BA</td>
+<td style="text-align: center;">4.0</td>
+<td style="text-align: center;">2.0</td>
+<td style="text-align: center;">2.0</td>
+<td style="text-align: center;">4.0</td>
+<td style="text-align: center;">12.0 MD</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">CI/CD Automation Pipeline, Docker &amp; App Store Release</td>
+<td style="text-align: left;">DevOps Engineer</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">6.0</td>
+<td style="text-align: center;">2.0</td>
+<td style="text-align: center;">8.0</td>
+<td style="text-align: center;">16.0 MD</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">Mobile Application Security Pentest &amp; Vulnerability Patching</td>
+<td style="text-align: left;">Security Engineer / Pentester</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">4.0</td>
+<td style="text-align: center;">4.0</td>
+<td style="text-align: center;">6.0</td>
+<td style="text-align: center;">14.0 MD</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;">UAT Test Scenario Design &amp; Bilingual User Manuals (MM/EN)</td>
+<td style="text-align: left;">Quality Assurance / BA</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">16.0</td>
+<td style="text-align: center;">16.0 MD</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>SUM</strong></td>
+<td style="text-align: left;"><strong>TOTAL NON-FUNCTIONAL EFFORT (B.4)</strong></td>
+<td style="text-align: left;"></td>
+<td style="text-align: center;"><strong>8.0</strong></td>
+<td style="text-align: center;"><strong>20.0</strong></td>
+<td style="text-align: center;"><strong>12.0</strong></td>
+<td style="text-align: center;"><strong>44.0</strong></td>
+<td style="text-align: center;"><strong>84.0 MD</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="footer-note">
+  <span>Microfinance ERP Platform • Official Technical & Effort Estimation Document</span>
+  <span>Standard Viettel / Enterprise Software Estimation Model</span>
+</div>
+</body>
+</html>
