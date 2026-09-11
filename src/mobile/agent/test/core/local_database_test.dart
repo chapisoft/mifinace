@@ -2,6 +2,7 @@ import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:bmf_agent_app/core/database/app_database.dart';
+import 'package:bmf_agent_app/core/enums/sync_status.dart';
 import 'package:bmf_agent_app/core/security/secure_storage_service.dart';
 import 'package:bmf_agent_app/core/security/sqlcipher_key_manager.dart';
 
@@ -108,7 +109,7 @@ void main() {
       expect(pendingItems.first.operationType, 'COLLECT_REPAYMENT');
 
       // Update status to COMPLETED
-      await db.updateSyncQueueStatus('SYNC-001', 'COMPLETED');
+      await db.updateSyncQueueStatus('SYNC-001', SyncStatus.completed);
       final remainingPending = await db.getPendingSyncQueueItems();
       expect(remainingPending.isEmpty, true);
     });

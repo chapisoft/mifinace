@@ -4,6 +4,7 @@ import 'package:drift/native.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 import '../constants/app_constants.dart';
+import '../enums/sync_status.dart';
 import '../security/sqlcipher_key_manager.dart';
 import '../utils/app_logger.dart';
 import 'tables/local_centers_table.dart';
@@ -115,7 +116,7 @@ class AppDatabase extends _$AppDatabase {
   }
 
   Future<List<LocalRepayment>> getPendingRepayments() {
-    return (select(localRepaymentsTable)..where((t) => t.syncStatus.equals('PENDING'))).get();
+    return (select(localRepaymentsTable)..where((t) => t.syncStatus.equals(SyncStatus.pending.code))).get();
   }
 
   Future<void> enqueueSyncOperation(LocalSyncQueueTableCompanion syncItem) async {
@@ -126,16 +127,17 @@ class AppDatabase extends _$AppDatabase {
 
   Future<List<LocalSyncQueueItem>> getPendingSyncQueueItems({int limit = 50}) {
     return (select(localSyncQueueTable)
-          ..where((t) => t.status.equals('PENDING'))
+          ..where((t) => t.status.equals(SyncStatus.pending.code))
           ..orderBy([(t) => OrderingTerm.asc(t.createdAt)])
           ..limit(limit))
         .get();
   }
 
-  Future<void> updateSyncQueueStatus(String queueId, String status, {String? errorMessage}) async {
+  Future<void> updateSyncQueueStatus(String queueId, dynamic status, {String? errorMessage}) async {
+    final statusStr = status is SyncStatus ? status.code : status.toString();
     await (update(localSyncQueueTable)..where((t) => t.queueId.equals(queueId))).write(
       LocalSyncQueueTableCompanion(
-        status: Value(status),
+        status: Value(statusStr),
         processedAt: Value(DateTime.now()),
         errorMessage: Value(errorMessage),
       ),

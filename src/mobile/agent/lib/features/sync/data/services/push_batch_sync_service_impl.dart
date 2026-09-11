@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:drift/drift.dart';
 import '../../../../core/database/app_database.dart';
+import '../../../../core/enums/sync_status.dart';
 import '../../../../core/network/api_client.dart';
 import '../../../../core/utils/app_logger.dart';
 import '../../domain/services/push_batch_sync_service.dart';
@@ -37,7 +38,7 @@ class PushBatchSyncServiceImpl implements PushBatchSyncService {
         batchPayload.add(decoded);
       } catch (e) {
         AppLogger.error('Malformed payload JSON for queue item: ${item.queueId}', tag: 'PushBatchSyncService');
-        await _database.updateSyncQueueStatus(item.queueId, 'FAILED', errorMessage: 'Malformed JSON payload');
+        await _database.updateSyncQueueStatus(item.queueId, SyncStatus.failed, errorMessage: 'Malformed JSON payload');
       }
     }
 
@@ -57,12 +58,12 @@ class PushBatchSyncServiceImpl implements PushBatchSyncService {
         final List results = data['results'];
         for (final res in results) {
           final String queueId = res['queueId']?.toString() ?? '';
-          final String status = res['status']?.toString() ?? 'FAILED';
+          final syncStatus = SyncStatus.fromCode(res['status']?.toString());
           final String? serverRef = res['serverRefId']?.toString();
           final String? errorMsg = res['errorMessage']?.toString();
 
-          if (status == 'SUCCESS' || status == 'SYNCED') {
-            await _database.updateSyncQueueStatus(queueId, 'SYNCED');
+          if (syncStatus == SyncStatus.completed) {
+            await _database.updateSyncQueueStatus(queueId, SyncStatus.completed);
             successCount++;
 
             // Update matching repayment and schedule status in local DB
@@ -71,18 +72,18 @@ class PushBatchSyncServiceImpl implements PushBatchSyncService {
                   ..where((t) => t.transactionId.equals(matchingItem.entityId)))
                 .write(
               LocalRepaymentsTableCompanion(
-                syncStatus: const Value('SYNCED'),
+                syncStatus: Value(SyncStatus.completed.code),
                 updatedAt: Value(DateTime.now()),
               ),
             );
           } else {
-            await _database.updateSyncQueueStatus(queueId, 'FAILED', errorMessage: errorMsg ?? 'Server rejected transaction');
+            await _database.updateSyncQueueStatus(queueId, SyncStatus.failed, errorMessage: errorMsg ?? 'Server rejected transaction');
           }
         }
       } else {
         // Entire batch accepted
         for (final item in pendingItems) {
-          await _database.updateSyncQueueStatus(item.queueId, 'SYNCED');
+          await _database.updateSyncQueueStatus(item.queueId, SyncStatus.completed);
           successCount++;
         }
       }

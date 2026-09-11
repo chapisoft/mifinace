@@ -4,6 +4,7 @@ import com.bmf.mobile.app.dto.response.CustomerLoanSummaryResponse;
 import com.bmf.mobile.domain.entity.CustomerMember;
 import com.bmf.mobile.domain.entity.GroupScheduleRecord;
 import com.bmf.mobile.domain.enums.ErrorCode;
+import com.bmf.mobile.domain.enums.RepaymentStatus;
 import com.bmf.mobile.domain.exception.BusinessException;
 import com.bmf.mobile.domain.repository.CustomerRepository;
 import com.bmf.mobile.domain.repository.LoanRepository;
@@ -37,12 +38,12 @@ public class CustomerLoanQueryUseCase {
         List<GroupScheduleRecord> schedules = loanRepository.findSchedulesByCustomerCode(customerCode);
 
         BigDecimal totalOutstandingPrincipal = schedules.stream()
-                .filter(s -> !"SETTLED".equalsIgnoreCase(s.getStatus()))
+                .filter(s -> !RepaymentStatus.SETTLED.name().equalsIgnoreCase(s.getStatus()))
                 .map(s -> s.getPrincipalAmount() != null ? s.getPrincipalAmount() : BigDecimal.ZERO)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         int totalPeriodsPaid = (int) schedules.stream()
-                .filter(s -> "SETTLED".equalsIgnoreCase(s.getStatus()))
+                .filter(s -> RepaymentStatus.SETTLED.name().equalsIgnoreCase(s.getStatus()))
                 .count();
 
         int totalPeriodsRemaining = schedules.size() - totalPeriodsPaid;
@@ -84,7 +85,7 @@ public class CustomerLoanQueryUseCase {
             BigDecimal principal = record.getPrincipalAmount() != null ? record.getPrincipalAmount() : BigDecimal.ZERO;
             totalPrincipal = totalPrincipal.add(principal);
 
-            boolean isSettled = "SETTLED".equalsIgnoreCase(record.getStatus());
+            boolean isSettled = RepaymentStatus.SETTLED.name().equalsIgnoreCase(record.getStatus());
             if (isSettled) {
                 paidCount++;
             } else {

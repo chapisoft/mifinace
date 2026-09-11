@@ -2,6 +2,7 @@ package com.bmf.mobile.infra.scheduler;
 
 import com.bmf.mobile.domain.entity.OutboxEvent;
 import com.bmf.mobile.domain.entity.RepaymentTransaction;
+import com.bmf.mobile.domain.enums.OutboxEventType;
 import com.bmf.mobile.domain.enums.OutboxStatus;
 import com.bmf.mobile.domain.enums.RepaymentStatus;
 import com.bmf.mobile.domain.repository.LoanRepository;
@@ -55,12 +56,12 @@ public class OutboxEventProcessor {
     }
 
     private void processSingleEvent(OutboxEvent event) throws Exception {
-        if ("REPAYMENT_COLLECTED".equalsIgnoreCase(event.getEventType())) {
+        if (OutboxEventType.REPAYMENT_COLLECTED.name().equalsIgnoreCase(event.getEventType())) {
             RepaymentTransaction tx = objectMapper.readValue(event.getPayloadJson(), RepaymentTransaction.class);
 
             // 1. Cập nhật quyết toán vào bảng TD_LICH_THUNO trong Core Banking
             loanRepository.updateScheduleStatus(
-                    tx.getContractCode(), tx.getPeriodNumber(), "SETTLED", tx.getTotalAmount());
+                    tx.getContractCode(), tx.getPeriodNumber(), RepaymentStatus.SETTLED.name(), tx.getTotalAmount());
 
             // 2. Cập nhật trạng thái giao dịch thu nợ sang SETTLED
             tx.setStatus(RepaymentStatus.SETTLED);

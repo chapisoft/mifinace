@@ -80,7 +80,8 @@ public class CollectRepaymentUseCase {
             }
 
             GroupScheduleRecord schedule = scheduleOpt.get();
-            if ("SETTLED".equalsIgnoreCase(schedule.getStatus()) || "COLLECTED".equalsIgnoreCase(schedule.getStatus())) {
+            if (RepaymentStatus.SETTLED.name().equalsIgnoreCase(schedule.getStatus()) 
+                    || RepaymentStatus.COLLECTED.name().equalsIgnoreCase(schedule.getStatus())) {
                 log.warn("Repayment rejected - schedule already settled: contract={}, period={}, currentStatus={}",
                         request.getContractCode(), request.getPeriodNumber(), schedule.getStatus());
                 throw new BusinessException(ErrorCode.ERR_TRANSACTION_ALREADY_SETTLED);

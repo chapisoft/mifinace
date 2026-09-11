@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import '../../../../core/database/app_database.dart';
+import '../../../../core/enums/sync_status.dart';
 import '../../../../core/utils/app_logger.dart';
 import '../../domain/models/sync_summary.dart';
 import '../../domain/services/pull_sync_service.dart';
@@ -86,11 +87,12 @@ class SyncEngineImpl implements SyncEngine {
     int failed = 0;
 
     for (final item in allQueueItems) {
-      if (item.status == 'PENDING') {
+      final status = SyncStatus.fromCode(item.status);
+      if (status == SyncStatus.pending || status == SyncStatus.syncing) {
         pending++;
-      } else if (item.status == 'SYNCED') {
+      } else if (status == SyncStatus.completed) {
         synced++;
-      } else if (item.status == 'FAILED') {
+      } else if (status == SyncStatus.failed || status == SyncStatus.conflict) {
         failed++;
       }
     }

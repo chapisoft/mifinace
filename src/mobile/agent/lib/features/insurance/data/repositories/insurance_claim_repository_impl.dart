@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:drift/drift.dart';
 import 'package:uuid/uuid.dart';
 import '../../../../core/database/app_database.dart';
+import '../../../../core/enums/sync_status.dart';
 import '../../../../core/network/api_client.dart';
 import '../../../../core/utils/app_logger.dart';
 import '../../domain/models/insurance_claim.dart';
@@ -53,7 +54,7 @@ class InsuranceClaimRepositoryImpl implements InsuranceClaimRepository {
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        await _database.updateSyncQueueStatus(queueId, 'SYNCED');
+        await _database.updateSyncQueueStatus(queueId, SyncStatus.completed);
         AppLogger.info('Insurance claim synced to Township core immediately: ${claim.claimId}', tag: 'ClaimRepo');
       }
     } catch (e) {

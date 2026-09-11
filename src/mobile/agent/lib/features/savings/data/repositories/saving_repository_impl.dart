@@ -155,7 +155,7 @@ class SavingRepositoryImpl implements SavingRepository {
         data: updatedDeposit.toJson(),
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
-        await _database.updateSyncQueueStatus(queueId, 'SYNCED');
+        await _database.updateSyncQueueStatus(queueId, SyncStatus.completed);
         AppLogger.info('Savings deposit synced to core immediately: ${deposit.depositId}', tag: 'SavingRepo');
       }
     } catch (e) {

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:drift/drift.dart';
 import 'package:uuid/uuid.dart';
 import '../../../../core/database/app_database.dart';
+import '../../../../core/enums/sync_operation.dart';
 import '../../../../core/enums/sync_status.dart';
 import '../../../../core/network/api_client.dart';
 import '../../../../core/utils/app_logger.dart';
@@ -50,7 +51,7 @@ class LoanOriginationRepositoryImpl implements LoanOriginationRepository {
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        await _database.updateSyncQueueStatus(queueId, 'SYNCED');
+        await _database.updateSyncQueueStatus(queueId, SyncStatus.completed);
         AppLogger.info('Loan application successfully synced to Gateway immediately.', tag: 'OriginationRepo');
         return application;
       }
@@ -64,7 +65,8 @@ class LoanOriginationRepositoryImpl implements LoanOriginationRepository {
   @override
   Future<List<LoanApplication>> getPendingApplications() async {
     final queueItems = await (_database.select(_database.localSyncQueueTable)
-          ..where((t) => t.operationType.equals('LOAN_APPLICATION') & t.status.equals('PENDING')))
+          ..where((t) => t.operationType.equals(SyncOperation.loanApplication.code) 
+              & t.status.equals(SyncStatus.pending.code)))
         .get();
 
     AppLogger.debug('Retrieved ${queueItems.length} pending loan applications from sync queue.', tag: 'OriginationRepo');

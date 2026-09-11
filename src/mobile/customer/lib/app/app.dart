@@ -4,6 +4,8 @@ import 'package:bmf_customer/app/router/app_router.dart';
 import 'package:bmf_customer/app/theme/customer_theme.dart';
 import 'package:bmf_customer/core/bloc/language/language_cubit.dart';
 import 'package:bmf_customer/core/bloc/language/language_state.dart';
+import 'package:bmf_customer/core/enums/app_language.dart';
+import 'package:bmf_customer/core/l10n/customer_localizations.dart';
 import 'package:bmf_customer/core/security/biometric_service.dart';
 import 'package:bmf_customer/core/security/secure_storage_service.dart';
 import 'package:bmf_customer/features/auth/domain/repositories/customer_auth_repository.dart';
@@ -80,7 +82,9 @@ class BmfCustomerApp extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               theme: CustomerTheme.lightTheme,
               themeMode: ThemeMode.light,
-              locale: Locale(langState.currentLanguage.code),
+              locale: langState.currentLanguage.locale,
+              supportedLocales: AppLanguage.values.map((l) => l.locale).toList(),
+              localizationsDelegates: CustomerLocalizations.localizationsDelegates,
               routerConfig: AppRouter.router,
             );
           },
