@@ -1,0 +1,88 @@
+spring:
+  application:
+    name: bmf-mobile-bff-gateway
+
+  # Bật Java 21 Virtual Threads (Project Loom)
+  threads:
+    virtual:
+      enabled: true
+
+  # Cấu hình CSDL SQL Server 2017 (NG-mFINA-BMF_20180402)
+  datasource:
+    url: ${DB_URL:jdbc:sqlserver://localhost:1433;databaseName=NG-mFINA-BMF_20180402;encrypt=false;trustServerCertificate=true}
+    username: ${DB_USERNAME:sa}
+    password: ${DB_PASSWORD:Bmf@2026Secure!}
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    hikari:
+      pool-name: BMF-HikariCP-Pool
+      maximum-pool-size: ${HIKARI_MAX_POOL:30}
+      minimum-idle: ${HIKARI_MIN_IDLE:10}
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      auto-commit: true
+
+  # Cấu hình Jackson JSON
+  jackson:
+    time-zone: Asia/Yangon
+    date-format: yyyy-MM-dd'T'HH:mm:ss.SSSXXX
+
+  # Cấu hình Web & Multipart
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 20MB
+
+server:
+  port: ${SERVER_PORT:8080}
+  tomcat:
+    threads:
+      max: 200
+      min-spare: 20
+    connection-timeout: 20000
+
+# Cấu hình Actuator & Prometheus Metrics
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus,metrics
+  endpoint:
+    health:
+      show-details: always
+
+# Cấu hình SpringDoc OpenAPI / Swagger UI
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: method
+    display-request-duration: true
+
+# Cấu hình Redisson Redis
+redisson:
+  address: ${REDIS_URL:redis://localhost:6379}
+  password: ${REDIS_PASSWORD:}
+  timeout: 3000
+  retry-attempts: 3
+  retry-interval: 1500
+  connection-pool-size: 64
+  connection-minimum-idle-size: 16
+
+# Cấu hình JWT Token
+security:
+  jwt:
+    secret-key: ${JWT_SECRET:BMF_MYANMAR_SUPER_SECRET_KEY_2026_MICROFINANCE_PLATFORM_KEY_256_BITS!}
+    access-token-expiration-seconds: 900     # 15 phút
+    refresh-token-expiration-seconds: 2592000 # 30 ngày
+
+# Cấu hình Dịch vụ WCF Core Banking (100% Kết nối Cục bộ / Private LAN - Không mở Public)
+core:
+  wcf:
+    tin-dung-service-url: ${WCF_TINDUNG_URL:http://localhost:8000/TinDungService.svc}
+    ke-toan-service-url: ${WCF_KETOAN_URL:http://localhost:8000/KeToanService.svc}
+    tiet-kiem-service-url: ${WCF_TIETKIEM_URL:http://localhost:8000/TietKiemService.svc}
+    connection-timeout-ms: 5000
+    receive-timeout-ms: 10000

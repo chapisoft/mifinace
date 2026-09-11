@@ -1,0 +1,100 @@
+name: BMF Mobile BFF Gateway CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+      - master
+      - develop
+    paths:
+      - 'src/backend/mobile-bff-gateway/**'
+      - 'src/db/**'
+      - '.github/workflows/bff-ci-cd.yml'
+  pull_request:
+    branches:
+      - main
+      - master
+      - develop
+    paths:
+      - 'src/backend/mobile-bff-gateway/**'
+      - 'src/db/**'
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}/mobile-bff-gateway
+  JAVA_VERSION: '21'
+
+jobs:
+  test-and-verify:
+    name: 1. Unit & Integration Test Verification
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: src/backend/mobile-bff-gateway
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21 LTS (Eclipse Temurin)
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ env.JAVA_VERSION }}
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Compile and Run All Unit & Integration Tests
+        run: |
+          mvn clean test -B
+
+      - name: Package JAR Artifact
+        run: |
+          mvn package -DskipTests=true -B
+
+      - name: Upload Test Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: surefire-test-reports
+          path: src/backend/mobile-bff-gateway/**/target/surefire-reports/
+          retention-days: 7
+
+  docker-build-and-publish:
+    name: 2. Docker Multi-Stage Build & Container Registry Push
+    needs: test-and-verify
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: actions/setup-buildx-action@v3
+
+      - name: Log in to GitHub Container Registry
+        uses: actions/docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract Docker Metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' }}
+            type=sha,format=short,prefix=sha-
+
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v5
+        with:
+          context: src/backend/mobile-bff-gateway
+          file: src/backend/mobile-bff-gateway/Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

@@ -1,0 +1,7 @@
+com/bmf/mobile/api/FieldOperationsIntegrationTests.class
+com/bmf/mobile/api/BffApplicationTests.class
+com/bmf/mobile/api/DigitalPaymentIntegrationTests.class
+com/bmf/mobile/api/OutboxNotificationWorkerTests.class
+com/bmf/mobile/api/AuthIntegrationTests.class
+com/bmf/mobile/api/TestConfig.class
+com/bmf/mobile/api/RepaymentIntegrationTests.class

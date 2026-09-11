@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  # Cụm Redis cho Blacklist Token & Redisson Distributed Lock
+  bmf-redis:
+    image: redis:7.2-alpine
+    container_name: bmf-redis
+    command: redis-server --appendonly yes --requirepass "BmfRedis@2026Secure!"
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - bmf-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "BmfRedis@2026Secure!", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Dịch vụ Mobile BFF Gateway (Java 21 LTS & Spring Boot 3.3+)
+  bmf-bff-gateway:
+    build:
+      context: ./src/backend/mobile-bff-gateway
+      dockerfile: Dockerfile
+    container_name: bmf-bff-gateway
+    depends_on:
+      bmf-redis:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+    environment:
+      - SERVER_PORT=8080
+      - DB_URL=jdbc:sqlserver://host.docker.internal:1433;databaseName=NG-mFINA-BMF_20180402;encrypt=false;trustServerCertificate=true
+      - DB_USERNAME=sa
+      - DB_PASSWORD=Bmf@2026Secure!
+      - REDIS_URL=redis://bmf-redis:6379
+      - REDIS_PASSWORD=BmfRedis@2026Secure!
+      - JWT_SECRET=BMF_MYANMAR_SUPER_SECRET_KEY_2026_MICROFINANCE_PLATFORM_KEY_256_BITS!
+    networks:
+      - bmf-network
+    restart: unless-stopped
+
+networks:
+  bmf-network:
+    driver: bridge
+
+volumes:
+  redis-data:
+    driver: local

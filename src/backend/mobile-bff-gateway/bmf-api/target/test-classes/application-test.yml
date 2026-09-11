@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: bmf-mobile-bff-gateway-test
+
+  threads:
+    virtual:
+      enabled: true
+
+  autoconfigure:
+    exclude:
+      - org.redisson.spring.starter.RedissonAutoConfigurationV2
+
+  # CSDL nhúng H2 cho Unit Test
+  datasource:
+    url: jdbc:h2:mem:bmf_test_db;DB_CLOSE_DELAY=-1;MODE=MSSQLServer
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ""
+
+server:
+  port: 0

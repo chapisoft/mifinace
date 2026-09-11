@@ -1,0 +1,12 @@
+com/bmf/mobile/app/usecase/CustomerLoanQueryUseCaseTest.class
+com/bmf/mobile/app/usecase/SyncRepaymentScheduleUseCaseTest.class
+com/bmf/mobile/app/usecase/BatchRepaymentSyncUseCaseTest.class
+com/bmf/mobile/app/usecase/AgentAuthenticationUseCaseTest.class
+com/bmf/mobile/app/usecase/SubmitInsuranceClaimUseCaseTest.class
+com/bmf/mobile/app/usecase/CustomerAuthenticationUseCaseTest.class
+com/bmf/mobile/app/usecase/LogoutUseCaseTest.class
+com/bmf/mobile/app/usecase/CollectRepaymentUseCaseTest.class
+com/bmf/mobile/app/usecase/TokenRefreshUseCaseTest.class
+com/bmf/mobile/app/usecase/CashHandoverUseCaseTest.class
+com/bmf/mobile/app/usecase/ManageSavingsUseCaseTest.class
+com/bmf/mobile/app/usecase/ApplyLoanUseCaseTest.class

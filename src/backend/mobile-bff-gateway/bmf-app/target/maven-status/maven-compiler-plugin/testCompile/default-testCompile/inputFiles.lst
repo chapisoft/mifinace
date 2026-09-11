@@ -1,0 +1,12 @@
+/Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-app/src/test/java/com/bmf/mobile/app/usecase/AgentAuthenticationUseCaseTest.java
+/Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-app/src/test/java/com/bmf/mobile/app/usecase/ApplyLoanUseCaseTest.java
+/Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-app/src/test/java/com/bmf/mobile/app/usecase/BatchRepaymentSyncUseCaseTest.java
+/Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-app/src/test/java/com/bmf/mobile/app/usecase/CashHandoverUseCaseTest.java
+/Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-app/src/test/java/com/bmf/mobile/app/usecase/CollectRepaymentUseCaseTest.java
+/Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-app/src/test/java/com/bmf/mobile/app/usecase/CustomerAuthenticationUseCaseTest.java
+/Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-app/src/test/java/com/bmf/mobile/app/usecase/CustomerLoanQueryUseCaseTest.java
+/Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-app/src/test/java/com/bmf/mobile/app/usecase/LogoutUseCaseTest.java
+/Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-app/src/test/java/com/bmf/mobile/app/usecase/ManageSavingsUseCaseTest.java
+/Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-app/src/test/java/com/bmf/mobile/app/usecase/SubmitInsuranceClaimUseCaseTest.java
+/Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-app/src/test/java/com/bmf/mobile/app/usecase/SyncRepaymentScheduleUseCaseTest.java
+/Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-app/src/test/java/com/bmf/mobile/app/usecase/TokenRefreshUseCaseTest.java

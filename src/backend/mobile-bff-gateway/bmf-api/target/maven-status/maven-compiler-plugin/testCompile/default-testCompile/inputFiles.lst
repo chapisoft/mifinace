@@ -1,0 +1,7 @@
+/Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-api/src/test/java/com/bmf/mobile/api/AuthIntegrationTests.java
+/Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-api/src/test/java/com/bmf/mobile/api/BffApplicationTests.java
+/Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-api/src/test/java/com/bmf/mobile/api/DigitalPaymentIntegrationTests.java
+/Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-api/src/test/java/com/bmf/mobile/api/FieldOperationsIntegrationTests.java
+/Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-api/src/test/java/com/bmf/mobile/api/OutboxNotificationWorkerTests.java
+/Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-api/src/test/java/com/bmf/mobile/api/RepaymentIntegrationTests.java
+/Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-api/src/test/java/com/bmf/mobile/api/TestConfig.java

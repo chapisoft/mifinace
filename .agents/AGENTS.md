@@ -5,13 +5,26 @@
 - **Trực quan & Định dạng:** Không dùng icon/emoji tràn lan. Sử dụng ký tự Unicode thuần túy thay cho công thức LaTeX chứa dấu `$`. Vẽ sơ đồ Mermaid LR 2 cột chuẩn 4:3.
 - **Tiến độ 3 tầng độc lập:** Tầng 1 (Mã nguồn nội bộ 60%), Tầng 2 (Tích hợp thực tế 20%), Tầng 3 (Phi chức năng & Vận hành 20%).
 
-## 2. NGUYÊN TẮC CỐT LÕI BẮT BUỘC TRONG LẬP TRÌNH (ZERO-HARDCODE & SECURITY)
-- **100% Enum-Driven:** Khai báo và dùng Enum cho toàn bộ mã trạng thái, loại hợp đồng, phân loại rủi ro, phương thức trả nợ, mã lỗi. Cấm so sánh string literal tự do.
-- **Zero Mock Data & Zero Fake Default Values:** Dữ liệu tài chính phải truy vấn từ CSDL thật hoặc do người dùng nhập liệu, state form khởi tạo rỗng (`""`, `null`, `[]`).
-- **Zero Vietnamese in Technical Logs:** 100% log Backend, Frontend, Mobile phải viết bằng tiếng Anh chuẩn kỹ thuật.
-- **100% i18n:** Toàn bộ thông báo, nhãn trường, mã lỗi phải quản lý qua hệ thống đa ngôn ngữ.
-- **Concurrency Data Integrity:** Bắt buộc áp dụng Distributed Lock (Redis/Redisson) và Database Isolation Level cho các giao dịch tài chính (giải ngân, tính lãi, trích nợ, thanh toán, tất toán).
-- **Phòng vệ an ninh 5 nguyên tắc:** Default Deny 100% luồng dữ liệu (chống IDOR), Stateless Cache Persistence trên Redis, Action-Gate Defense-in-Depth, Bằng chứng thực chứng Hard Evidence or Zero, Sửa lỗi nhất quán toàn cục.
+## 2. NGUYÊN TẮC CỐT LÕI BẮT BUỘC TRONG LẬP TRÌNH & TỔ CHỨC CODE
+- **Cấu trúc thư mục chuẩn `src/` (Mã nguồn & CSDL):**
+  - Toàn bộ mã nguồn phát triển (Backend, Frontend, Mobile) và kịch bản CSDL (DDL/DML migrations) **BẮT BUỘC phải đặt trong thư mục `src/`** (ví dụ: `src/backend/mobile-bff-gateway/`, `src/db/migrations/`, `src/mobile/`,...).
+  - Tuyệt đối **CẤM** tạo thư mục code hoặc db rời rạc ngoài thư mục gốc.
+- **100% Enum-Driven & Zero-Hardcode:**
+  - Khai báo và sử dụng 100% Enum cho toàn bộ mã trạng thái (Status), phân loại (Type), vai trò (Role), phương thức (Method), nền tảng (Platform), mã lỗi (ErrorCode).
+  - Tuyệt đối **CẤM** dùng chuỗi tự do (String literal) để gán hoặc so sánh logic (cấm `"SUCCESS"`, `"UP"`, `"ACTIVE"`, `"ADMIN"`, `"IOS"`,...).
+- **Zero Fake Default Values & No Mock Data (Không gán giá trị mặc định giả lập):**
+  - Đối tượng Entity, DTO, Request, Response, Form State: Tuyệt đối **CẤM** gán cứng các giá trị mặc định giả lập ngầm (cấm `@Builder.Default` gán dữ liệu ngầm không kiểm soát).
+  - Dữ liệu tài chính và nghiệp vụ bắt buộc phải lấy 100% từ request thực tế hoặc truy vấn CSDL thật; nếu chưa có dữ liệu thì để rỗng (`null`, `""`, `[]`).
+- **100% i18n & Phân giải đa ngôn ngữ qua Message Bundle:**
+  - Toàn bộ thông điệp, nhãn trường, lỗi validation, thông báo nghiệp vụ và lỗi RFC 7807 Problem Details phải được quản lý tập trung qua hệ thống đa ngôn ngữ (`messages_*.properties` ở Backend và file JSON ở Frontend).
+  - Bean Validation **BẮT BUỘC** dùng key template dạng `{validation...}` để tự động phân giải theo `Accept-Language` của Client.
+  - Phân giải thông điệp qua `I18nService` / `MessageSource`, cấm hardcode câu chữ tiếng Việt hay tiếng Anh tự do trong Controller, Service, ExceptionHandler.
+- **Zero Vietnamese in Technical Logs (100% Log tiếng Anh kỹ thuật):**
+  - 100% thông điệp log (`log.info`, `log.warn`, `log.error`, `log.debug`) ở Backend, Frontend, Mobile bắt buộc phải viết bằng tiếng Anh kỹ thuật có cấu trúc, ngữ cảnh rõ ràng và đính kèm `traceId` (MDC). Tuyệt đối không log tiếng Việt.
+- **Concurrency Data Integrity (Toàn vẹn dữ liệu đồng thời):**
+  - Bắt buộc áp dụng Distributed Lock (Redis/Redisson) và Database Isolation Level cho các giao dịch tài chính (giải ngân, tính lãi, trích nợ, thanh toán, tất toán).
+- **Phòng vệ an ninh 5 nguyên tắc (Security Defense):**
+  - Default Deny 100% luồng dữ liệu (chống IDOR), Stateless Cache Persistence trên Redis, Action-Gate Defense-in-Depth, Bằng chứng thực chứng Hard Evidence or Zero, Sửa lỗi nhất quán toàn cục.
 
 ## 3. DANH MỤC QUY CHUẨN RULES VÀ KỸ NĂNG SKILLS CỦA HỆ THỐNG
 - **Tài liệu Yêu cầu Phần mềm (SRS):** Quy chuẩn [.agents/rules/srs_authoring_rules.md](file:///Users/micro/Source/erp/mifinace/.agents/rules/srs_authoring_rules.md) | Kỹ năng `srs-authoring` tại [.agents/skills/srs-authoring/SKILL.md](file:///Users/micro/Source/erp/mifinace/.agents/skills/srs-authoring/SKILL.md).
