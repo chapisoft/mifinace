@@ -1,0 +1,7 @@
+{
+  "elements": {},
+  "imports": [
+    "package:intl/intl.dart",
+    "package:bmf_agent_app/core/l10n/app_localizations.dart"
+  ]
+}

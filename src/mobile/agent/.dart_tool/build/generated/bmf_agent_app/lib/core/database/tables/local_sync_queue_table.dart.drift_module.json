@@ -1,0 +1,291 @@
+{
+  "elements": {
+    "local_sync_queue_table": {
+      "id": {
+        "library_uri": "package:bmf_agent_app/core/database/tables/local_sync_queue_table.dart",
+        "name": "local_sync_queue_table"
+      },
+      "declaration": {
+        "source_uri": "package:bmf_agent_app/core/database/tables/local_sync_queue_table.dart",
+        "offset": 154,
+        "name": "LocalSyncQueueTable"
+      },
+      "references": [],
+      "type": "table",
+      "columns": [
+        {
+          "sqlType": {
+            "builtin": "string"
+          },
+          "nullable": false,
+          "nameInSql": "queue_id",
+          "nameInDart": "queueId",
+          "declaration": {
+            "source_uri": "package:bmf_agent_app/core/database/tables/local_sync_queue_table.dart",
+            "offset": 207,
+            "name": "queueId"
+          },
+          "typeConverter": null,
+          "clientDefaultCode": null,
+          "defaultArgument": null,
+          "overriddenJsonName": null,
+          "referenceName": null,
+          "documentationComment": null,
+          "constraints": [],
+          "customConstraints": null
+        },
+        {
+          "sqlType": {
+            "builtin": "string"
+          },
+          "nullable": false,
+          "nameInSql": "operation_type",
+          "nameInDart": "operationType",
+          "declaration": {
+            "source_uri": "package:bmf_agent_app/core/database/tables/local_sync_queue_table.dart",
+            "offset": 263,
+            "name": "operationType"
+          },
+          "typeConverter": null,
+          "clientDefaultCode": null,
+          "defaultArgument": null,
+          "overriddenJsonName": null,
+          "referenceName": null,
+          "documentationComment": null,
+          "constraints": [],
+          "customConstraints": null
+        },
+        {
+          "sqlType": {
+            "builtin": "string"
+          },
+          "nullable": false,
+          "nameInSql": "aggregate_id",
+          "nameInDart": "aggregateId",
+          "declaration": {
+            "source_uri": "package:bmf_agent_app/core/database/tables/local_sync_queue_table.dart",
+            "offset": 376,
+            "name": "aggregateId"
+          },
+          "typeConverter": null,
+          "clientDefaultCode": null,
+          "defaultArgument": null,
+          "overriddenJsonName": null,
+          "referenceName": null,
+          "documentationComment": null,
+          "constraints": [],
+          "customConstraints": null
+        },
+        {
+          "sqlType": {
+            "builtin": "string"
+          },
+          "nullable": false,
+          "nameInSql": "payload_json",
+          "nameInDart": "payloadJson",
+          "declaration": {
+            "source_uri": "package:bmf_agent_app/core/database/tables/local_sync_queue_table.dart",
+            "offset": 440,
+            "name": "payloadJson"
+          },
+          "typeConverter": null,
+          "clientDefaultCode": null,
+          "defaultArgument": null,
+          "overriddenJsonName": null,
+          "referenceName": null,
+          "documentationComment": null,
+          "constraints": [],
+          "customConstraints": null
+        },
+        {
+          "sqlType": {
+            "builtin": "string"
+          },
+          "nullable": false,
+          "nameInSql": "status",
+          "nameInDart": "status",
+          "declaration": {
+            "source_uri": "package:bmf_agent_app/core/database/tables/local_sync_queue_table.dart",
+            "offset": 504,
+            "name": "status"
+          },
+          "typeConverter": null,
+          "clientDefaultCode": null,
+          "defaultArgument": null,
+          "overriddenJsonName": null,
+          "referenceName": null,
+          "documentationComment": null,
+          "constraints": [],
+          "customConstraints": null
+        },
+        {
+          "sqlType": {
+            "builtin": "int"
+          },
+          "nullable": false,
+          "nameInSql": "retry_count",
+          "nameInDart": "retryCount",
+          "declaration": {
+            "source_uri": "package:bmf_agent_app/core/database/tables/local_sync_queue_table.dart",
+            "offset": 605,
+            "name": "retryCount"
+          },
+          "typeConverter": null,
+          "clientDefaultCode": null,
+          "defaultArgument": {
+            "elements": [
+              "const ",
+              {
+                "lexeme": "Constant",
+                "import_uri": "package:drift/src/runtime/query_builder/query_builder.dart"
+              },
+              "(0)"
+            ]
+          },
+          "overriddenJsonName": null,
+          "referenceName": null,
+          "documentationComment": null,
+          "constraints": [],
+          "customConstraints": null
+        },
+        {
+          "sqlType": {
+            "builtin": "int"
+          },
+          "nullable": false,
+          "nameInSql": "max_retries",
+          "nameInDart": "maxRetries",
+          "declaration": {
+            "source_uri": "package:bmf_agent_app/core/database/tables/local_sync_queue_table.dart",
+            "offset": 700,
+            "name": "maxRetries"
+          },
+          "typeConverter": null,
+          "clientDefaultCode": null,
+          "defaultArgument": {
+            "elements": [
+              "const ",
+              {
+                "lexeme": "Constant",
+                "import_uri": "package:drift/src/runtime/query_builder/query_builder.dart"
+              },
+              "(5)"
+            ]
+          },
+          "overriddenJsonName": null,
+          "referenceName": null,
+          "documentationComment": null,
+          "constraints": [],
+          "customConstraints": null
+        },
+        {
+          "sqlType": {
+            "builtin": "string"
+          },
+          "nullable": false,
+          "nameInSql": "idempotency_key",
+          "nameInDart": "idempotencyKey",
+          "declaration": {
+            "source_uri": "package:bmf_agent_app/core/database/tables/local_sync_queue_table.dart",
+            "offset": 796,
+            "name": "idempotencyKey"
+          },
+          "typeConverter": null,
+          "clientDefaultCode": null,
+          "defaultArgument": null,
+          "overriddenJsonName": null,
+          "referenceName": null,
+          "documentationComment": null,
+          "constraints": [],
+          "customConstraints": null
+        },
+        {
+          "sqlType": {
+            "builtin": "dateTime"
+          },
+          "nullable": false,
+          "nameInSql": "created_at",
+          "nameInDart": "createdAt",
+          "declaration": {
+            "source_uri": "package:bmf_agent_app/core/database/tables/local_sync_queue_table.dart",
+            "offset": 870,
+            "name": "createdAt"
+          },
+          "typeConverter": null,
+          "clientDefaultCode": null,
+          "defaultArgument": null,
+          "overriddenJsonName": null,
+          "referenceName": null,
+          "documentationComment": null,
+          "constraints": [],
+          "customConstraints": null
+        },
+        {
+          "sqlType": {
+            "builtin": "dateTime"
+          },
+          "nullable": true,
+          "nameInSql": "processed_at",
+          "nameInDart": "processedAt",
+          "declaration": {
+            "source_uri": "package:bmf_agent_app/core/database/tables/local_sync_queue_table.dart",
+            "offset": 938,
+            "name": "processedAt"
+          },
+          "typeConverter": null,
+          "clientDefaultCode": null,
+          "defaultArgument": null,
+          "overriddenJsonName": null,
+          "referenceName": null,
+          "documentationComment": null,
+          "constraints": [],
+          "customConstraints": null
+        },
+        {
+          "sqlType": {
+            "builtin": "string"
+          },
+          "nullable": true,
+          "nameInSql": "error_message",
+          "nameInDart": "errorMessage",
+          "declaration": {
+            "source_uri": "package:bmf_agent_app/core/database/tables/local_sync_queue_table.dart",
+            "offset": 1017,
+            "name": "errorMessage"
+          },
+          "typeConverter": null,
+          "clientDefaultCode": null,
+          "defaultArgument": null,
+          "overriddenJsonName": null,
+          "referenceName": null,
+          "documentationComment": null,
+          "constraints": [],
+          "customConstraints": null
+        }
+      ],
+      "existing_data_class": null,
+      "table_constraints": [
+        {
+          "type": "primary_key",
+          "columns": [
+            "queue_id"
+          ]
+        }
+      ],
+      "custom_parent_class": null,
+      "interfaces_for_row_class": [],
+      "fixed_entity_info_name": null,
+      "base_dart_name": "LocalSyncQueueTable",
+      "row_class_name": "LocalSyncQueueItem",
+      "companion_class_name": null,
+      "without_rowid": false,
+      "strict": false,
+      "write_default_constraints": true,
+      "custom_constraints": [],
+      "attached_indices": []
+    }
+  },
+  "imports": [
+    "package:drift/drift.dart"
+  ]
+}

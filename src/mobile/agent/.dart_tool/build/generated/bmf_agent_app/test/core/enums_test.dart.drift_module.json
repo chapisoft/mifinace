@@ -1,0 +1,13 @@
+{
+  "elements": {},
+  "imports": [
+    "package:flutter_test/flutter_test.dart",
+    "package:bmf_agent_app/core/enums/app_language.dart",
+    "package:bmf_agent_app/core/enums/debt_group.dart",
+    "package:bmf_agent_app/core/enums/repayment_method.dart",
+    "package:bmf_agent_app/core/enums/repayment_status.dart",
+    "package:bmf_agent_app/core/enums/sync_operation.dart",
+    "package:bmf_agent_app/core/enums/sync_status.dart",
+    "package:bmf_agent_app/core/enums/user_role.dart"
+  ]
+}

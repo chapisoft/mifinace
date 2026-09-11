@@ -1,0 +1,13 @@
+{
+  "elements": {},
+  "imports": [
+    "package:flutter/material.dart",
+    "package:flutter_bloc/flutter_bloc.dart",
+    "package:flutter_localizations/flutter_localizations.dart",
+    "package:bmf_agent_app/core/bloc/language/language_cubit.dart",
+    "package:bmf_agent_app/core/bloc/language/language_state.dart",
+    "package:bmf_agent_app/core/enums/app_language.dart",
+    "package:bmf_agent_app/app/router/app_router.dart",
+    "package:bmf_agent_app/app/theme/app_theme.dart"
+  ]
+}

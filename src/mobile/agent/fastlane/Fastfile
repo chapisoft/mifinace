@@ -1,0 +1,54 @@
+# ====================================================================================
+# FASTLANE AUTOMATION SCRIPT CHO BMF AGENT MOBILE APP (FLUTTER 3.24+)
+# HỆ THỐNG: ERP Microfinance BMF Myanmar
+# TÁC VỤ: TASK-SEC-03.2
+# ====================================================================================
+
+default_platform(:android)
+
+platform :android do
+  desc "Chạy toàn bộ bài kiểm thử tự động (Unit Tests & Widget Tests)"
+  lane :test do
+    sh("flutter test")
+  end
+
+  desc "Đóng gói tệp APK Release cho thiết bị thực địa"
+  lane :build_apk do
+    test
+    sh("flutter build apk --release --split-per-abi")
+    UI.success("Đóng gói Android APK thành công!")
+  end
+
+  desc "Đóng gói Android App Bundle (AAB) và tải lên Google Play Internal Track"
+  lane :release do
+    test
+    sh("flutter build appbundle --release")
+    upload_to_play_store(
+      track: 'internal',
+      aab: '../build/app/outputs/bundle/release/app-release.aab',
+      skip_upload_metadata: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true
+    )
+    UI.success("Phát hành bản build lên Google Play Internal Track thành công!")
+  end
+end
+
+platform :ios do
+  desc "Chạy bài kiểm thử iOS"
+  lane :test do
+    sh("flutter test")
+  end
+
+  desc "Đóng gói bản build iOS IPA và tải lên Apple TestFlight"
+  lane :release do
+    test
+    match(type: "appstore")
+    sh("flutter build ipa --release --export-options-plist=ios/ExportOptions.plist")
+    upload_to_testflight(
+      ipa: '../build/ios/ipa/bmf_agent_app.ipa',
+      skip_waiting_for_build_processing: true
+    )
+    UI.success("Phát hành bản build lên Apple TestFlight thành công!")
+  end
+end

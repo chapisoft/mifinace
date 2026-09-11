@@ -1,0 +1,5 @@
+# BMF Agent Mobile App - Fastlane Appfile Configuration
+app_identifier("com.bmf.mobile.agent") # iOS Bundle Identifier
+package_name("com.bmf.mobile.agent")   # Android Package Name
+apple_id("dev@bmf.mm")                # Apple Developer Account Email
+team_id("BMFTEAM123")                 # Apple Developer Team ID

@@ -1,0 +1,6 @@
+# BMF Agent Mobile App - Fastlane Matchfile (iOS Code Signing)
+git_url("git@github.com:bmf-microfinance/mobile-certificates.git")
+storage_mode("git")
+type("appstore") # appstore, adhoc, enterprise or development
+app_identifier(["com.bmf.mobile.agent"])
+username("dev@bmf.mm")
