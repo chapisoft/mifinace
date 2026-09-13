@@ -39,7 +39,10 @@ public class LoanApplicationController {
             @Valid @RequestBody ApplyLoanRequest request,
             Principal principal) {
 
-        String createdBy = principal != null ? principal.getName() : "SYSTEM";
+        if (principal == null || principal.getName() == null || principal.getName().isBlank()) {
+            throw new com.bmf.mobile.domain.exception.BusinessException(com.bmf.mobile.domain.enums.ErrorCode.ERR_UNAUTHORIZED);
+        }
+        String createdBy = principal.getName();
         LoanApplicationResponse response = applyLoanUseCase.apply(request, createdBy);
         String message = i18nService.getMessage("msg.loan.apply.success");
         return ResponseEntity.ok(ApiResponse.ok(response, message));

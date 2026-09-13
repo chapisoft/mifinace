@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:bmf_customer/app/theme/customer_theme.dart';
+import 'package:bmf_customer/core/l10n/customer_localizations.dart';
 import 'package:bmf_customer/core/utils/currency_formatter.dart';
 import 'package:bmf_customer/features/loans/domain/models/customer_loan.dart';
 
@@ -18,14 +19,16 @@ class LoanCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = CustomerLocalizations.of(context);
+
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      elevation: 2,
+      elevation: 0,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(16),
         side: BorderSide(
           color: loan.isDueSoon ? CustomerTheme.secondaryAmber : CustomerTheme.borderSubtle,
-          width: loan.isDueSoon ? 2 : 1,
+          width: loan.isDueSoon ? 1.8 : 1,
         ),
       ),
       child: Padding(
@@ -43,19 +46,19 @@ class LoanCard extends StatelessWidget {
                     children: [
                       Text(
                         loan.loanType.label,
-                        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: CustomerTheme.textPrimary),
+                        style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: CustomerTheme.textPrimary),
                         overflow: TextOverflow.ellipsis,
                       ),
                       const SizedBox(height: 2),
                       Text(
-                        'Contract: ${loan.contractCode}',
+                        '${l10n.contractCodeLabel}: ${loan.contractCode}',
                         style: const TextStyle(fontSize: 12, color: CustomerTheme.textSecondary),
                       ),
                     ],
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                   decoration: BoxDecoration(
                     color: loan.debtGroup.badgeColor.withAlpha(25),
                     borderRadius: BorderRadius.circular(8),
@@ -81,7 +84,7 @@ class LoanCard extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('Total Loan Principal', style: TextStyle(fontSize: 11, color: CustomerTheme.textSecondary)),
+                    Text(l10n.principal, style: const TextStyle(fontSize: 11, color: CustomerTheme.textSecondary)),
                     const SizedBox(height: 2),
                     Text(
                       CurrencyFormatter.formatMmk(loan.disbursedAmountMmk),
@@ -92,7 +95,7 @@ class LoanCard extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    const Text('Remaining Principal', style: TextStyle(fontSize: 11, color: CustomerTheme.textSecondary)),
+                    Text(l10n.outstandingLoanMetric, style: const TextStyle(fontSize: 11, color: CustomerTheme.textSecondary)),
                     const SizedBox(height: 2),
                     Text(
                       CurrencyFormatter.formatMmk(loan.remainingPrincipalMmk),
@@ -104,61 +107,19 @@ class LoanCard extends StatelessWidget {
             ),
             const SizedBox(height: 12),
 
-            // Progress Bar (Repaid Principal %)
+            // Progress Bar
             ClipRRect(
               borderRadius: BorderRadius.circular(6),
               child: LinearProgressIndicator(
-                value: loan.completionProgress.clamp(0.0, 1.0),
-                minHeight: 8,
-                backgroundColor: const Color(0xFFE2E8F0),
-                valueColor: AlwaysStoppedAnimation<Color>(
-                  loan.debtGroup.isNonPerforming ? CustomerTheme.accentCrimson : CustomerTheme.primaryNavy,
-                ),
+                value: loan.completionProgress,
+                minHeight: 6,
+                backgroundColor: CustomerTheme.backgroundLight,
+                valueColor: const AlwaysStoppedAnimation<Color>(CustomerTheme.statusCurrent),
               ),
             ),
-            const SizedBox(height: 6),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  '${(loan.completionProgress * 100).toStringAsFixed(0)}% Repaid',
-                  style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: CustomerTheme.textSecondary),
-                ),
-                Text(
-                  '${loan.paidPeriods} / ${loan.totalPeriods} Months',
-                  style: const TextStyle(fontSize: 11, color: CustomerTheme.textSecondary),
-                ),
-              ],
-            ),
+            const SizedBox(height: 12),
 
-            // Due Soon Alert Banner within card
-            if (loan.isDueSoon) ...[
-              const SizedBox(height: 12),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFFEF3C7),
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: CustomerTheme.secondaryAmber),
-                ),
-                child: Row(
-                  children: [
-                    const Icon(Icons.alarm, size: 16, color: Color(0xFF92400E)),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: Text(
-                        'Repayment due: ${CurrencyFormatter.formatMmk(loan.nextDueAmountMmk)} (${loan.daysUntilDue} days left)',
-                        style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF92400E)),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-
-            const SizedBox(height: 14),
-
-            // Action Buttons
+            // Actions: View Schedule & Pay Now
             Row(
               children: [
                 Expanded(
@@ -167,10 +128,10 @@ class LoanCard extends StatelessWidget {
                     style: OutlinedButton.styleFrom(
                       foregroundColor: CustomerTheme.primaryNavy,
                       side: const BorderSide(color: CustomerTheme.primaryNavy),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                      padding: const EdgeInsets.symmetric(vertical: 8),
                     ),
-                    child: const Text('View Schedule', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600)),
+                    child: Text(l10n.scheduleTitle, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
                   ),
                 ),
                 const SizedBox(width: 10),
@@ -178,12 +139,12 @@ class LoanCard extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: onPayNow,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: CustomerTheme.primaryNavy,
+                      backgroundColor: CustomerTheme.primaryCyan,
                       foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                      padding: const EdgeInsets.symmetric(vertical: 8),
                     ),
-                    child: const Text('Pay Installment', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600)),
+                    child: Text(l10n.payNow, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
                   ),
                 ),
               ],

@@ -35,8 +35,8 @@ class PullSyncServiceImpl implements PullSyncService {
 
       // 1. Process Centers
       if (data['centers'] != null && data['centers'] is List) {
-        final List centersList = data['centers'];
-        final companions = centersList.map((item) {
+        final centersList = data['centers'] as List<dynamic>;
+        final companions = centersList.map<LocalCentersTableCompanion>((item) {
           return LocalCentersTableCompanion(
             centerId: Value(item['centerId']?.toString() ?? item['id']?.toString() ?? ''),
             centerCode: Value(item['centerCode']?.toString() ?? ''),
@@ -55,8 +55,8 @@ class PullSyncServiceImpl implements PullSyncService {
 
       // 2. Process Groups
       if (data['groups'] != null && data['groups'] is List) {
-        final List groupsList = data['groups'];
-        final companions = groupsList.map((item) {
+        final groupsList = data['groups'] as List<dynamic>;
+        final companions = groupsList.map<LocalGroupsTableCompanion>((item) {
           return LocalGroupsTableCompanion(
             groupId: Value(item['groupId']?.toString() ?? item['id']?.toString() ?? ''),
             groupCode: Value(item['groupCode']?.toString() ?? ''),
@@ -75,8 +75,8 @@ class PullSyncServiceImpl implements PullSyncService {
 
       // 3. Process Schedules
       if (data['schedules'] != null && data['schedules'] is List) {
-        final List schedulesList = data['schedules'];
-        final companions = schedulesList.map((item) {
+        final schedulesList = data['schedules'] as List<dynamic>;
+        final companions = schedulesList.map<LocalSchedulesTableCompanion>((item) {
           final dueDate = DateTime.tryParse(item['dueDate']?.toString() ?? '') ?? DateTime.now();
           return LocalSchedulesTableCompanion(
             scheduleId: Value(item['scheduleId']?.toString() ?? item['id']?.toString() ?? ''),
@@ -92,7 +92,6 @@ class PullSyncServiceImpl implements PullSyncService {
             totalAmount: Value(double.tryParse(item['totalAmount']?.toString() ?? '0') ?? 0.0),
             dueDate: Value(dueDate),
             status: Value(item['status']?.toString() ?? 'PENDING'),
-            overdueDays: Value(int.tryParse(item['overdueDays']?.toString() ?? '0') ?? 0),
             debtGroup: Value(item['debtGroup']?.toString() ?? 'STANDARD'),
             updatedAt: Value(DateTime.now()),
           );

@@ -40,6 +40,7 @@ class ScreenProtectionService with WidgetsBindingObserver {
       await _channel.invokeMethod('disableSecure');
       AppLogger.i('Screen protection temporarily disabled.', tag: 'ScreenProtection');
     } on MissingPluginException {
+      AppLogger.i('Screen protection channel not present for disable.', tag: 'ScreenProtection');
     } catch (e) {
       AppLogger.w('Could not deactivate screen protection: $e', tag: 'ScreenProtection');
     }

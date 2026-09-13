@@ -1,9 +1,0 @@
-{
-  "elements": {},
-  "imports": [
-    "package:flutter/material.dart",
-    "package:go_router/go_router.dart",
-    "package:bmf_agent_app/features/auth/presentation/screens/login_screen.dart",
-    "package:bmf_agent_app/features/dashboard/presentation/screens/dashboard_screen.dart"
-  ]
-}

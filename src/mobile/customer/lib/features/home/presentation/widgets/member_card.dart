@@ -19,19 +19,12 @@ class MemberCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [
-            CustomerTheme.primaryNavy,
-            Color(0xFF2563EB), // Vibrant Navy Blue
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        borderRadius: BorderRadius.circular(20),
+        gradient: CustomerTheme.cardGradient,
+        borderRadius: BorderRadius.circular(22),
         boxShadow: [
           BoxShadow(
-            color: CustomerTheme.primaryNavy.withAlpha(70),
-            blurRadius: 16,
+            color: CustomerTheme.primaryNavy.withAlpha(50),
+            blurRadius: 18,
             offset: const Offset(0, 8),
           ),
         ],
@@ -91,24 +84,52 @@ class MemberCard extends StatelessWidget {
           ),
           const SizedBox(height: 20),
 
-          // Member Full Name & NRC
-          Text(
-            member.fullName,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              letterSpacing: 0.5,
-            ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            'NRC: ${member.nrcFormatted}',
-            style: const TextStyle(
-              color: Colors.white70,
-              fontSize: 13,
-              letterSpacing: 0.3,
-            ),
+          // Member Full Name & NRC & Customer ID
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    member.fullName,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 0.5,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    'NRC: ${member.nrcFormatted}',
+                    style: const TextStyle(
+                      color: Colors.white70,
+                      fontSize: 13,
+                      letterSpacing: 0.3,
+                    ),
+                  ),
+                ],
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                decoration: BoxDecoration(
+                  color: Colors.black.withAlpha(50),
+                  borderRadius: BorderRadius.circular(6),
+                  border: Border.all(color: CustomerTheme.secondaryAmber.withAlpha(120), width: 0.8),
+                ),
+                child: Text(
+                  member.customerCode,
+                  style: const TextStyle(
+                    color: CustomerTheme.secondaryAmber,
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 0.5,
+                  ),
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 18),
 
@@ -116,41 +137,50 @@ class MemberCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'VILLAGE CENTER',
-                    style: TextStyle(color: Colors.white60, fontSize: 10, letterSpacing: 0.5),
-                  ),
-                  const SizedBox(height: 2),
-                  Text(
-                    member.centerName,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 13,
-                      fontWeight: FontWeight.w600,
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'VILLAGE CENTER',
+                      style: TextStyle(color: Colors.white60, fontSize: 10, letterSpacing: 0.5),
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 2),
+                    Text(
+                      member.centerName,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  const Text(
-                    'SOLIDARITY GROUP',
-                    style: TextStyle(color: Colors.white60, fontSize: 10, letterSpacing: 0.5),
-                  ),
-                  const SizedBox(height: 2),
-                  Text(
-                    member.groupName,
-                    style: const TextStyle(
-                      color: CustomerTheme.secondaryAmber,
-                      fontSize: 13,
-                      fontWeight: FontWeight.w600,
+              const SizedBox(width: 8),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    const Text(
+                      'SOLIDARITY GROUP',
+                      style: TextStyle(color: Colors.white60, fontSize: 10, letterSpacing: 0.5),
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 2),
+                    Text(
+                      member.groupName,
+                      style: const TextStyle(
+                        color: CustomerTheme.secondaryAmber,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

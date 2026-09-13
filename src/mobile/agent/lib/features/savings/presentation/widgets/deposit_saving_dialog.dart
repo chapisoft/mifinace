@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../app/theme/app_theme.dart';
+import '../../../../core/l10n/app_localizations.dart';
 import '../../../../core/utils/currency_formatter.dart';
 import '../../domain/models/saving_account.dart';
 
@@ -39,6 +40,8 @@ class _DepositSavingDialogState extends State<DepositSavingDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return AlertDialog(
       title: Row(
         children: [
@@ -46,7 +49,7 @@ class _DepositSavingDialogState extends State<DepositSavingDialog> {
           const SizedBox(width: 8),
           Expanded(
             child: Text(
-              'Deposit: ${widget.account.customerName}',
+              '${l10n.depositTitle}: ${widget.account.customerName}',
               style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               overflow: TextOverflow.ellipsis,
             ),
@@ -83,7 +86,7 @@ class _DepositSavingDialogState extends State<DepositSavingDialog> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text('Current Balance:', style: TextStyle(fontSize: 13)),
+                        Text(l10n.currentBalanceLabel, style: const TextStyle(fontSize: 13)),
                         Text(
                           CurrencyFormatter.formatMmk(widget.account.balanceMmk),
                           style: const TextStyle(
@@ -102,18 +105,18 @@ class _DepositSavingDialogState extends State<DepositSavingDialog> {
                 controller: _amountController,
                 keyboardType: TextInputType.number,
                 autofocus: true,
-                decoration: const InputDecoration(
-                  labelText: 'Deposit Amount (MMK) *',
-                  hintText: 'Enter amount to deposit',
-                  prefixIcon: Icon(Icons.money),
+                decoration: InputDecoration(
+                  labelText: l10n.depositAmountLabel,
+                  hintText: l10n.depositAmountHint,
+                  prefixIcon: const Icon(Icons.money),
                 ),
                 validator: (val) {
                   if (val == null || val.trim().isEmpty) {
-                    return 'Deposit amount is required';
+                    return l10n.depositAmountRequired;
                   }
                   final parsed = double.tryParse(val.replaceAll(',', ''));
                   if (parsed == null || parsed < 1000) {
-                    return 'Minimum deposit amount is 1,000 MMK';
+                    return l10n.minDepositValidation;
                   }
                   return null;
                 },
@@ -121,7 +124,7 @@ class _DepositSavingDialogState extends State<DepositSavingDialog> {
               const SizedBox(height: 12),
               CheckboxListTile(
                 contentPadding: EdgeInsets.zero,
-                title: const Text('Print receipt via Bluetooth printer', style: TextStyle(fontSize: 13)),
+                title: Text(l10n.printReceiptCheckbox, style: const TextStyle(fontSize: 13)),
                 value: _printReceipt,
                 activeColor: AppTheme.primaryNavy,
                 onChanged: (val) => setState(() => _printReceipt = val ?? true),
@@ -133,7 +136,7 @@ class _DepositSavingDialogState extends State<DepositSavingDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Cancel'),
+          child: Text(l10n.cancelButton),
         ),
         ElevatedButton.icon(
           style: ElevatedButton.styleFrom(
@@ -141,7 +144,7 @@ class _DepositSavingDialogState extends State<DepositSavingDialog> {
             foregroundColor: Colors.white,
           ),
           icon: const Icon(Icons.check, size: 18),
-          label: const Text('Confirm Deposit'),
+          label: Text(l10n.confirmDeposit),
           onPressed: _submit,
         ),
       ],

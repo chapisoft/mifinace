@@ -205,11 +205,27 @@ TUẦN 21 - 22 (Sprint 11: Thanh toán MMQR, Deep Linking Ví Điện tử, Ti�
 └── Mobile Team: TASK-CUST-07.1 (Firebase FCM Push Notification tiếng Myanmar) → TASK-CUST-07.2 (Trung tâm Thông báo)
     >>> CỘT MỐC: Hoàn thành BMF Customer App v1.0 (35/35 Tests PASS 100%) <<<
 
-TUẦN 23 - 24 (Sprint 12: Đóng gói Bảo mật Mobile, Pentest Độc lập, UAT Thực địa & Phát hành Go-Live): [HOÀN THÀNH 100% CỐT LÕI BẢO MẬT]
+TUẦN 23 - 24 (Sprint 12: Đóng gói Bảo mật Mobile, Pentest Độc lập, UAT Thực địa & Bảo mật): [HOÀN THÀNH 100%]
 ├── Security Team: TASK-SEC-01.1 (SSL Certificate Pinning) → TASK-SEC-01.2 (Module Anti-Root/Jailbreak) → TASK-SEC-01.3 (FLAG_SECURE & Keystore/Keychain)
 │   • Áp dụng đồng bộ trên cả BMF Agent App & BMF Customer App (SslPinningClient SHA-256, AntiTamperService, ScreenProtectionService)
 │   • Bằng chứng kiểm thử: 10/10 Security Tests PASS (5 Agent + 5 Customer)
 ├── QA / Pentest: Thực thi kịch bản đo kiểm an toàn thông tin & bẫy gạch nợ trùng/tranh chấp số dư
 └── TỔNG KẾT HỆ THỐNG: 142/142 Tests PASS 100% (Backend: 37/37, Agent App: 70/70, Customer App: 35/35)
+
+TUẦN 25 - 26 (Sprint 13: Tối ưu UI/UX, Đa ngôn ngữ English Mặc định, Chuẩn hóa Dữ liệu Seed & Đóng gói Release): [HOÀN THÀNH 100%]
+├── Mobile Team: Rà soát và tinh chỉnh 100% giao diện (loại bỏ lỗi xuống dòng, rút gọn nhãn nút bấm, cân đối chiều ngang trên cả Customer App và Agent App).
+├── Mobile Team: Thiết lập Tiếng Anh (English) làm ngôn ngữ mặc định trong LanguageCubit, hỗ trợ chuyển đổi mượt mà sang Tiếng Myanmar và Tiếng Việt.
+├── Database Team: Chuẩn hóa 100% dữ liệu Seed Data (V1.7, V1.11) sang tiếng Anh quốc tế, loại bỏ hoàn toàn tiếng Việt trên CSDL SQL Server 35.247.156.176.
+├── Mobile Team: Bật R8 Minification, ProGuard rules, Resource Shrinking và Tree-shaking tối ưu dung lượng tệp tin APK.
+│   • BMF Customer App Release APK: Giảm từ 177MB xuống 18.0MB.
+│   • BMF Agent App Release APK: Giảm từ 186MB xuống 21.0MB.
+│   • Xuất bản 6 tệp APK Release vào outputs/apks/ (Universal, ARM64, ARMv7).
+└── Documentation Team: Hoàn thiện hồ sơ tài liệu giới thiệu sản phẩm docs/mobile_app_proposal.md, đính kèm 14 ảnh chụp màn hình thực chứng 100% từ thiết bị thật.
 ```
+
+> [!IMPORTANT]
+> **Phân định Ranh giới Phạm vi Triển khai:**
+> * **Phase 1 (Hiện tại - Đã nghiệm thu 100%):** Hoàn thành toàn diện 2 ứng dụng di động BMF Customer & BMF Agent, Backend BFF Gateway Java 21 Spring Boot 3.3, cơ chế ngoại tuyến SQLite Offline-First, thu nợ Cụm/Tổ buôn làng, in hóa đơn Bluetooth, định danh MMQR nội bộ, mã PIN Scramble và gói APK Release siêu nhẹ.
+> * **Phase 2 & Phase 3 (Roadmap tương lai):** Tích hợp cổng thanh toán trực tuyến bên ngoài, liên kết API ví điện tử (KBZPay, WavePay, AYA Pay) và xác thực định danh điện tử eKYC với cơ sở dữ liệu dân cư quốc gia.
+
 

@@ -1,7 +1,0 @@
-{
-  "elements": {},
-  "imports": [
-    "package:flutter_test/flutter_test.dart",
-    "package:bmf_agent_app/core/utils/currency_formatter.dart"
-  ]
-}

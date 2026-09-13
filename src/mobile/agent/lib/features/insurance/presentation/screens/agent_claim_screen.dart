@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../app/router/app_router.dart';
 import '../../../../app/theme/app_theme.dart';
 import '../../../../core/enums/claim_risk_type.dart';
+import '../../../../core/l10n/app_localizations.dart';
 import '../../../../core/utils/currency_formatter.dart';
 import '../bloc/insurance_claim_bloc.dart';
 import '../bloc/insurance_claim_event.dart';
@@ -35,7 +36,7 @@ class _AgentClaimScreenState extends State<AgentClaimScreen> {
   final _descController = TextEditingController();
 
   ClaimRiskType _selectedRisk = ClaimRiskType.illness;
-  DateTime _incidentDate = DateTime.now();
+  final DateTime _incidentDate = DateTime.now();
   String? _villageLetterPath;
   String? _medicalReceiptPath;
 
@@ -73,9 +74,11 @@ class _AgentClaimScreenState extends State<AgentClaimScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Mutual Insurance Claim'),
+        title: Text(l10n.insuranceClaimTitle),
       ),
       body: BlocConsumer<InsuranceClaimBloc, InsuranceClaimState>(
         listener: (context, state) {
@@ -84,18 +87,18 @@ class _AgentClaimScreenState extends State<AgentClaimScreen> {
               context: context,
               barrierDismissible: false,
               builder: (ctx) => AlertDialog(
-                title: const Row(
+                title: Row(
                   children: [
-                    Icon(Icons.check_circle, color: AppTheme.accentTeal, size: 28),
-                    SizedBox(width: 8),
-                    Text('Claim Submitted'),
+                    const Icon(Icons.check_circle, color: AppTheme.accentTeal, size: 28),
+                    const SizedBox(width: 8),
+                    Text(l10n.claimSubmittedTitle),
                   ],
                 ),
                 content: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Claim Reference Code: ${state.claim.claimId}',
+                    Text('${l10n.claimReferenceCode}: ${state.claim.claimId}',
                         style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
                     const SizedBox(height: 8),
                     Text(
@@ -110,7 +113,7 @@ class _AgentClaimScreenState extends State<AgentClaimScreen> {
                       Navigator.pop(ctx);
                       context.go(AppRouter.dashboardRoute);
                     },
-                    child: const Text('Back to Dashboard'),
+                    child: Text(l10n.backToDashboard),
                   ),
                 ],
               ),
@@ -141,50 +144,58 @@ class _AgentClaimScreenState extends State<AgentClaimScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          'Beneficiary & Incident Details',
-                          style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: AppTheme.textPrimary),
+                        Text(
+                          l10n.beneficiaryIncidentDetails,
+                          style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: AppTheme.textPrimary),
                         ),
                         const SizedBox(height: 14),
                         TextFormField(
                           controller: _nameController,
-                          decoration: const InputDecoration(
-                            labelText: 'Member Full Name *',
-                            hintText: 'e.g. Daw Khin Khin Win',
-                            prefixIcon: Icon(Icons.person_outline),
+                          decoration: InputDecoration(
+                            labelText: l10n.borrowerFullName,
+                            hintText: l10n.borrowerFullNameHint,
+                            prefixIcon: const Icon(Icons.person_outline),
                           ),
-                          validator: (val) => (val == null || val.trim().isEmpty) ? 'Member name is required' : null,
+                          validator: (val) => (val == null || val.trim().isEmpty) ? l10n.borrowerFullNameRequired : null,
                         ),
                         const SizedBox(height: 12),
                         TextFormField(
                           controller: _nrcController,
-                          decoration: const InputDecoration(
-                            labelText: 'Myanmar NRC Card *',
-                            hintText: 'e.g. 12/DAGANA(N)123456',
-                            prefixIcon: Icon(Icons.badge_outlined),
+                          decoration: InputDecoration(
+                            labelText: l10n.nrcInputLabel,
+                            hintText: l10n.nrcInputHint,
+                            prefixIcon: const Icon(Icons.badge_outlined),
                           ),
-                          validator: (val) => (val == null || val.trim().isEmpty) ? 'NRC is required' : null,
+                          validator: (val) => (val == null || val.trim().isEmpty) ? l10n.nrcRequiredValidation : null,
                         ),
                         const SizedBox(height: 12),
                         TextFormField(
                           controller: _phoneController,
                           keyboardType: TextInputType.phone,
-                          decoration: const InputDecoration(
-                            labelText: 'Contact Phone Number *',
-                            hintText: 'e.g. 09123456789',
-                            prefixIcon: Icon(Icons.phone_outlined),
+                          decoration: InputDecoration(
+                            labelText: l10n.phoneNumber,
+                            hintText: l10n.phoneNumberHint,
+                            prefixIcon: const Icon(Icons.phone_outlined),
                           ),
-                          validator: (val) => (val == null || val.trim().isEmpty) ? 'Phone number is required' : null,
+                          validator: (val) => (val == null || val.trim().isEmpty) ? l10n.phoneNumberRequired : null,
                         ),
                         const SizedBox(height: 12),
                         DropdownButtonFormField<ClaimRiskType>(
-                          value: _selectedRisk,
-                          decoration: const InputDecoration(
-                            labelText: 'Covered Risk Category',
-                            prefixIcon: Icon(Icons.health_and_safety_outlined),
+                          isExpanded: true,
+                          initialValue: _selectedRisk,
+                          decoration: InputDecoration(
+                            labelText: l10n.coveredRiskCategory,
+                            prefixIcon: const Icon(Icons.health_and_safety_outlined),
                           ),
                           items: ClaimRiskType.values.map((risk) {
-                            return DropdownMenuItem(value: risk, child: Text(risk.label));
+                            return DropdownMenuItem(
+                              value: risk,
+                              child: Text(
+                                risk.localizedName(l10n),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                              ),
+                            );
                           }).toList(),
                           onChanged: (val) {
                             if (val != null) setState(() => _selectedRisk = val);
@@ -194,15 +205,15 @@ class _AgentClaimScreenState extends State<AgentClaimScreen> {
                         TextFormField(
                           controller: _amountController,
                           keyboardType: TextInputType.number,
-                          decoration: const InputDecoration(
-                            labelText: 'Requested Assistance Amount (MMK) *',
+                          decoration: InputDecoration(
+                            labelText: l10n.requestedAssistanceAmount,
                             hintText: 'e.g. 150000',
-                            prefixIcon: Icon(Icons.money),
+                            prefixIcon: const Icon(Icons.money),
                           ),
                           validator: (val) {
-                            if (val == null || val.trim().isEmpty) return 'Amount is required';
+                            if (val == null || val.trim().isEmpty) return l10n.claimAmountRequired;
                             final parsed = double.tryParse(val.replaceAll(',', ''));
-                            if (parsed == null || parsed <= 0) return 'Invalid amount';
+                            if (parsed == null || parsed <= 0) return l10n.invalidAmountValidation;
                             return null;
                           },
                         ),
@@ -210,12 +221,12 @@ class _AgentClaimScreenState extends State<AgentClaimScreen> {
                         TextFormField(
                           controller: _descController,
                           maxLines: 3,
-                          decoration: const InputDecoration(
-                            labelText: 'Incident Description & Circumstances *',
-                            hintText: 'Describe medical diagnosis, hospitalization dates, or loss details...',
-                            prefixIcon: Icon(Icons.description_outlined),
+                          decoration: InputDecoration(
+                            labelText: l10n.incidentDescription,
+                            hintText: l10n.incidentDescriptionHint,
+                            prefixIcon: const Icon(Icons.description_outlined),
                           ),
-                          validator: (val) => (val == null || val.trim().isEmpty) ? 'Description is required' : null,
+                          validator: (val) => (val == null || val.trim().isEmpty) ? l10n.incidentDescriptionRequired : null,
                         ),
                       ],
                     ),
@@ -236,9 +247,9 @@ class _AgentClaimScreenState extends State<AgentClaimScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          'Evidentiary Documents & Photos',
-                          style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: AppTheme.textPrimary),
+                        Text(
+                          l10n.evidentiaryDocuments,
+                          style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: AppTheme.textPrimary),
                         ),
                         const SizedBox(height: 12),
                         ListTile(
@@ -250,15 +261,15 @@ class _AgentClaimScreenState extends State<AgentClaimScreen> {
                               color: _villageLetterPath != null ? AppTheme.accentTeal : AppTheme.textSecondary,
                             ),
                           ),
-                          title: const Text('Village Head Verification Letter', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
-                          subtitle: Text(_villageLetterPath != null ? 'Letter attached' : 'Tap to attach or take photo', style: const TextStyle(fontSize: 12)),
+                          title: Text(l10n.villageHeadLetter, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
+                          subtitle: Text(_villageLetterPath != null ? l10n.letterAttached : l10n.tapToAttachLetter, style: const TextStyle(fontSize: 12)),
                           trailing: const Icon(Icons.chevron_right),
                           onTap: () {
                             setState(() {
                               _villageLetterPath = '/data/user/photos/village_head_letter.jpg';
                             });
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Village Head verification photo attached.')),
+                              SnackBar(content: Text(l10n.letterAttachedToast)),
                             );
                           },
                         ),
@@ -272,15 +283,15 @@ class _AgentClaimScreenState extends State<AgentClaimScreen> {
                               color: _medicalReceiptPath != null ? AppTheme.accentTeal : AppTheme.textSecondary,
                             ),
                           ),
-                          title: const Text('Hospital Bill / Medical Receipt', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
-                          subtitle: Text(_medicalReceiptPath != null ? 'Receipt attached' : 'Tap to attach or take photo', style: const TextStyle(fontSize: 12)),
+                          title: Text(l10n.medicalReceipt, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
+                          subtitle: Text(_medicalReceiptPath != null ? l10n.receiptAttached : l10n.tapToAttachReceipt, style: const TextStyle(fontSize: 12)),
                           trailing: const Icon(Icons.chevron_right),
                           onTap: () {
                             setState(() {
                               _medicalReceiptPath = '/data/user/photos/hospital_receipt.jpg';
                             });
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Medical invoice photo attached.')),
+                              SnackBar(content: Text(l10n.receiptAttachedToast)),
                             );
                           },
                         ),
@@ -303,7 +314,7 @@ class _AgentClaimScreenState extends State<AgentClaimScreen> {
                       ? const SizedBox(width: 18, height: 18, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2))
                       : const Icon(Icons.send_outlined, size: 20),
                   label: Text(
-                    isSubmitting ? 'Submitting Claim...' : 'Submit Emergency Claim',
+                    isSubmitting ? l10n.submittingClaim : l10n.submitEmergencyClaim,
                     style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                   onPressed: isSubmitting ? null : _submitClaim,

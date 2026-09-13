@@ -7,6 +7,7 @@
 /Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-infra/src/main/java/com/bmf/mobile/infra/lock/RedissonDistributedLockAdapter.java
 /Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-infra/src/main/java/com/bmf/mobile/infra/notification/FirebasePushNotificationAdapter.java
 /Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-infra/src/main/java/com/bmf/mobile/infra/payment/MmqrGeneratorService.java
+/Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-infra/src/main/java/com/bmf/mobile/infra/persistence/JdbcAppUserRepository.java
 /Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-infra/src/main/java/com/bmf/mobile/infra/persistence/JdbcCashHandoverRepository.java
 /Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-infra/src/main/java/com/bmf/mobile/infra/persistence/JdbcCustomerRepository.java
 /Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-infra/src/main/java/com/bmf/mobile/infra/persistence/JdbcInsuranceClaimRepository.java
@@ -25,5 +26,6 @@
 /Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-infra/src/main/java/com/bmf/mobile/infra/security/JwtAuthenticationFilter.java
 /Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-infra/src/main/java/com/bmf/mobile/infra/security/JwtProperties.java
 /Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-infra/src/main/java/com/bmf/mobile/infra/security/JwtTokenProvider.java
+/Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-infra/src/main/java/com/bmf/mobile/infra/security/OtpManagementAdapter.java
 /Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-infra/src/main/java/com/bmf/mobile/infra/security/TokenBlacklistService.java
 /Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-infra/src/main/java/com/bmf/mobile/infra/security/UserPrincipal.java

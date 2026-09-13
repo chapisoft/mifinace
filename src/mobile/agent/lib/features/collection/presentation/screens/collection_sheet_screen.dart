@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../app/theme/app_theme.dart';
 import '../../../../core/enums/debt_group.dart';
-import '../../../../core/enums/repayment_method.dart';
 import '../../../../core/enums/repayment_status.dart';
 import '../../../../core/l10n/app_localizations.dart';
 import '../../../../core/utils/currency_formatter.dart';
@@ -125,7 +124,7 @@ class _CollectionSheetScreenState extends State<CollectionSheetScreen> {
                       onPressed: () {
                         context.read<CollectionBloc>().add(LoadSchedulesRequested(widget.groupCode, forceRefresh: true));
                       },
-                      child: const Text('Retry'),
+                      child: Text(l10n.retryButton),
                     ),
                   ],
                 ),
@@ -221,10 +220,10 @@ class _CollectionSheetScreenState extends State<CollectionSheetScreen> {
                 // Schedules List
                 Expanded(
                   child: filteredList.isEmpty
-                      ? const Center(
+                      ? Center(
                           child: Text(
-                            'No repayments found for current filter',
-                            style: TextStyle(color: AppTheme.textSecondary),
+                            l10n.noRepaymentsFound,
+                            style: const TextStyle(color: AppTheme.textSecondary),
                           ),
                         )
                       : ListView.separated(
@@ -329,7 +328,9 @@ class _ScheduleCard extends StatelessWidget {
     }
   }
 
-  Widget _buildStatusBadge(RepaymentStatus status) {
+  Widget _buildStatusBadge(BuildContext context, RepaymentStatus status) {
+    final l10n = AppLocalizations.of(context);
+
     switch (status) {
       case RepaymentStatus.paidLocal:
         return Container(
@@ -339,14 +340,14 @@ class _ScheduleCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(4),
             border: Border.all(color: AppTheme.accentTeal),
           ),
-          child: const Row(
+          child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(Icons.sync_problem, size: 12, color: AppTheme.accentTeal),
-              SizedBox(width: 4),
+              const Icon(Icons.sync_problem, size: 12, color: AppTheme.accentTeal),
+              const SizedBox(width: 4),
               Text(
-                'Paid (Offline Queue)',
-                style: TextStyle(color: AppTheme.accentTeal, fontSize: 11, fontWeight: FontWeight.bold),
+                l10n.paidOfflineBadge,
+                style: const TextStyle(color: AppTheme.accentTeal, fontSize: 11, fontWeight: FontWeight.bold),
               ),
             ],
           ),
@@ -360,14 +361,14 @@ class _ScheduleCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(4),
             border: Border.all(color: Colors.green),
           ),
-          child: const Row(
+          child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(Icons.check_circle, size: 12, color: Colors.green),
-              SizedBox(width: 4),
+              const Icon(Icons.check_circle, size: 12, color: Colors.green),
+              const SizedBox(width: 4),
               Text(
-                'Paid (Synced)',
-                style: TextStyle(color: Colors.green, fontSize: 11, fontWeight: FontWeight.bold),
+                l10n.paidSyncedBadge,
+                style: const TextStyle(color: Colors.green, fontSize: 11, fontWeight: FontWeight.bold),
               ),
             ],
           ),
@@ -380,9 +381,9 @@ class _ScheduleCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(4),
             border: Border.all(color: AppTheme.accentCrimson),
           ),
-          child: const Text(
-            'Overdue',
-            style: TextStyle(color: AppTheme.accentCrimson, fontSize: 11, fontWeight: FontWeight.bold),
+          child: Text(
+            l10n.statusOverdue,
+            style: const TextStyle(color: AppTheme.accentCrimson, fontSize: 11, fontWeight: FontWeight.bold),
           ),
         );
       default:
@@ -393,9 +394,9 @@ class _ScheduleCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(4),
             border: Border.all(color: AppTheme.primaryNavy),
           ),
-          child: const Text(
-            'Pending',
-            style: TextStyle(color: AppTheme.primaryNavy, fontSize: 11, fontWeight: FontWeight.bold),
+          child: Text(
+            l10n.statusPending,
+            style: const TextStyle(color: AppTheme.primaryNavy, fontSize: 11, fontWeight: FontWeight.bold),
           ),
         );
     }
@@ -433,13 +434,13 @@ class _ScheduleCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 2),
                       Text(
-                        '${schedule.contractCode} (Period ${schedule.periodNumber})',
+                        '${schedule.contractCode} (${l10n.periodNumberLabel} ${schedule.periodNumber})',
                         style: const TextStyle(fontSize: 12, color: AppTheme.textSecondary),
                       ),
                     ],
                   ),
                 ),
-                _buildStatusBadge(schedule.status),
+                _buildStatusBadge(context, schedule.status),
               ],
             ),
             const SizedBox(height: 8),
@@ -473,7 +474,7 @@ class _ScheduleCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Due: $dateStr',
+                  '${l10n.dueLabel}: $dateStr',
                   style: const TextStyle(fontSize: 11, color: AppTheme.textSecondary),
                 ),
                 if (!isPaid)

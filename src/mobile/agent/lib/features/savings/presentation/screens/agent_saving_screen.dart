@@ -5,6 +5,7 @@ import '../../../../app/router/app_router.dart';
 import '../../../../app/theme/app_theme.dart';
 import '../../../../core/enums/repayment_method.dart';
 import '../../../../core/enums/sync_status.dart';
+import '../../../../core/l10n/app_localizations.dart';
 import '../../../../core/utils/currency_formatter.dart';
 import '../../../collection/domain/entities/repayment_receipt.dart';
 import '../../../printer/domain/services/bluetooth_printer_service.dart';
@@ -52,7 +53,14 @@ class _AgentSavingScreenState extends State<AgentSavingScreen> {
         ));
   }
 
-  Future<void> _handleDepositReceiptPrint(BuildContext context, String customerName, String nrc, String accountNo, double amount, double newBalance) async {
+  Future<void> _handleDepositReceiptPrint(
+    String customerName,
+    String nrc,
+    String accountNo,
+    double amount,
+    double newBalance,
+    AppLocalizations l10n,
+  ) async {
     try {
       final printerService = context.read<BluetoothPrinterService>();
       final receipt = RepaymentReceipt(
@@ -76,14 +84,13 @@ class _AgentSavingScreenState extends State<AgentSavingScreen> {
 
       final receiptBytes = await MyanmarReceiptRenderer.renderReceiptToEscPosBytes(receipt: receipt);
       final success = await printerService.sendBytes(receiptBytes);
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(success ? 'Savings deposit receipt printed.' : 'Bluetooth printer not connected.'),
-            backgroundColor: success ? AppTheme.accentTeal : AppTheme.accentAmber,
-          ),
-        );
-      }
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(success ? l10n.printSuccess : l10n.printerDisconnected),
+          backgroundColor: success ? AppTheme.accentTeal : AppTheme.accentAmber,
+        ),
+      );
     } catch (_) {
       // Non-blocking print error
     }
@@ -91,13 +98,15 @@ class _AgentSavingScreenState extends State<AgentSavingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Village Savings Accounts'),
+        title: Text(l10n.savingsTitle),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
-            tooltip: 'Reload Accounts',
+            tooltip: l10n.reloadAccounts,
             onPressed: () {
               context.read<SavingBloc>().add(LoadSavingAccountsRequested(
                     centerCode: widget.initialCenterCode,
@@ -117,7 +126,7 @@ class _AgentSavingScreenState extends State<AgentSavingScreen> {
               controller: _searchController,
               onChanged: _onSearchChanged,
               decoration: InputDecoration(
-                hintText: 'Search by member name, NRC, or account...',
+                hintText: l10n.searchSavingHint,
                 prefixIcon: const Icon(Icons.search, color: AppTheme.textSecondary),
                 suffixIcon: _searchController.text.isNotEmpty
                     ? IconButton(
@@ -169,14 +178,14 @@ class _AgentSavingScreenState extends State<AgentSavingScreen> {
                         children: [
                           const Icon(Icons.savings_outlined, size: 48, color: AppTheme.textSecondary),
                           const SizedBox(height: 12),
-                          const Text(
-                            'No savings accounts found.',
-                            style: TextStyle(color: AppTheme.textSecondary, fontSize: 14),
+                          Text(
+                            l10n.noSavingsFound,
+                            style: const TextStyle(color: AppTheme.textSecondary, fontSize: 14),
                           ),
                           const SizedBox(height: 16),
                           ElevatedButton.icon(
                             icon: const Icon(Icons.add),
-                            label: const Text('Open First Account'),
+                            label: Text(l10n.openFirstAccount),
                             onPressed: () {
                               context.push(AppRouter.openSavingRoute);
                             },
@@ -209,12 +218,12 @@ class _AgentSavingScreenState extends State<AgentSavingScreen> {
                                     );
                                 if (printReceipt) {
                                   _handleDepositReceiptPrint(
-                                    context,
                                     account.customerName,
                                     account.nrcFormatted,
                                     account.accountNumber,
                                     amount,
                                     account.balanceMmk + amount,
+                                    l10n,
                                   );
                                 }
                               },
@@ -236,7 +245,7 @@ class _AgentSavingScreenState extends State<AgentSavingScreen> {
         backgroundColor: AppTheme.primaryNavy,
         foregroundColor: Colors.white,
         icon: const Icon(Icons.person_add_alt_1),
-        label: const Text('Open New Passbook'),
+        label: Text(l10n.openPassbookButton),
         onPressed: () {
           context.push(AppRouter.openSavingRoute);
         },

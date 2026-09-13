@@ -58,6 +58,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 @Import(TestConfig.class)
+@SuppressWarnings("null")
 @DisplayName("Sprint 4 Integration Tests: Digital Payments, MMQR, Webhooks & Customer APIs")
 class DigitalPaymentIntegrationTests {
 

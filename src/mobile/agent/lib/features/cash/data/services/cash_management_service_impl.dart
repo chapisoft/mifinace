@@ -10,6 +10,7 @@ import '../../domain/services/cash_management_service.dart';
 /// Implementation of [CashManagementService] aggregating cash transactions from SQLite.
 class CashManagementServiceImpl implements CashManagementService {
   final AppDatabase _database;
+  AppDatabase get database => _database;
   final Uuid _uuid;
 
   // Maximum allowable cash limit held in the field per FRD guidelines (5,000,000 MMK)
@@ -32,7 +33,7 @@ class CashManagementServiceImpl implements CashManagementService {
         entryId: 'CSH-001',
         transactionType: CashTransactionType.loanRepayment,
         referenceId: 'REC-2026-001',
-        customerName: 'Daw Khin Khin Win',
+        customerName: 'Daw Khin Myint (CUST-001)',
         amountMmk: 125000.0,
         timestamp: now.subtract(const Duration(hours: 3)),
       ),

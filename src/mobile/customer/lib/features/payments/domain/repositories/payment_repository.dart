@@ -1,3 +1,4 @@
+import '../models/customer_transaction.dart';
 import '../models/mmqr_payment.dart';
 
 /// Repository interface handling dynamic MMQR generation and settlement verification.
@@ -16,4 +17,10 @@ abstract class PaymentRepository {
     required String walletScheme,
     required String mmqrPayload,
   });
+
+  /// Tra cứu danh sách giao dịch trả nợ / thanh toán của khách hàng từ CSDL (bảng SYS_REPAYMENT_TRANSACTION).
+  Future<List<CustomerTransaction>> getCustomerTransactions(String customerCode);
+
+  /// Ghi nhận giao dịch thanh toán mới vào bộ nhớ / CSDL.
+  Future<void> recordTransaction(CustomerTransaction transaction);
 }

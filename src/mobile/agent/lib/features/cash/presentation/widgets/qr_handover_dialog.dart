@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../app/theme/app_theme.dart';
+import '../../../../core/l10n/app_localizations.dart';
 import '../../../../core/utils/currency_formatter.dart';
 import '../../domain/models/cash_summary.dart';
 
@@ -18,12 +19,19 @@ class QrHandoverDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return AlertDialog(
-      title: const Row(
+      title: Row(
         children: [
-          Icon(Icons.qr_code_2, color: AppTheme.primaryNavy, size: 28),
-          SizedBox(width: 8),
-          Text('Branch Cashier Handover', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+          const Icon(Icons.qr_code_2, color: AppTheme.primaryNavy, size: 28),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              l10n.branchCashierHandoverTitle,
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+          ),
         ],
       ),
       content: SingleChildScrollView(
@@ -79,7 +87,7 @@ class QrHandoverDialog extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    '${summary.transactionCount} transactions collected today',
+                    '${summary.transactionCount} ${l10n.transactionsCollectedToday}',
                     style: const TextStyle(fontSize: 12, color: AppTheme.textSecondary),
                   ),
                 ],
@@ -97,7 +105,7 @@ class QrHandoverDialog extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text('Loan Repayments:', style: TextStyle(fontSize: 12)),
+                      Text('${l10n.loanRepayments}:', style: const TextStyle(fontSize: 12)),
                       Text(CurrencyFormatter.formatMmk(summary.totalRepaymentMmk),
                           style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
                     ],
@@ -106,7 +114,7 @@ class QrHandoverDialog extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text('Savings Deposits:', style: TextStyle(fontSize: 12)),
+                      Text('${l10n.savingsDeposits}:', style: const TextStyle(fontSize: 12)),
                       Text(CurrencyFormatter.formatMmk(summary.totalSavingMmk),
                           style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
                     ],
@@ -120,7 +128,7 @@ class QrHandoverDialog extends StatelessWidget {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Close'),
+          child: Text(l10n.closeButton),
         ),
         ElevatedButton.icon(
           style: ElevatedButton.styleFrom(
@@ -128,7 +136,7 @@ class QrHandoverDialog extends StatelessWidget {
             foregroundColor: Colors.white,
           ),
           icon: const Icon(Icons.check, size: 18),
-          label: const Text('Confirm Cashier Deposit'),
+          label: Text(l10n.confirmCashierDeposit),
           onPressed: () {
             Navigator.of(context).pop();
             onHandoverConfirmed();

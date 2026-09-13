@@ -46,6 +46,9 @@ public class ManageSavingsUseCase {
     private final DistributedLockPort distributedLockPort;
     private final ObjectMapper objectMapper;
 
+    @org.springframework.beans.factory.annotation.Value("${bmf.saving.default-interest-rate:10.00}")
+    private BigDecimal defaultInterestRate = BigDecimal.valueOf(10.00);
+
     @Transactional
     public SavingAccountResponse openAccount(OpenSavingAccountRequest request, String createdBy) {
         String traceId = MDC.get(AppConstants.MDC_TRACE_ID);
@@ -54,7 +57,7 @@ public class ManageSavingsUseCase {
         log.info("[{}] Opening saving account: number={}, custCode={}, productType={}, createdBy={}",
                 traceId, accountNumber, request.getCustomerCode(), request.getProductType(), createdBy);
 
-        BigDecimal defaultInterestRate = BigDecimal.valueOf(10.00); // 10% / năm chuẩn vi mô
+        BigDecimal appliedInterestRate = defaultInterestRate;
         LocalDateTime now = LocalDateTime.now();
 
         SavingAccount account = SavingAccount.builder()
@@ -63,7 +66,7 @@ public class ManageSavingsUseCase {
                 .customerName(request.getCustomerName())
                 .productType(request.getProductType())
                 .balance(request.getInitialDeposit())
-                .interestRate(defaultInterestRate)
+                .interestRate(appliedInterestRate)
                 .termMonths(request.getTermMonths() != null ? request.getTermMonths() : 0)
                 .beneficiaryName(request.getBeneficiaryName())
                 .beneficiaryNrc(request.getBeneficiaryNrc())
@@ -105,12 +108,15 @@ public class ManageSavingsUseCase {
             SavingTransaction tx = existingTx.get();
             log.info("[{}] Idempotent saving deposit request detected for key={}: returning existing receipt={}",
                     traceId, request.getIdempotencyKey(), tx.getTransactionId());
+            BigDecimal currentBalance = savingRepository.findAccountByNumber(tx.getAccountNumber())
+                    .map(acc -> acc.getBalance())
+                    .orElse(tx.getAmount());
             return SavingTransactionReceiptResponse.builder()
                     .transactionId(tx.getTransactionId())
                     .accountNumber(tx.getAccountNumber())
                     .customerCode(tx.getCustomerCode())
                     .amount(tx.getAmount())
-                    .newBalance(BigDecimal.ZERO) // Cached response
+                    .newBalance(currentBalance)
                     .transactionType(tx.getTransactionType())
                     .paymentMethod(tx.getPaymentMethod())
                     .status(tx.getStatus())

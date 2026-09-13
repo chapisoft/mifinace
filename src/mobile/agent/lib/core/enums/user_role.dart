@@ -1,6 +1,7 @@
 /// User roles supported within the BMF mobile platform.
 enum UserRole {
   creditOfficer('CREDIT_OFFICER'),
+  agent('AGENT'),
   branchManager('BRANCH_MANAGER'),
   customerMember('CUSTOMER_MEMBER'),
   admin('ADMIN');

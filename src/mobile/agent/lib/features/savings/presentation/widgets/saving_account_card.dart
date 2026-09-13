@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../../app/theme/app_theme.dart';
+import '../../../../core/enums/saving_product_type.dart';
+import '../../../../core/l10n/app_localizations.dart';
 import '../../../../core/utils/currency_formatter.dart';
 import '../../domain/models/saving_account.dart';
 
@@ -16,6 +18,8 @@ class SavingAccountCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
       elevation: 1,
@@ -50,7 +54,7 @@ class SavingAccountCard extends StatelessWidget {
                     border: Border.all(color: AppTheme.accentTeal.withAlpha(80)),
                   ),
                   child: Text(
-                    account.productType.label,
+                    account.productType.localizedName(l10n),
                     style: const TextStyle(
                       fontSize: 11,
                       fontWeight: FontWeight.bold,
@@ -85,9 +89,9 @@ class SavingAccountCard extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Accumulated Balance',
-                      style: TextStyle(fontSize: 11, color: AppTheme.textSecondary),
+                    Text(
+                      l10n.accumulatedBalance,
+                      style: const TextStyle(fontSize: 11, color: AppTheme.textSecondary),
                     ),
                     const SizedBox(height: 2),
                     Text(
@@ -108,7 +112,7 @@ class SavingAccountCard extends StatelessWidget {
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                   ),
                   icon: const Icon(Icons.add, size: 16),
-                  label: const Text('Deposit'),
+                  label: Text(l10n.depositTitle),
                   onPressed: onDeposit,
                 ),
               ],

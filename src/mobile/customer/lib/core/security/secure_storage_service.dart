@@ -13,10 +13,32 @@ class SecureStorageService {
             );
 
   static const String _keyToken = 'bmf_customer_auth_token';
+  static const String _keyRefreshToken = 'bmf_customer_refresh_token';
   static const String _keyPinHash = 'bmf_customer_pin_hash';
   static const String _keyMemberNrc = 'bmf_customer_nrc';
+  static const String _keyLastIdentifier = 'bmf_customer_last_identifier';
+  static const String _keyLastFullName = 'bmf_customer_last_full_name';
+  static const String _keyDeviceId = 'bmf_customer_device_id';
   static const String _keyLanguage = 'bmf_customer_lang';
   static const String _keyBiometricEnabled = 'bmf_customer_biometric_enabled';
+
+  static const String _keyQuickActions = 'bmf_customer_quick_actions';
+
+  Future<void> saveQuickActions(List<String> actions) => _storage.write(key: _keyQuickActions, value: actions.join(','));
+  Future<List<String>?> getQuickActions() async {
+    final val = await _storage.read(key: _keyQuickActions);
+    if (val == null || val.isEmpty) return null;
+    return val.split(',').where((s) => s.isNotEmpty).toList();
+  }
+
+  Future<void> saveDeviceId(String deviceId) => _storage.write(key: _keyDeviceId, value: deviceId);
+  Future<String?> getDeviceId() => _storage.read(key: _keyDeviceId);
+
+  Future<void> saveLastIdentifier(String identifier) => _storage.write(key: _keyLastIdentifier, value: identifier);
+  Future<String?> getLastIdentifier() => _storage.read(key: _keyLastIdentifier);
+
+  Future<void> saveLastFullName(String fullName) => _storage.write(key: _keyLastFullName, value: fullName);
+  Future<String?> getLastFullName() => _storage.read(key: _keyLastFullName);
 
   Future<void> saveAuthToken(String token) async {
     await _storage.write(key: _keyToken, value: token);
@@ -24,6 +46,15 @@ class SecureStorageService {
   }
 
   Future<String?> getAuthToken() => _storage.read(key: _keyToken);
+
+  Future<void> saveAccessToken(String token) => saveAuthToken(token);
+  Future<String?> getAccessToken() => getAuthToken();
+
+  Future<void> saveRefreshToken(String token) async {
+    await _storage.write(key: _keyRefreshToken, value: token);
+  }
+
+  Future<String?> getRefreshToken() => _storage.read(key: _keyRefreshToken);
 
   Future<void> savePinHash(String pinHash) async {
     await _storage.write(key: _keyPinHash, value: pinHash);
@@ -55,6 +86,15 @@ class SecureStorageService {
 
   Future<void> clearSession() async {
     await _storage.delete(key: _keyToken);
+    await _storage.delete(key: _keyRefreshToken);
     AppLogger.info('Cleared customer session tokens.', tag: 'SecureStorage');
   }
+
+  Future<void> clearAllSession() async {
+    await _storage.deleteAll();
+    AppLogger.info('Cleared all secure customer data on full logout.', tag: 'SecureStorage');
+  }
+
+  Future<void> clearAuthTokens() => clearSession();
 }
+

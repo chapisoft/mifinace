@@ -32,7 +32,7 @@ public class JdbcLoanRepository implements LoanRepository {
             FROM dbo.TD_LICH_THUNO l
             INNER JOIN dbo.TD_HOPDONG h ON l.Ma_HopDong = h.Ma_HopDong
             INNER JOIN dbo.KH_THANHVIEN k ON h.Ma_ThanhVien = k.Ma_ThanhVien
-            WHERE h.Ma_To = :groupCode AND l.Ngay_DenHan = :dueDate
+            WHERE h.Ma_To = :groupCode AND (l.Ngay_DenHan = :dueDate OR l.Trang_Thai IN ('DUE_TODAY', 'OVERDUE', 'PENDING'))
             ORDER BY k.Ten_ThanhVien ASC, l.Ky_Thu ASC
             """;
 
@@ -166,29 +166,24 @@ public class JdbcLoanRepository implements LoanRepository {
             ORDER BY l.Ngay_DenHan ASC, k.Ten_ThanhVien ASC
             """;
 
-        try {
-            return jdbcClient.sql(sql)
-                    .param("fromDate", Date.valueOf(fromDate))
-                    .param("toDate", Date.valueOf(toDate))
-                    .query((rs, rowNum) -> GroupScheduleRecord.builder()
-                            .contractCode(rs.getString("Ma_HopDong"))
-                            .customerCode(rs.getString("Ma_ThanhVien"))
-                            .customerName(rs.getString("Ten_ThanhVien"))
-                            .groupCode(rs.getString("Ma_To"))
-                            .periodNumber(rs.getInt("Ky_Thu"))
-                            .principalAmount(rs.getBigDecimal("Tien_Goc"))
-                            .interestAmount(rs.getBigDecimal("Tien_Lai"))
-                            .insuranceFee(rs.getBigDecimal("Phi_BaoHiem"))
-                            .compulsorySaving(rs.getBigDecimal("TietKiem_BatBuoc"))
-                            .totalAmount(rs.getBigDecimal("Tong_Tien"))
-                            .dueDate(rs.getDate("Ngay_DenHan") != null ? rs.getDate("Ngay_DenHan").toLocalDate() : null)
-                            .status(rs.getString("Trang_Thai"))
-                            .build())
-                    .list();
-        } catch (Exception e) {
-            log.warn("Database query for due schedules failed, returning fallback mock/empty list: {}", e.getMessage());
-            return List.of();
-        }
+        return jdbcClient.sql(sql)
+                .param("fromDate", Date.valueOf(fromDate))
+                .param("toDate", Date.valueOf(toDate))
+                .query((rs, rowNum) -> GroupScheduleRecord.builder()
+                        .contractCode(rs.getString("Ma_HopDong"))
+                        .customerCode(rs.getString("Ma_ThanhVien"))
+                        .customerName(rs.getString("Ten_ThanhVien"))
+                        .groupCode(rs.getString("Ma_To"))
+                        .periodNumber(rs.getInt("Ky_Thu"))
+                        .principalAmount(rs.getBigDecimal("Tien_Goc"))
+                        .interestAmount(rs.getBigDecimal("Tien_Lai"))
+                        .insuranceFee(rs.getBigDecimal("Phi_BaoHiem"))
+                        .compulsorySaving(rs.getBigDecimal("TietKiem_BatBuoc"))
+                        .totalAmount(rs.getBigDecimal("Tong_Tien"))
+                        .dueDate(rs.getDate("Ngay_DenHan") != null ? rs.getDate("Ngay_DenHan").toLocalDate() : null)
+                        .status(rs.getString("Trang_Thai"))
+                        .build())
+                .list();
     }
 
     @Override

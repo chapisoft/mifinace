@@ -107,7 +107,7 @@ class _CentersScreenState extends State<CentersScreen> {
                             onPressed: () {
                               context.read<CenterBloc>().add(const LoadCentersRequested(forceRefresh: true));
                             },
-                            child: const Text('Retry'),
+                            child: Text(l10n.retryButton),
                           ),
                         ],
                       ),
@@ -126,7 +126,7 @@ class _CentersScreenState extends State<CentersScreen> {
                   if (filteredCenters.isEmpty) {
                     return Center(
                       child: Text(
-                        'No centers match "$_searchQuery"',
+                        _searchQuery.isNotEmpty ? '${l10n.noCentersMatch} "$_searchQuery"' : l10n.noCentersMatch,
                         style: const TextStyle(color: AppTheme.textSecondary),
                       ),
                     );
@@ -243,12 +243,13 @@ class _CenterCard extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 10),
-                  Row(
+                  Wrap(
+                    spacing: 12,
+                    runSpacing: 4,
+                    crossAxisAlignment: WrapCrossAlignment.center,
                     children: [
                       _MetaInfo(icon: Icons.calendar_today, label: '${l10n.meetingDayLabel}: ${center.meetingDay}'),
-                      const SizedBox(width: 16),
                       _MetaInfo(icon: Icons.access_time, label: center.meetingTime),
-                      const Spacer(),
                       _MetaInfo(icon: Icons.location_on_outlined, label: center.townshipCode),
                     ],
                   ),

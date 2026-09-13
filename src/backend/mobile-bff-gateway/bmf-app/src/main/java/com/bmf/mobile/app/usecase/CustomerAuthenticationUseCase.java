@@ -2,6 +2,7 @@ package com.bmf.mobile.app.usecase;
 
 import com.bmf.mobile.app.dto.request.CustomerLoginRequest;
 import com.bmf.mobile.app.dto.response.AuthResponse;
+import com.bmf.mobile.domain.entity.AppUser;
 import com.bmf.mobile.domain.entity.CustomerMember;
 import com.bmf.mobile.domain.entity.MobileDevice;
 import com.bmf.mobile.domain.enums.ErrorCode;
@@ -29,6 +30,7 @@ import java.util.Optional;
 public class CustomerAuthenticationUseCase {
 
     private final CustomerRepository customerRepository;
+    private final com.bmf.mobile.domain.repository.AppUserRepository appUserRepository;
     private final MobileDeviceRepository deviceRepository;
     private final TokenProviderPort tokenProviderPort;
     private final TokenBlacklistPort tokenBlacklistPort;
@@ -37,31 +39,50 @@ public class CustomerAuthenticationUseCase {
     private static final String BEARER_TYPE = "Bearer";
 
     public AuthResponse authenticate(CustomerLoginRequest request) {
-        log.info("Processing Customer authentication: nrc={}, deviceId={}, platform={}",
-                request.getNrcNumber(), request.getDeviceId(), request.getPlatform());
+        String identifier = request.getEffectiveIdentifier().trim();
+        log.info("Processing Customer authentication: identifier={}, deviceId={}, platform={}",
+                identifier, request.getDeviceId(), request.getPlatform());
 
         // Kiểm tra bẫy Brute-force PIN
-        if (tokenBlacklistPort.isPinLocked(request.getNrcNumber())) {
-            log.warn("Customer login blocked by brute-force defense: nrc={}", request.getNrcNumber());
+        if (tokenBlacklistPort.isPinLocked(identifier)) {
+            log.warn("Customer login blocked by brute-force defense: identifier={}", identifier);
             throw new BusinessException(ErrorCode.ERR_PIN_BLOCKED);
         }
 
-        CustomerMember customer = customerRepository.findByNrcNumber(request.getNrcNumber())
+        // Tìm kiếm hồ sơ thành viên: Ưu tiên Ma_ThanhVien, sau đó tới So_NRC và So_DienThoai
+        CustomerMember customer = customerRepository.findByCustomerCode(identifier)
+                .or(() -> customerRepository.findByNrcNumber(identifier))
+                .or(() -> customerRepository.findByPhoneNumber(identifier))
                 .orElseThrow(() -> {
-                    log.warn("Customer login failed - NRC not found: {}", request.getNrcNumber());
+                    log.warn("Customer login failed - Account not found in Core: {}", identifier);
                     return new BusinessException(ErrorCode.ERR_USER_NOT_FOUND);
                 });
 
         if (!customer.isActive()) {
-            log.warn("Customer login failed - account is disabled: nrc={}, customerCode={}",
-                    request.getNrcNumber(), customer.getCustomerCode());
+            log.warn("Customer login failed - account is disabled: identifier={}, customerCode={}",
+                    identifier, customer.getCustomerCode());
             throw new BusinessException(ErrorCode.ERR_FORBIDDEN);
         }
 
+        // Bắt buộc tài khoản đã kích hoạt trên App (khóa ngoại Business_Id = Ma_ThanhVien)
+        AppUser appUser = appUserRepository.findByBusinessId(customer.getCustomerCode(), UserType.CUSTOMER)
+                .or(() -> appUserRepository.findByIdentifier(customer.getCustomerCode(), UserType.CUSTOMER))
+                .orElseThrow(() -> {
+                    log.warn("Customer login failed - App account not activated: customerCode={}", customer.getCustomerCode());
+                    return new BusinessException(ErrorCode.ERR_ACCOUNT_NOT_ACTIVATED);
+                });
+
+        if (!appUser.isActivated() || appUser.getPinHash() == null) {
+            log.warn("Customer login failed - App account is not active: customerCode={}", customer.getCustomerCode());
+            throw new BusinessException(ErrorCode.ERR_ACCOUNT_NOT_ACTIVATED);
+        }
+
         // So khớp mã PIN băm
-        if (!passwordEncoderPort.matches(request.getPinCode(), customer.getPinHash())) {
-            long failAttempts = tokenBlacklistPort.recordPinFailure(request.getNrcNumber());
-            log.warn("Customer login failed - PIN mismatch: nrc={}, attempt={}", request.getNrcNumber(), failAttempts);
+        String targetPinHash = appUser.getPinHash() != null ? appUser.getPinHash() : customer.getPinHash();
+        if (!passwordEncoderPort.matches(request.getPinCode(), targetPinHash)) {
+            long failAttempts = tokenBlacklistPort.recordPinFailure(customer.getCustomerCode());
+            appUserRepository.recordPinFailure(appUser.getUserId(), (int) failAttempts);
+            log.warn("Customer login failed - PIN mismatch: customerCode={}, attempt={}", customer.getCustomerCode(), failAttempts);
 
             if (failAttempts >= 5) {
                 throw new BusinessException(ErrorCode.ERR_PIN_BLOCKED);
@@ -70,7 +91,15 @@ public class CustomerAuthenticationUseCase {
         }
 
         // Đăng nhập đúng -> Xóa bộ đếm sai PIN
-        tokenBlacklistPort.resetPinFailure(request.getNrcNumber());
+        tokenBlacklistPort.resetPinFailure(customer.getCustomerCode());
+        if (customer.getNrcNumber() != null && !customer.getNrcNumber().equalsIgnoreCase(customer.getCustomerCode())) {
+            tokenBlacklistPort.resetPinFailure(customer.getNrcNumber());
+        }
+        if (!identifier.equalsIgnoreCase(customer.getCustomerCode())
+                && (customer.getNrcNumber() == null || !identifier.equalsIgnoreCase(customer.getNrcNumber()))) {
+            tokenBlacklistPort.resetPinFailure(identifier);
+        }
+        appUserRepository.recordLoginSuccess(appUser.getUserId());
 
         // Kiểm tra và cập nhật thiết bị
         Optional<MobileDevice> existingDeviceOpt = deviceRepository.findByDeviceIdAndUserId(

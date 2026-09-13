@@ -1,8 +1,0 @@
-{
-  "elements": {},
-  "imports": [
-    "package:flutter_secure_storage/flutter_secure_storage.dart",
-    "package:bmf_agent_app/core/constants/app_constants.dart",
-    "package:bmf_agent_app/core/utils/app_logger.dart"
-  ]
-}

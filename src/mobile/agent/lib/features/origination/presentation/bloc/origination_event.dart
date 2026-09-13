@@ -1,9 +1,7 @@
 import 'dart:typed_data';
 import 'package:equatable/equatable.dart';
 import '../../../../core/enums/loan_purpose_type.dart';
-import '../../../../core/enums/survey_photo_type.dart';
 import '../../domain/models/gps_location.dart';
-import '../../domain/models/loan_application.dart';
 import '../../domain/models/nrc_data.dart';
 import '../../domain/models/survey_photo.dart';
 

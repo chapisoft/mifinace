@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:bmf_customer/app/app.dart';
+import 'package:bmf_customer/core/network/api_client.dart';
 import 'package:bmf_customer/core/security/biometric_service.dart';
 import 'package:bmf_customer/core/security/secure_storage_service.dart';
 import 'package:bmf_customer/core/utils/app_logger.dart';
@@ -14,13 +15,16 @@ void main() async {
 
   final secureStorage = SecureStorageService();
   final biometricService = BiometricService();
+  final apiClient = ApiClient(secureStorage: secureStorage);
+
   final authRepository = CustomerAuthRepositoryImpl(
     storage: secureStorage,
     biometricService: biometricService,
+    apiClient: apiClient,
   );
-  final loanRepository = CustomerLoanRepositoryImpl();
-  final paymentRepository = PaymentRepositoryImpl();
-  final savingsRepository = SavingsRepositoryImpl();
+  final loanRepository = CustomerLoanRepositoryImpl(apiClient: apiClient);
+  final paymentRepository = PaymentRepositoryImpl(apiClient: apiClient);
+  final savingsRepository = SavingsRepositoryImpl(apiClient: apiClient);
 
   runApp(
     BmfCustomerApp(

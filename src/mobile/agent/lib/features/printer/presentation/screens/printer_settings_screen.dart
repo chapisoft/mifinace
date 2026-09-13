@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../app/theme/app_theme.dart';
 import '../../../../core/l10n/app_localizations.dart';
-import '../../domain/models/bluetooth_printer_device.dart';
 import '../bloc/printer_bloc.dart';
 import '../bloc/printer_event.dart';
 import '../bloc/printer_state.dart';
@@ -102,7 +101,7 @@ class _PrinterSettingsScreenState extends State<PrinterSettingsScreen> {
                                 Text(
                                   isConnected
                                       ? '${state.connectedDevice!.address} • ${state.connectedDevice!.paperWidth.name}'
-                                      : 'No active Bluetooth link established',
+                                      : l10n.noActiveBluetoothLink,
                                   style: const TextStyle(fontSize: 12, color: AppTheme.textSecondary),
                                 ),
                               ],
@@ -128,7 +127,7 @@ class _PrinterSettingsScreenState extends State<PrinterSettingsScreen> {
                             Expanded(
                               child: OutlinedButton.icon(
                                 icon: const Icon(Icons.receipt_long, size: 16),
-                                label: const Text('Print Test Receipt', style: TextStyle(fontSize: 13)),
+                                label: Text(l10n.printTestReceipt, style: const TextStyle(fontSize: 13)),
                                 onPressed: state is PrinterPrinting
                                     ? null
                                     : () {
@@ -159,7 +158,7 @@ class _PrinterSettingsScreenState extends State<PrinterSettingsScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Available Bluetooth Devices (${state.availableDevices.length})',
+                    '${l10n.availableBluetoothDevices} (${state.availableDevices.length})',
                     style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppTheme.textPrimary),
                   ),
                   if (state is PrinterScanning)

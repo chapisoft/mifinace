@@ -10,7 +10,7 @@ class LanguageCubit extends Cubit<LanguageState> {
   final SecureStorageService _secureStorage;
 
   LanguageCubit(this._secureStorage)
-      : super(const LanguageState(currentLanguage: AppLanguage.myanmar)) {
+      : super(const LanguageState(currentLanguage: AppLanguage.english)) {
     _loadSavedLanguage();
   }
 
@@ -23,7 +23,7 @@ class LanguageCubit extends Cubit<LanguageState> {
         AppLogger.info('Loaded saved language: ${lang.displayName} (${lang.languageCode})', tag: 'LanguageCubit');
       }
     } catch (e) {
-      AppLogger.warn('Failed to load saved language, default to Myanmar: $e', tag: 'LanguageCubit');
+      AppLogger.warn('Failed to load saved language, default to English: $e', tag: 'LanguageCubit');
     }
   }
 

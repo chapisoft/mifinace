@@ -52,6 +52,43 @@ class CustomerSavingAccount extends Equatable {
 
   double get totalProjectedMmk => balanceMmk + accruedInterestMmk;
 
+  factory CustomerSavingAccount.fromJson(Map<String, dynamic> json) {
+    return CustomerSavingAccount(
+      accountId: json['accountId']?.toString() ?? json['id']?.toString() ?? json['accountNumber']?.toString() ?? '',
+      accountNumber: json['accountNumber']?.toString() ?? '',
+      savingType: SavingType.fromCode(json['productType']?.toString() ?? json['savingType']?.toString()),
+      balanceMmk: (json['balanceMmk'] as num?)?.toDouble() ??
+          (json['balance'] as num?)?.toDouble() ??
+          (json['currentBalance'] as num?)?.toDouble() ??
+          0.0,
+      accruedInterestMmk: (json['accruedInterestMmk'] as num?)?.toDouble() ??
+          (json['accruedInterest'] as num?)?.toDouble() ??
+          0.0,
+      interestRateAnnual: (json['interestRateAnnual'] as num?)?.toDouble() ??
+          (json['interestRate'] as num?)?.toDouble() ??
+          8.0,
+      openedDate: json['openedDate'] != null
+          ? DateTime.tryParse(json['openedDate'].toString()) ?? DateTime.now()
+          : (json['createdTime'] != null ? DateTime.tryParse(json['createdTime'].toString()) ?? DateTime.now() : DateTime.now()),
+      maturityDate: json['maturityDate'] != null ? DateTime.tryParse(json['maturityDate'].toString()) : null,
+      tenureMonths: (json['tenureMonths'] as num?)?.toInt() ?? (json['termMonths'] as num?)?.toInt() ?? 0,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'accountId': accountId,
+      'accountNumber': accountNumber,
+      'savingType': savingType.code,
+      'balanceMmk': balanceMmk,
+      'accruedInterestMmk': accruedInterestMmk,
+      'interestRateAnnual': interestRateAnnual,
+      'openedDate': openedDate.toIso8601String(),
+      'maturityDate': maturityDate?.toIso8601String(),
+      'tenureMonths': tenureMonths,
+    };
+  }
+
   @override
   List<Object?> get props => [
         accountId,

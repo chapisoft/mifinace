@@ -9,7 +9,7 @@ class LanguageCubit extends Cubit<LanguageState> {
   final SecureStorageService _storageService;
 
   LanguageCubit(this._storageService)
-      : super(const LanguageState(currentLanguage: AppLanguage.myanmar)) {
+      : super(const LanguageState(currentLanguage: AppLanguage.english)) {
     _loadSavedLanguage();
   }
 

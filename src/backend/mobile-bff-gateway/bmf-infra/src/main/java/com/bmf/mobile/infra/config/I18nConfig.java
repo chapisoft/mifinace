@@ -18,6 +18,7 @@ import java.util.Locale;
  * Hỗ trợ 5 ngôn ngữ chuẩn doanh nghiệp: Myanmar (my), English (en), Vietnamese (vi), Chinese (zh), Japanese (ja), Korean (ko).
  */
 @Configuration
+@SuppressWarnings("null")
 public class I18nConfig {
 
     private static final List<Locale> SUPPORTED_LOCALES = Arrays.asList(

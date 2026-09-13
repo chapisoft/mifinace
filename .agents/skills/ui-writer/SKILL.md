@@ -46,10 +46,20 @@ Kỹ năng này cung cấp phương pháp luận và các biểu mẫu chuẩn m
      * Tự động dịch mã lỗi ngoại lệ (`GlobalExceptionHandler`), thông điệp phản hồi API `ResultResponse<T>` và mẫu email/SMS thông báo theo đúng ngôn ngữ client gửi lên.
 4. **Hệ Thống Design Tokens Chuẩn Hóa:**
    * 100% màu sắc, khoảng cách, bán kính bo góc và độ đổ bóng **bắt buộc sử dụng biến CSS (CSS Variables)** hoặc theme token tập trung. Tuyệt đối không hardcode mã Hex (`#FFFFFF`) hay giá trị pixel cố định trong component.
-5. **Nguyên Tắc Sắp Xếp Cột Bảng Dữ Liệu (DataTable Standard Column Ordering):**
+5. **Nguyên Tắc Thiết Kế Giao Diện Mobile Cao Cấp (Fintech Mobile Aesthetics):**
+   * Đối với ứng dụng di động (Flutter Mobile App):
+     * **Bảng màu định danh chuẩn xác:** Phân định rõ ràng ngôn ngữ thương hiệu của từng phân hệ (Agent dùng Deep Navy `#0D1B2A` & Emerald `#10B981`; Member dùng Deep Cyan Teal `#0E8388` & Amber Gold `#F59E0B`).
+     * **Bố cục thẻ phân tầng (Layered Card Surfaces):** Sử dụng bo góc lớn mềm mại (`BorderRadius.circular(16)` đến `24`), đổ bóng phân tầng êm ái (`BoxShadow` với alpha 4-8%), triệt tiêu hoàn toàn viền đơn điệu thô cứng.
+     * **Dải màu chuyển sắc tinh tế (Subtle Gradients):** Sử dụng gradient chuyển màu nhẹ ở Header, Thẻ thành viên (Passbook Card) và nút hành động chính (Primary CTA) để tạo cảm giác cao cấp, tin cậy.
+     * **Khoảng cách công thái học (Ergonomic Spacing):** Vùng chạm tối thiểu 48×48px, trường nhập liệu cao 52-56px có icon và nhãn phân cấp rõ ràng.
+6. **Quy Tắc Xác Thực Định Danh Tài Khoản Di Động (Mobile Identity & Auth UX):**
+   * **Tuyệt đối cấm vào thẳng màn hình nhập mã PIN mà không có ngữ cảnh người dùng:**
+     * Ứng dụng Thành viên (Member App) **BẮT BUỘC** phải cho phép người dùng nhập định danh tài khoản (Số thẻ căn cước NRC, Số điện thoại hoặc Mã thành viên) kết hợp mã PIN, hoặc chọn luồng đăng ký mới.
+     * Đối với thiết bị đã từng đăng nhập thành công trước đó: Cho phép lưu phiên đăng nhập nhanh (Quick PIN / Biometrics) nhưng **BẮT BUỘC phải hiển thị Thẻ định danh tài khoản (Avatar, Tên khách hàng, Số thẻ NRC) và nút "Đổi tài khoản khác" (Switch Account)** để người dùng có thể đăng nhập tài khoản khác bất cứ lúc nào.
+7. **Nguyên Tắc Sắp Xếp Cột Bảng Dữ Liệu (DataTable Standard Column Ordering):**
    * Thứ tự cột chuẩn từ trái sang phải: `Checkbox` (chọn nhiều bản ghi) → `STT` (số thứ tự) → `Thao tác / Hành động` (xem chi tiết, sửa, xóa, duyệt) → `Các cột dữ liệu nghiệp vụ`.
    * **Tuyệt đối không đặt cột Thao tác ở cuối cùng bên phải** (tránh việc người dùng phải cuộn ngang màn hình để tìm nút thao tác).
-6. **Kiểm Tra Tính Hợp Lệ Dữ Liệu Toàn Diện (Schema Validation):**
+8. **Kiểm Tra Tính Hợp Lệ Dữ Liệu Toàn Diện (Schema Validation):**
    * Mọi biểu mẫu (Form) bắt buộc phải có lược đồ kiểm tra hợp lệ bằng thư viện chuẩn (Zod / Yup) kết hợp React Hook Form hoặc Formik.
    * Đảm bảo quy tắc kiểm tra phía Frontend khớp 100% với Backend, có thông báo lỗi inline dưới từng ô nhập liệu.
 

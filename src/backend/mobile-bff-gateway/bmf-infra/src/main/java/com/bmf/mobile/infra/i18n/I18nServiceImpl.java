@@ -16,6 +16,7 @@ import java.util.Locale;
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@SuppressWarnings("null")
 public class I18nServiceImpl implements I18nService {
 
     private final MessageSource messageSource;

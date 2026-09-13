@@ -35,7 +35,10 @@ public class CustomerLoanController {
     @PreAuthorize("hasRole('CUSTOMER')")
     @Operation(summary = "TASK-BFF-05.8: Khách hàng tra cứu danh sách khoản vay và tổng dư nợ")
     public ResponseEntity<ApiResponse<CustomerLoanSummaryResponse>> getCustomerLoans(Principal principal) {
-        String customerCode = principal != null ? principal.getName() : "CUST-DEFAULT";
+        if (principal == null || principal.getName() == null || principal.getName().isBlank()) {
+            throw new com.bmf.mobile.domain.exception.BusinessException(com.bmf.mobile.domain.enums.ErrorCode.ERR_UNAUTHORIZED);
+        }
+        String customerCode = principal.getName();
         CustomerLoanSummaryResponse response = customerLoanQueryUseCase.getLoanSummary(customerCode);
         String message = i18nService.getMessage("msg.common.success");
         return ResponseEntity.ok(ApiResponse.ok(response, message));
@@ -48,7 +51,10 @@ public class CustomerLoanController {
             @PathVariable("loanId") String loanId,
             Principal principal) {
 
-        String customerCode = principal != null ? principal.getName() : "CUST-DEFAULT";
+        if (principal == null || principal.getName() == null || principal.getName().isBlank()) {
+            throw new com.bmf.mobile.domain.exception.BusinessException(com.bmf.mobile.domain.enums.ErrorCode.ERR_UNAUTHORIZED);
+        }
+        String customerCode = principal.getName();
         CustomerLoanScheduleResponse response = customerLoanQueryUseCase.getLoanScheduleDetail(customerCode, loanId);
         String message = i18nService.getMessage("msg.common.success");
         return ResponseEntity.ok(ApiResponse.ok(response, message));

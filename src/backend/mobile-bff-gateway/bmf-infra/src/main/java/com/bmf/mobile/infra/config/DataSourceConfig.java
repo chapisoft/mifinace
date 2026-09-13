@@ -63,6 +63,7 @@ public class DataSourceConfig {
     }
 
     @Bean
+    @SuppressWarnings("null")
     public JdbcClient jdbcClient(DataSource dataSource) {
         return JdbcClient.create(dataSource);
     }

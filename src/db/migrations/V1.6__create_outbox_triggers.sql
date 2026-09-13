@@ -5,6 +5,45 @@
 --        Tự động ghi nhận sự kiện vào SYS_OUTBOX_EVENT phục vụ Outbox Pattern
 -- ====================================================================================
 
+-- 0. BẢO ĐẢM SỰ HIỆN DIỆN CỦA CÁC BẢNG CORE PHÁT SINH SỰ KIỆN
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[TD_GIAINGAN]') AND type in (N'U'))
+BEGIN
+    CREATE TABLE [dbo].[TD_GIAINGAN] (
+        [ID] INT IDENTITY(1,1) PRIMARY KEY,
+        [Ma_Kk] VARCHAR(64) NOT NULL,
+        [Ma_Khach_Hang] VARCHAR(32) NOT NULL,
+        [So_Tien_GN] DECIMAL(18,2) NOT NULL,
+        [Ngay_GN] DATETIME DEFAULT GETDATE()
+    );
+END
+GO
+
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[TD_THUNO]') AND type in (N'U'))
+BEGIN
+    CREATE TABLE [dbo].[TD_THUNO] (
+        [ID] INT IDENTITY(1,1) PRIMARY KEY,
+        [Ma_Kk] VARCHAR(64) NOT NULL,
+        [Ma_Khach_Hang] VARCHAR(32) NOT NULL,
+        [So_Tien_Thu] DECIMAL(18,2) NOT NULL,
+        [Ky_Thu] INT DEFAULT 1,
+        [Ngay_Thu] DATETIME DEFAULT GETDATE()
+    );
+END
+GO
+
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[TK_SOGD]') AND type in (N'U'))
+BEGIN
+    CREATE TABLE [dbo].[TK_SOGD] (
+        [ID] INT IDENTITY(1,1) PRIMARY KEY,
+        [So_So_TK] VARCHAR(64) NOT NULL,
+        [Ma_Khach_Hang] VARCHAR(32) NOT NULL,
+        [Loai_GD] VARCHAR(8) NOT NULL,
+        [So_Tien_GD] DECIMAL(18,2) NOT NULL,
+        [Ngay_GD] DATETIME DEFAULT GETDATE()
+    );
+END
+GO
+
 -- ------------------------------------------------------------------------------------
 -- 1. TRIGGER TRG_TD_GIAINGAN_OUTBOX: Bắt sự kiện giải ngân vốn vay cho khách hàng
 -- ------------------------------------------------------------------------------------

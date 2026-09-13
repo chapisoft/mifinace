@@ -1,6 +1,7 @@
 com/bmf/mobile/api/controller/SavingController.class
 com/bmf/mobile/api/controller/HealthController$HealthStatus$HealthStatusBuilder.class
 com/bmf/mobile/api/controller/PaymentController.class
+com/bmf/mobile/api/controller/BranchController$BranchDto$BranchDtoBuilder.class
 com/bmf/mobile/api/controller/InsuranceController.class
 com/bmf/mobile/api/exception/GlobalExceptionHandler.class
 com/bmf/mobile/api/controller/CustomerLoanController.class
@@ -11,7 +12,9 @@ com/bmf/mobile/api/config/VirtualThreadConfig.class
 com/bmf/mobile/api/controller/AuthController.class
 com/bmf/mobile/api/controller/PaymentWebhookController.class
 com/bmf/mobile/api/controller/DeviceController.class
+com/bmf/mobile/api/controller/BranchController$BranchDto.class
 com/bmf/mobile/api/controller/HealthController$HealthStatus.class
+com/bmf/mobile/api/controller/BranchController.class
 com/bmf/mobile/api/BffApplication.class
 com/bmf/mobile/api/controller/HealthController.class
 com/bmf/mobile/api/controller/CustomerInsuranceController.class

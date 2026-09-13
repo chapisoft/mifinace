@@ -37,7 +37,7 @@ void main() {
     late FakeLoanOriginationRepository repository;
     late OriginationBloc bloc;
 
-    final testNrc = NrcData(
+    const testNrc = NrcData(
       stateNumber: 12,
       townshipCode: 'DAGANA',
       citizenshipType: NrcCitizenshipType.citizen,
@@ -72,7 +72,7 @@ void main() {
     });
 
     test('NrcScannedEvent updates draft state with parsed NRC', () async {
-      bloc.add(NrcScannedEvent(testNrc));
+      bloc.add(const NrcScannedEvent(testNrc));
       await expectLater(
         bloc.stream,
         emits(predicate<OriginationState>((s) => s.nrcData?.fullNrcFormatted == '12/DAGANA(N)123456')),
@@ -129,7 +129,7 @@ void main() {
           requestedTermMonths: 12,
           purposeType: LoanPurposeType.agriculture,
           gpsLocation: testGps,
-          surveyPhotos: [],
+          surveyPhotos: const [],
           base64Signature: 'AQIDBA==',
           officerId: 'OFFICER001',
         ),
@@ -168,7 +168,7 @@ void main() {
           requestedTermMonths: 12,
           purposeType: LoanPurposeType.agriculture,
           gpsLocation: testGps,
-          surveyPhotos: [],
+          surveyPhotos: const [],
           base64Signature: null,
           officerId: 'OFFICER001',
         ),

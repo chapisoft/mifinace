@@ -1,43 +1,49 @@
-import 'package:bmf_customer/core/utils/app_logger.dart';
+import '../../../../core/constants/api_endpoints.dart';
+import '../../../../core/network/api_client.dart';
+import '../../../../core/security/secure_storage_service.dart';
+import '../../../../core/utils/app_logger.dart';
 import '../../domain/models/customer_saving_account.dart';
 import '../../domain/repositories/savings_repository.dart';
 
 /// Implementation of [SavingsRepository] querying Core Saving Gateway.
 class SavingsRepositoryImpl implements SavingsRepository {
+  final ApiClient _apiClient;
   final List<CustomerSavingAccount> _accounts = [];
 
-  SavingsRepositoryImpl() {
-    _initDemoSavings();
-  }
-
-  void _initDemoSavings() {
-    _accounts.addAll([
-      CustomerSavingAccount(
-        accountId: 'SAV-001',
-        accountNumber: 'BMF-SAV-098231',
-        savingType: SavingType.compulsory,
-        balanceMmk: 120000.0,
-        accruedInterestMmk: 4800.0,
-        interestRateAnnual: 8.0,
-        openedDate: DateTime(2025, 6, 1),
-        tenureMonths: 12,
-      ),
-      CustomerSavingAccount(
-        accountId: 'SAV-002',
-        accountNumber: 'BMF-SAV-114920',
-        savingType: SavingType.voluntary,
-        balanceMmk: 250000.0,
-        accruedInterestMmk: 12500.0,
-        interestRateAnnual: 10.0,
-        openedDate: DateTime(2025, 9, 15),
-        tenureMonths: 0,
-      ),
-    ]);
-  }
+  SavingsRepositoryImpl({ApiClient? apiClient})
+      : _apiClient = apiClient ?? ApiClient(secureStorage: SecureStorageService());
 
   @override
   Future<List<CustomerSavingAccount>> getSavingAccounts(String memberNrc) async {
     AppLogger.info('Retrieving savings accounts for member: $memberNrc', tag: 'SavingsRepo');
+
+    try {
+      final response = await _apiClient.get(ApiEndpoints.getMySavings);
+      if (response.statusCode == 200 && response.data != null) {
+        final dynamic body = response.data;
+        List<dynamic> list = [];
+        if (body is Map<String, dynamic>) {
+          if (body['data'] is List) {
+            list = body['data'] as List<dynamic>;
+          } else if (body['data'] is Map && body['data']['accounts'] is List) {
+            list = body['data']['accounts'] as List<dynamic>;
+          }
+        } else if (body is List) {
+          list = body;
+        }
+
+        final fetched = list
+            .whereType<Map<String, dynamic>>()
+            .map((item) => CustomerSavingAccount.fromJson(item))
+            .toList();
+        _accounts.clear();
+        _accounts.addAll(fetched);
+        return List.unmodifiable(_accounts);
+      }
+    } catch (e) {
+      AppLogger.warn('Remote savings accounts fetch failed: $e. Returning cached accounts.', tag: 'SavingsRepo');
+    }
+
     return List.unmodifiable(_accounts);
   }
 
@@ -50,21 +56,28 @@ class SavingsRepositoryImpl implements SavingsRepository {
   }) async {
     AppLogger.info('Opening new $tenureMonths-month fixed savings for $memberNrc, beneficiary: $beneficiaryName', tag: 'SavingsRepo');
 
-    final now = DateTime.now();
-    final maturity = now.add(Duration(days: tenureMonths * 30));
-    final newAccount = CustomerSavingAccount(
-      accountId: 'SAV-${now.millisecondsSinceEpoch}',
-      accountNumber: 'BMF-FIX-${now.millisecondsSinceEpoch.toString().substring(7)}',
-      savingType: SavingType.fixedTerm,
-      balanceMmk: initialDepositMmk,
-      accruedInterestMmk: 0.0,
-      interestRateAnnual: 14.0,
-      openedDate: now,
-      maturityDate: maturity,
-      tenureMonths: tenureMonths,
-    );
-
-    _accounts.add(newAccount);
-    return newAccount;
+    try {
+      final response = await _apiClient.post(
+        ApiEndpoints.openSavings,
+        data: {
+          'customerCode': memberNrc,
+          'productType': 'FIXED_TERM',
+          'initialDepositMmk': initialDepositMmk,
+          'tenureMonths': tenureMonths,
+          'beneficiaryName': beneficiaryName,
+        },
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final dynamic body = response.data;
+        final data = body is Map<String, dynamic> ? (body['data'] ?? body) : <String, dynamic>{};
+        final account = CustomerSavingAccount.fromJson(data);
+        _accounts.add(account);
+        return account;
+      }
+      throw Exception('Mở sổ tiết kiệm thất bại: Máy chủ trả về mã lỗi HTTP ${response.statusCode}');
+    } catch (e) {
+      AppLogger.error('Remote openFixedTermSaving failed: $e', tag: 'SavingsRepo');
+      throw Exception('Không thể mở sổ tiết kiệm: Máy chủ chưa sẵn sàng hoặc kết nối mạng gián đoạn.');
+    }
   }
 }

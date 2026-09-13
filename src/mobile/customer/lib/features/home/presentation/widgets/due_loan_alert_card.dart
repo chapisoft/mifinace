@@ -91,6 +91,7 @@ class DueLoanAlertCard extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: CustomerTheme.primaryNavy,
                   foregroundColor: Colors.white,
+                  minimumSize: const Size(0, 38),
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                 ),

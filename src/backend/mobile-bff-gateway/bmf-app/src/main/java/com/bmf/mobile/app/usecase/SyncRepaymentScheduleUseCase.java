@@ -34,10 +34,10 @@ public class SyncRepaymentScheduleUseCase {
 
         BigDecimal totalExpectedAmount = schedules.stream()
                 .map(s -> s.getTotalAmount() != null ? s.getTotalAmount() : BigDecimal.ZERO)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+                .reduce(BigDecimal.ZERO, (a, b) -> a.add(b));
 
         int totalMembers = (int) schedules.stream()
-                .map(GroupScheduleRecord::getCustomerCode)
+                .map(s -> s.getCustomerCode())
                 .distinct()
                 .count();
 

@@ -1,6 +1,5 @@
 package com.bmf.mobile.api;
 
-import org.mockito.Mockito;
 import org.redisson.api.RBucket;
 import org.redisson.api.RedissonClient;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -18,11 +17,11 @@ public class TestConfig {
 
     @Bean
     @Primary
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public RedissonClient redissonClient() {
         RedissonClient redissonClient = mock(RedissonClient.class);
-        RBucket<Object> bucket = mock(RBucket.class);
-        when(redissonClient.getBucket(anyString())).thenReturn((RBucket) bucket);
+        RBucket bucket = mock(RBucket.class);
+        when(redissonClient.getBucket(anyString())).thenReturn(bucket);
         return redissonClient;
     }
 }

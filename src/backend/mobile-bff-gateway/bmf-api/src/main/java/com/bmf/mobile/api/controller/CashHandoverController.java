@@ -40,7 +40,10 @@ public class CashHandoverController {
             @RequestBody(required = false) GenerateCashHandoverQrRequest request,
             Principal principal) {
 
-        String collectorId = principal != null ? principal.getName() : "SYSTEM";
+        if (principal == null || principal.getName() == null || principal.getName().isBlank()) {
+            throw new com.bmf.mobile.domain.exception.BusinessException(com.bmf.mobile.domain.enums.ErrorCode.ERR_UNAUTHORIZED);
+        }
+        String collectorId = principal.getName();
         CashHandoverQrResponse response = cashHandoverUseCase.generateHandoverQr(request, collectorId);
         String message = i18nService.getMessage("msg.handover.qr.generated");
         return ResponseEntity.ok(ApiResponse.ok(response, message));
@@ -53,7 +56,10 @@ public class CashHandoverController {
             @Valid @RequestBody ConfirmCashHandoverRequest request,
             Principal principal) {
 
-        String cashierId = principal != null ? principal.getName() : "SYSTEM";
+        if (principal == null || principal.getName() == null || principal.getName().isBlank()) {
+            throw new com.bmf.mobile.domain.exception.BusinessException(com.bmf.mobile.domain.enums.ErrorCode.ERR_UNAUTHORIZED);
+        }
+        String cashierId = principal.getName();
         cashHandoverUseCase.confirmHandover(request, cashierId);
         String message = i18nService.getMessage("msg.handover.confirmed");
         return ResponseEntity.ok(ApiResponse.ok(null, message));

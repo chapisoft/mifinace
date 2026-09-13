@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:uuid/uuid.dart';
 import '../../../../app/theme/app_theme.dart';
 import '../../../../core/enums/saving_product_type.dart';
+import '../../../../core/l10n/app_localizations.dart';
 import '../../../../core/utils/currency_formatter.dart';
 import '../../domain/models/saving_account.dart';
 import '../bloc/saving_bloc.dart';
@@ -89,9 +90,11 @@ class _OpenSavingScreenState extends State<OpenSavingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Open Savings Passbook'),
+        title: Text(l10n.openSavingsPassbookTitle),
       ),
       body: BlocListener<SavingBloc, SavingState>(
         listener: (context, state) {
@@ -100,11 +103,11 @@ class _OpenSavingScreenState extends State<OpenSavingScreen> {
               context: context,
               barrierDismissible: false,
               builder: (ctx) => AlertDialog(
-                title: const Row(
+                title: Row(
                   children: [
-                    Icon(Icons.check_circle, color: AppTheme.accentTeal, size: 28),
-                    SizedBox(width: 8),
-                    Text('Passbook Created'),
+                    const Icon(Icons.check_circle, color: AppTheme.accentTeal, size: 28),
+                    const SizedBox(width: 8),
+                    Text(l10n.passbookCreatedTitle),
                   ],
                 ),
                 content: Text(
@@ -116,7 +119,7 @@ class _OpenSavingScreenState extends State<OpenSavingScreen> {
                       Navigator.pop(ctx);
                       context.pop();
                     },
-                    child: const Text('Done'),
+                    child: Text(l10n.doneButton),
                   ),
                 ],
               ),
@@ -144,50 +147,50 @@ class _OpenSavingScreenState extends State<OpenSavingScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'Member Account Holder',
-                        style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: AppTheme.textPrimary),
+                      Text(
+                        l10n.memberAccountHolder,
+                        style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: AppTheme.textPrimary),
                       ),
                       const SizedBox(height: 14),
                       TextFormField(
                         controller: _nameController,
-                        decoration: const InputDecoration(
-                          labelText: 'Member Full Name *',
-                          hintText: 'e.g. Daw Khin Khin Win',
-                          prefixIcon: Icon(Icons.person_outline),
+                        decoration: InputDecoration(
+                          labelText: l10n.borrowerFullName,
+                          hintText: l10n.borrowerFullNameHint,
+                          prefixIcon: const Icon(Icons.person_outline),
                         ),
-                        validator: (val) => (val == null || val.trim().isEmpty) ? 'Name is required' : null,
+                        validator: (val) => (val == null || val.trim().isEmpty) ? l10n.borrowerFullNameRequired : null,
                       ),
                       const SizedBox(height: 12),
                       TextFormField(
                         controller: _nrcController,
-                        decoration: const InputDecoration(
-                          labelText: 'Myanmar NRC Card *',
-                          hintText: 'e.g. 12/DAGANA(N)123456',
-                          prefixIcon: Icon(Icons.badge_outlined),
+                        decoration: InputDecoration(
+                          labelText: l10n.nrcInputLabel,
+                          hintText: l10n.nrcInputHint,
+                          prefixIcon: const Icon(Icons.badge_outlined),
                         ),
-                        validator: (val) => (val == null || val.trim().isEmpty) ? 'NRC is required' : null,
+                        validator: (val) => (val == null || val.trim().isEmpty) ? l10n.nrcRequiredValidation : null,
                       ),
                       const SizedBox(height: 12),
                       TextFormField(
                         controller: _phoneController,
                         keyboardType: TextInputType.phone,
-                        decoration: const InputDecoration(
-                          labelText: 'Phone Number *',
-                          hintText: 'e.g. 09123456789',
-                          prefixIcon: Icon(Icons.phone_outlined),
+                        decoration: InputDecoration(
+                          labelText: l10n.phoneNumber,
+                          hintText: l10n.phoneNumberHint,
+                          prefixIcon: const Icon(Icons.phone_outlined),
                         ),
-                        validator: (val) => (val == null || val.trim().isEmpty) ? 'Phone number is required' : null,
+                        validator: (val) => (val == null || val.trim().isEmpty) ? l10n.phoneNumberRequired : null,
                       ),
                       const SizedBox(height: 12),
                       DropdownButtonFormField<SavingProductType>(
-                        value: _selectedProduct,
-                        decoration: const InputDecoration(
-                          labelText: 'Savings Product Package',
-                          prefixIcon: Icon(Icons.category_outlined),
+                        initialValue: _selectedProduct,
+                        decoration: InputDecoration(
+                          labelText: l10n.savingsProductPackage,
+                          prefixIcon: const Icon(Icons.category_outlined),
                         ),
                         items: SavingProductType.values.map((p) {
-                          return DropdownMenuItem(value: p, child: Text(p.label));
+                          return DropdownMenuItem(value: p, child: Text(p.localizedName(l10n)));
                         }).toList(),
                         onChanged: (val) {
                           if (val != null) setState(() => _selectedProduct = val);
@@ -197,10 +200,10 @@ class _OpenSavingScreenState extends State<OpenSavingScreen> {
                       TextFormField(
                         controller: _initialDepositController,
                         keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(
-                          labelText: 'Initial Cash Deposit (MMK)',
-                          hintText: '0 if opening without deposit',
-                          prefixIcon: Icon(Icons.money),
+                        decoration: InputDecoration(
+                          labelText: l10n.initialCashDeposit,
+                          hintText: l10n.initialDepositHint,
+                          prefixIcon: const Icon(Icons.money),
                         ),
                       ),
                     ],
@@ -222,35 +225,35 @@ class _OpenSavingScreenState extends State<OpenSavingScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'Legal Nominee / Beneficiary',
-                        style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: AppTheme.textPrimary),
+                      Text(
+                        l10n.legalNominee,
+                        style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: AppTheme.textPrimary),
                       ),
                       const SizedBox(height: 14),
                       TextFormField(
                         controller: _nomineeNameController,
-                        decoration: const InputDecoration(
-                          labelText: 'Nominee Full Name',
+                        decoration: InputDecoration(
+                          labelText: l10n.nomineeFullName,
                           hintText: 'e.g. U Mg Mg',
-                          prefixIcon: Icon(Icons.person_pin_outlined),
+                          prefixIcon: const Icon(Icons.person_pin_outlined),
                         ),
                       ),
                       const SizedBox(height: 12),
                       TextFormField(
                         controller: _nomineeNrcController,
-                        decoration: const InputDecoration(
-                          labelText: 'Nominee NRC Card',
+                        decoration: InputDecoration(
+                          labelText: l10n.nomineeNrc,
                           hintText: 'e.g. 12/DAGANA(N)654321',
-                          prefixIcon: Icon(Icons.badge_outlined),
+                          prefixIcon: const Icon(Icons.badge_outlined),
                         ),
                       ),
                       const SizedBox(height: 12),
                       TextFormField(
                         controller: _nomineeRelationController,
-                        decoration: const InputDecoration(
-                          labelText: 'Relationship with Member',
+                        decoration: InputDecoration(
+                          labelText: l10n.nomineeRelation,
                           hintText: 'e.g. Spouse / Son / Daughter',
-                          prefixIcon: Icon(Icons.family_restroom_outlined),
+                          prefixIcon: const Icon(Icons.family_restroom_outlined),
                         ),
                       ),
                     ],
@@ -268,9 +271,9 @@ class _OpenSavingScreenState extends State<OpenSavingScreen> {
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                 ),
                 icon: const Icon(Icons.check_circle_outline, size: 20),
-                label: const Text(
-                  'Confirm & Open Passbook',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                label: Text(
+                  l10n.confirmOpenPassbook,
+                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
                 onPressed: _submit,
               ),

@@ -86,3 +86,17 @@ core:
     tiet-kiem-service-url: ${WCF_TIETKIEM_URL:http://localhost:8000/TietKiemService.svc}
     connection-timeout-ms: 5000
     receive-timeout-ms: 10000
+
+# Cấu hình Nghiệp vụ Vi mô (Microfinance Business Config)
+bmf:
+  insurance:
+    max-hospitalization-benefit: ${INS_HOSPITAL_BENEFIT:200000.00}
+    max-accident-benefit: ${INS_ACCIDENT_BENEFIT:500000.00}
+    max-life-benefit: ${INS_LIFE_BENEFIT:1000000.00}
+    annual-contribution-fee: ${INS_ANNUAL_FEE:12000.00}
+    emergency-hotline: ${INS_HOTLINE:+95 1 234 5678}
+    benefit-description-myanmar: ${INS_DESC_MY:BMF အဖွဲ့ဝင်များအတွက် ဆေးရုံတက်စရိတ်နှင့် မတော်တဆမှု အထောက်အပံ့ ရန်ပုံငွေ အကျိုးခံစားခွင့်များ}
+    claim-procedure-myanmar: ${INS_PROC_MY:ဆေးရုံဆေးခန်း အထောက်အထားစာရွက်စာတမ်းများနှင့် ရပ်ကျေးထောက်ခံစာ တင်ပြလျှောက်ထားနိုင်ပါသည်}
+  saving:
+    default-interest-rate: ${SAV_DEFAULT_RATE:10.00}
+

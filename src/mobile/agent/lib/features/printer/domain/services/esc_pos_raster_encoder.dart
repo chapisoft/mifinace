@@ -1,5 +1,4 @@
 import 'dart:typed_data';
-import '../models/bluetooth_printer_device.dart';
 
 /// ESC/POS Command & Raster Bit Image Encoder for portable thermal printers.
 class EscPosRasterEncoder {

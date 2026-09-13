@@ -69,4 +69,29 @@ public class JdbcUserRepository implements UserRepository {
                         .build())
                 .optional();
     }
+
+    @Override
+    public Optional<SysUser> findByPhoneNumber(String phoneNumber) {
+        String sql = """
+            SELECT Ma_NguoiDung, Ten_DangNhap, Ten_DayDu, Mat_Khau, Ma_ChiNhanh, Email, So_DienThoai, Trang_Thai, Ngay_Tao
+            FROM dbo.HT_NGUOIDUNG
+            WHERE So_DienThoai = :phoneNumber
+            """;
+
+        return jdbcClient.sql(sql)
+                .param("phoneNumber", phoneNumber)
+                .query((rs, rowNum) -> SysUser.builder()
+                        .userId(rs.getString("Ma_NguoiDung"))
+                        .username(rs.getString("Ten_DangNhap"))
+                        .fullName(rs.getString("Ten_DayDu"))
+                        .passwordHash(rs.getString("Mat_Khau"))
+                        .branchCode(rs.getString("Ma_ChiNhanh"))
+                        .email(rs.getString("Email"))
+                        .phoneNumber(rs.getString("So_DienThoai"))
+                        .active(rs.getInt("Trang_Thai") == 1)
+                        .userType(UserType.AGENT)
+                        .createdTime(rs.getTimestamp("Ngay_Tao") != null ? rs.getTimestamp("Ngay_Tao").toLocalDateTime() : null)
+                        .build())
+                .optional();
+    }
 }

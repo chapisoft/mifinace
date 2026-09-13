@@ -21,7 +21,18 @@ import lombok.Setter;
 @AllArgsConstructor
 public class CustomerLoginRequest {
 
-    @NotBlank(message = "{validation.auth.nrc.notBlank}")
+    /**
+     * Mã thành viên (Ma_ThanhVien), Số thẻ NRC, hoặc Số điện thoại.
+     */
+    @Size(max = 64, message = "{validation.auth.nrc.size}")
+    private String identifier;
+
+    @Size(max = 64, message = "{validation.auth.nrc.size}")
+    private String username;
+
+    @Size(max = 64, message = "{validation.auth.nrc.size}")
+    private String customerCode;
+
     @Size(max = 64, message = "{validation.auth.nrc.size}")
     private String nrcNumber;
 
@@ -51,4 +62,20 @@ public class CustomerLoginRequest {
 
     @Size(max = 512, message = "{validation.device.publicKey.size}")
     private String publicKey;
+
+    public String getEffectiveIdentifier() {
+        if (identifier != null && !identifier.isBlank()) {
+            return identifier;
+        }
+        if (username != null && !username.isBlank()) {
+            return username;
+        }
+        if (customerCode != null && !customerCode.isBlank()) {
+            return customerCode;
+        }
+        if (nrcNumber != null && !nrcNumber.isBlank()) {
+            return nrcNumber;
+        }
+        return "";
+    }
 }

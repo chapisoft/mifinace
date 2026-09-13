@@ -66,7 +66,7 @@ class NrcParser {
     if (rawText.trim().isEmpty) return null;
 
     // Clean whitespace and normalize brackets
-    String cleaned = rawText.trim().replaceAll('[', '(').replaceAll(']', ')');
+    final String cleaned = rawText.trim().replaceAll('[', '(').replaceAll(']', ')');
 
     // 1. Check English Format directly
     final englishMatch = _englishNrcPattern.firstMatch(cleaned);

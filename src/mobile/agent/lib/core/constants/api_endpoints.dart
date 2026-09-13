@@ -2,20 +2,25 @@
 class ApiEndpoints {
   ApiEndpoints._();
 
-  static const String defaultBaseUrl = 'http://10.0.2.2:8080'; // Android Emulator localhost bridge or Gateway URL
+  static const String defaultBaseUrl = 'https://mbmfina.microtec.vn';
+
+  // Health
+  static const String health = '/api/v1/health';
 
   // Authentication & Device
-  static const String loginOfficer = '/api/v1/auth/officer/login';
-  static const String refreshToken = '/api/v1/auth/refresh';
+  static const String loginOfficer = '/api/v1/auth/agent-login';
+  static const String loginCustomer = '/api/v1/auth/customer-login';
+  static const String refreshToken = '/api/v1/auth/refresh-token';
   static const String logout = '/api/v1/auth/logout';
   static const String registerDevice = '/api/v1/devices/register';
 
   // Agent Operations (Centers, Groups, Schedules, Collection)
   static const String getCenters = '/api/v1/agent/centers';
   static const String getGroups = '/api/v1/agent/centers/{centerId}/groups';
-  static const String getDueSchedules = '/api/v1/repayments/schedule';
-  static const String collectRepayment = '/api/v1/repayments/collect';
-  static const String batchSyncRepayments = '/api/v1/repayments/batch-sync';
+  static const String getDueSchedules = '/api/v1/loans/schedules/sync';
+  static const String collectRepayment = '/api/v1/loans/repayments/collect';
+  static const String batchSyncRepayments = '/api/v1/loans/repayments/batch-sync';
+  static const String getCustomerLoans = '/api/v1/loans/my-loans';
 
   // Field Operations (Applications, Savings, Insurance, Handover)
   static const String submitLoanApplication = '/api/v1/field/loans/apply';

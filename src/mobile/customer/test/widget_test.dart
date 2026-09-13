@@ -5,8 +5,10 @@ import 'package:bmf_customer/core/enums/loan_type.dart';
 import 'package:bmf_customer/core/enums/repayment_status.dart';
 import 'package:bmf_customer/features/auth/domain/models/member_profile.dart';
 import 'package:bmf_customer/features/auth/presentation/widgets/random_numeric_keypad.dart';
+import 'package:bmf_customer/core/l10n/customer_localizations.dart';
 import 'package:bmf_customer/features/home/presentation/widgets/due_loan_alert_card.dart';
 import 'package:bmf_customer/features/home/presentation/widgets/member_card.dart';
+import 'package:bmf_customer/features/home/presentation/widgets/quick_services_grid.dart';
 import 'package:bmf_customer/features/loans/domain/models/customer_loan.dart';
 import 'package:bmf_customer/features/loans/domain/models/customer_schedule_item.dart';
 import 'package:bmf_customer/features/loans/presentation/widgets/loan_card.dart';
@@ -95,6 +97,7 @@ void main() {
       final loan = CustomerLoan(
         loanId: 'LN-2026-001',
         contractCode: 'AGRI-KYA-001',
+        customerCode: 'CUST-001',
         loanType: LoanType.agricultureSeasonal,
         disbursedAmountMmk: 500000.0,
         totalRepaidMmk: 200000.0,
@@ -171,6 +174,7 @@ void main() {
       final loan = CustomerLoan(
         loanId: 'LN-2026-001',
         contractCode: 'AGRI-KYA-001',
+        customerCode: 'CUST-001',
         loanType: LoanType.agricultureSeasonal,
         disbursedAmountMmk: 500000.0,
         totalRepaidMmk: 200000.0,
@@ -203,5 +207,81 @@ void main() {
       await tester.tap(payBtn);
       expect(payTapped, isTrue);
     });
+
+    testWidgets('QuickServicesGrid renders 8 menu items in 4-column layout and responds to taps', (tester) async {
+      bool mmqrTapped = false;
+      bool loansTapped = false;
+      bool savingsTapped = false;
+      bool insuranceTapped = false;
+      bool applyLoanTapped = false;
+      bool historyTapped = false;
+      bool branchesTapped = false;
+      bool notificationsTapped = false;
+
+      await tester.pumpWidget(
+        MaterialApp(
+          localizationsDelegates: const [
+            CustomerLocalizations.delegate,
+          ],
+          supportedLocales: const [Locale('en')],
+          locale: const Locale('en'),
+          home: Scaffold(
+            body: QuickServicesGrid(
+              onMmqrPay: () => mmqrTapped = true,
+              onLoans: () => loansTapped = true,
+              onSavings: () => savingsTapped = true,
+              onInsurance: () => insuranceTapped = true,
+              onApplyLoan: () => applyLoanTapped = true,
+              onHistory: () => historyTapped = true,
+              onBranches: () => branchesTapped = true,
+              onNotifications: () => notificationsTapped = true,
+              unreadNotificationsCount: 3,
+            ),
+          ),
+        ),
+      );
+
+      // Verify grid title
+      expect(find.text('Quick Services'), findsOneWidget);
+
+      // Verify 8 menu items in English
+      expect(find.text('MMQR Pay'), findsOneWidget);
+      expect(find.text('Loans'), findsOneWidget);
+      expect(find.text('Savings'), findsOneWidget);
+      expect(find.text('Insurance'), findsOneWidget);
+      expect(find.text('Fast Loan'), findsOneWidget);
+      expect(find.text('History'), findsOneWidget);
+      expect(find.text('Branches'), findsOneWidget);
+      expect(find.text('Notifications'), findsOneWidget);
+
+      // Verify notification badge
+      expect(find.text('3'), findsOneWidget);
+
+      // Tap on items and check callbacks
+      await tester.tap(find.text('MMQR Pay'));
+      expect(mmqrTapped, isTrue);
+
+      await tester.tap(find.text('Loans'));
+      expect(loansTapped, isTrue);
+
+      await tester.tap(find.text('Savings'));
+      expect(savingsTapped, isTrue);
+
+      await tester.tap(find.text('Insurance'));
+      expect(insuranceTapped, isTrue);
+
+      await tester.tap(find.text('Fast Loan'));
+      expect(applyLoanTapped, isTrue);
+
+      await tester.tap(find.text('History'));
+      expect(historyTapped, isTrue);
+
+      await tester.tap(find.text('Branches'));
+      expect(branchesTapped, isTrue);
+
+      await tester.tap(find.text('Notifications'));
+      expect(notificationsTapped, isTrue);
+    });
   });
 }
+

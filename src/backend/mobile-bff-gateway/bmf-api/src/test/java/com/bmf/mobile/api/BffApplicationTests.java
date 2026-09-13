@@ -25,6 +25,7 @@ import org.springframework.context.annotation.Import;
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 @Import(TestConfig.class)
+@SuppressWarnings("null")
 class BffApplicationTests {
 
     @Autowired

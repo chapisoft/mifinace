@@ -32,7 +32,7 @@ class PushBatchSyncServiceImpl implements PushBatchSyncService {
     final List<Map<String, dynamic>> batchPayload = [];
     for (final item in pendingItems) {
       try {
-        final Map<String, dynamic> decoded = jsonDecode(item.payloadJson);
+        final decoded = Map<String, dynamic>.from(jsonDecode(item.payloadJson) as Map);
         decoded['queueId'] = item.queueId;
         decoded['idempotencyKey'] = item.idempotencyKey;
         batchPayload.add(decoded);
@@ -55,7 +55,7 @@ class PushBatchSyncServiceImpl implements PushBatchSyncService {
 
       final data = response.data;
       if (data != null && data['results'] is List) {
-        final List results = data['results'];
+        final results = data['results'] as List<dynamic>;
         for (final res in results) {
           final String queueId = res['queueId']?.toString() ?? '';
           final syncStatus = SyncStatus.fromCode(res['status']?.toString());
@@ -63,17 +63,18 @@ class PushBatchSyncServiceImpl implements PushBatchSyncService {
           final String? errorMsg = res['errorMessage']?.toString();
 
           if (syncStatus == SyncStatus.completed) {
+            AppLogger.info('Queue item $queueId synced successfully (ref: $serverRef)', tag: 'BatchSync');
             await _database.updateSyncQueueStatus(queueId, SyncStatus.completed);
             successCount++;
 
             // Update matching repayment and schedule status in local DB
             final matchingItem = pendingItems.firstWhere((p) => p.queueId == queueId);
             await (_database.update(_database.localRepaymentsTable)
-                  ..where((t) => t.transactionId.equals(matchingItem.entityId)))
+                  ..where((t) => t.transactionId.equals(matchingItem.aggregateId)))
                 .write(
               LocalRepaymentsTableCompanion(
                 syncStatus: Value(SyncStatus.completed.code),
-                updatedAt: Value(DateTime.now()),
+                syncedAt: Value(DateTime.now()),
               ),
             );
           } else {

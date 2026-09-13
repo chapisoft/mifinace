@@ -1,3 +1,5 @@
+import '../l10n/app_localizations.dart';
+
 /// Microfinance savings product types in Myanmar.
 enum SavingProductType {
   compulsory(code: 'COMPULSORY', label: 'Compulsory Micro Saving', myanmarLabel: 'မဖြစ်မနေ စုဆောင်းငွေ'),
@@ -24,3 +26,17 @@ enum SavingProductType {
     return SavingProductType.voluntary;
   }
 }
+
+extension SavingProductTypeL10n on SavingProductType {
+  String localizedName(AppLocalizations l10n) {
+    switch (this) {
+      case SavingProductType.compulsory:
+        return l10n.savingProductCompulsory;
+      case SavingProductType.voluntary:
+        return l10n.savingProductVoluntary;
+      case SavingProductType.fixedTerm:
+        return l10n.savingProductFixedTerm;
+    }
+  }
+}
+

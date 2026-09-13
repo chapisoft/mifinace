@@ -34,6 +34,14 @@ public enum ErrorCode {
     ERR_LOAN_NOT_FOUND("ERR_LOAN_NOT_FOUND", "Không tìm thấy hợp đồng vay vốn tương ứng", 404),
     ERR_GROUP_NOT_FOUND("ERR_GROUP_NOT_FOUND", "Không tìm thấy thông tin Cụm/Tổ", 404),
 
+    // Nhóm Kích hoạt tài khoản & OTP
+    ERR_ACCOUNT_NOT_ACTIVATED("ERR_ACCOUNT_NOT_ACTIVATED", "Tài khoản chưa được kích hoạt trên ứng dụng di động", 403),
+    ERR_ACCOUNT_ALREADY_ACTIVATED("ERR_ACCOUNT_ALREADY_ACTIVATED", "Tài khoản đã được kích hoạt trước đó", 400),
+    ERR_OTP_INVALID("ERR_OTP_INVALID", "Mã xác thực OTP không chính xác", 400),
+    ERR_OTP_EXPIRED("ERR_OTP_EXPIRED", "Mã xác thực OTP đã hết hạn, vui lòng gửi lại", 400),
+    ERR_ACTIVATION_TOKEN_INVALID("ERR_ACTIVATION_TOKEN_INVALID", "Phiên kích hoạt không hợp lệ hoặc đã hết hạn", 401),
+    ERR_RESET_TOKEN_INVALID("ERR_RESET_TOKEN_INVALID", "Phiên đặt lại mã PIN không hợp lệ hoặc đã hết hạn", 401),
+
     // Nhóm 409 - Tranh chấp đồng thời & Trùng lặp Idempotency
     ERR_CONFLICT("ERR_CONFLICT", "Dữ liệu bị xung đột hoặc đang được xử lý bởi tiến trình khác", 409),
     ERR_TRANSACTION_DUPLICATED("ERR_TRANSACTION_DUPLICATED", "Giao dịch đã được tiếp nhận và xử lý trước đó", 409),

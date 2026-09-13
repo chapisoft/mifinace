@@ -25,7 +25,7 @@ class RetryInterceptor extends Interceptor {
       final delayMs = baseDelayMs * (1 << (nextRetry - 1)); // Exponential backoff: 1s, 2s, 4s
 
       AppLogger.warn(
-        'Retrying request (${nextRetry}/$maxRetries) in ${delayMs}ms on path: ${err.requestOptions.path} (error: ${err.type})',
+        'Retrying request ($nextRetry/$maxRetries) in ${delayMs}ms on path: ${err.requestOptions.path} (error: ${err.type})',
         tag: 'RetryInterceptor',
       );
 

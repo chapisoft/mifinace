@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import '../../../app/router/app_router.dart';
-import '../../../app/theme/customer_theme.dart';
+import '../../../../app/router/app_router.dart';
+import '../../../../app/theme/customer_theme.dart';
+import '../../../../core/l10n/customer_localizations.dart';
 import '../bloc/auth_bloc.dart';
 import '../bloc/auth_event.dart';
 import '../bloc/auth_state.dart';
 import '../widgets/random_numeric_keypad.dart';
 
-/// Screen for creating a 6-digit security PIN with anti-shoulder surfing randomized keypad.
+/// Màn hình thiết lập mã PIN 6 số với bàn phím số ngẫu nhiên chống nhìn trộm (anti-shoulder surfing).
 class SetPinScreen extends StatefulWidget {
-  const SetPinScreen({super.key});
+  final String token;
+  final String purpose; // 'ACTIVATION' | 'RESET_PIN'
+
+  const SetPinScreen({
+    super.key,
+    required this.token,
+    this.purpose = 'ACTIVATION',
+  });
 
   @override
   State<SetPinScreen> createState() => _SetPinScreenState();
@@ -60,10 +68,11 @@ class _SetPinScreenState extends State<SetPinScreen> {
   }
 
   void _verifyAndSubmit() {
+    final l10n = CustomerLocalizations.of(context);
     if (_pin != _confirmPin) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('PIN numbers do not match. Please try again.'),
+        SnackBar(
+          content: Text(l10n.pinMismatch),
           backgroundColor: CustomerTheme.accentCrimson,
         ),
       );
@@ -75,45 +84,77 @@ class _SetPinScreenState extends State<SetPinScreen> {
       return;
     }
 
-    context.read<CustomerAuthBloc>().add(
-          SetupPinRequested(
-            pin: _pin,
-            enableBiometric: _enableBiometric,
-          ),
-        );
+    if (widget.purpose == 'ACTIVATION') {
+      context.read<CustomerAuthBloc>().add(
+            ActivateAccountRequested(
+              activationToken: widget.token,
+              pinCode: _pin,
+              enableBiometric: _enableBiometric,
+            ),
+          );
+    } else {
+      context.read<CustomerAuthBloc>().add(
+            ResetPinRequested(
+              resetPinToken: widget.token,
+              newPinCode: _pin,
+            ),
+          );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = CustomerLocalizations.of(context);
     final currentInput = _isConfirming ? _confirmPin : _pin;
+    final isActivation = widget.purpose == 'ACTIVATION';
+    final headerTitle = _isConfirming ? l10n.confirmPinTitle : l10n.setPinTitle;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(_isConfirming ? 'Confirm Security PIN' : 'Create 6-Digit PIN'),
+        title: Text(headerTitle, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
       ),
       body: BlocConsumer<CustomerAuthBloc, CustomerAuthState>(
         listener: (context, state) {
           if (state is AuthAuthenticated) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(l10n.pinSuccess),
+                backgroundColor: CustomerTheme.primaryCyan,
+              ),
+            );
             context.go(AppRouter.homeRoute);
           } else if (state is AuthError) {
+            final cleanMsg = state.errorMessage.replaceAll('Exception: ', '').trim();
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.errorMessage), backgroundColor: CustomerTheme.accentCrimson),
+              SnackBar(
+                content: Text(cleanMsg),
+                backgroundColor: CustomerTheme.accentCrimson,
+                behavior: SnackBarBehavior.floating,
+              ),
             );
+            setState(() {
+              _isConfirming = false;
+              _pin = '';
+              _confirmPin = '';
+            });
           }
         },
         builder: (context, state) {
+          final isLoading = state is AuthLoading;
+
           return Column(
             children: [
               const SizedBox(height: 24),
               Text(
-                _isConfirming ? 'Re-enter your 6-digit PIN to confirm' : 'Set a memorable 6-digit security PIN',
+                _isConfirming ? l10n.confirmPinTitle : l10n.setPinTitle,
                 textAlign: TextAlign.center,
                 style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: CustomerTheme.textPrimary),
               ),
-              const SizedBox(height: 12),
-              const Text(
-                'Used for quick daily login and approving digital payments.',
-                style: TextStyle(fontSize: 12, color: CustomerTheme.textSecondary),
+              const SizedBox(height: 8),
+              Text(
+                l10n.enter6DigitPin,
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 12, color: CustomerTheme.textSecondary),
               ),
               const SizedBox(height: 24),
 
@@ -124,28 +165,37 @@ class _SetPinScreenState extends State<SetPinScreen> {
                   final isFilled = i < currentInput.length;
                   return Container(
                     margin: const EdgeInsets.symmetric(horizontal: 8),
-                    width: 18,
-                    height: 18,
+                    width: 16,
+                    height: 16,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: isFilled ? CustomerTheme.primaryNavy : Colors.transparent,
-                      border: Border.all(color: CustomerTheme.primaryNavy, width: 2),
+                      color: isFilled ? CustomerTheme.primaryCyan : Colors.transparent,
+                      border: Border.all(
+                        color: isFilled ? CustomerTheme.primaryCyan : CustomerTheme.borderSubtle,
+                        width: 2.2,
+                      ),
                     ),
                   );
                 }),
               ),
               const SizedBox(height: 16),
 
-              if (!_isConfirming)
+              if (!_isConfirming && isActivation)
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 32),
                   child: CheckboxListTile(
                     contentPadding: EdgeInsets.zero,
-                    title: const Text('Enable Fingerprint / Face Unlock', style: TextStyle(fontSize: 13)),
+                    title: Text(l10n.biometricLogin, style: const TextStyle(fontSize: 13)),
                     value: _enableBiometric,
-                    activeColor: CustomerTheme.primaryNavy,
+                    activeColor: CustomerTheme.primaryCyan,
                     onChanged: (val) => setState(() => _enableBiometric = val ?? true),
                   ),
+                ),
+
+              if (isLoading)
+                const Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: CircularProgressIndicator(color: CustomerTheme.primaryCyan),
                 ),
 
               const Spacer(),

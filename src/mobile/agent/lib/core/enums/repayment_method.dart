@@ -21,3 +21,25 @@ enum RepaymentMethod {
     return RepaymentMethod.cash;
   }
 }
+
+extension RepaymentMethodExtension on RepaymentMethod {
+  String localizedName(dynamic l10n) {
+    switch (this) {
+      case RepaymentMethod.cash:
+        return l10n.methodCash;
+      case RepaymentMethod.mmqr:
+        return l10n.methodMmqr;
+      case RepaymentMethod.kbzPay:
+        return l10n.methodKbzPay;
+      case RepaymentMethod.wavePay:
+        return l10n.methodWavePay;
+      case RepaymentMethod.ayaPay:
+        return l10n.methodAyaPay;
+      case RepaymentMethod.mytelPay:
+        return l10n.methodMytelPay;
+      case RepaymentMethod.bankTransfer:
+        return l10n.methodBankTransfer;
+    }
+  }
+}
+

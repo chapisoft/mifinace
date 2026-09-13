@@ -41,7 +41,10 @@ public class InsuranceController {
             @Valid @RequestBody SubmitInsuranceClaimRequest request,
             Principal principal) {
 
-        String submittedBy = principal != null ? principal.getName() : "SYSTEM";
+        if (principal == null || principal.getName() == null || principal.getName().isBlank()) {
+            throw new com.bmf.mobile.domain.exception.BusinessException(com.bmf.mobile.domain.enums.ErrorCode.ERR_UNAUTHORIZED);
+        }
+        String submittedBy = principal.getName();
         InsuranceClaimResponse response = submitInsuranceClaimUseCase.submitClaim(request, submittedBy);
         String message = i18nService.getMessage("msg.insurance.submitted");
         return ResponseEntity.ok(ApiResponse.ok(response, message));
@@ -53,7 +56,10 @@ public class InsuranceController {
     public ResponseEntity<ApiResponse<List<InsuranceClaimResponse>>> getMyClaims(
             Principal principal) {
 
-        String customerCode = principal != null ? principal.getName() : "SYSTEM";
+        if (principal == null || principal.getName() == null || principal.getName().isBlank()) {
+            throw new com.bmf.mobile.domain.exception.BusinessException(com.bmf.mobile.domain.enums.ErrorCode.ERR_UNAUTHORIZED);
+        }
+        String customerCode = principal.getName();
         List<InsuranceClaimResponse> claims = submitInsuranceClaimUseCase.getMyClaims(customerCode);
         String message = i18nService.getMessage("msg.common.success");
         return ResponseEntity.ok(ApiResponse.ok(claims, message));

@@ -21,8 +21,16 @@ public class FirebasePushNotificationAdapter implements PushNotificationPort {
     @Value("${firebase.fcm.enabled:false}")
     private boolean fcmEnabled;
 
-    @Value("${firebase.fcm.server-key:mock-fcm-server-key}")
+    @Value("${firebase.fcm.server-key:}")
     private String fcmServerKey;
+
+    @jakarta.annotation.PostConstruct
+    public void validateConfiguration() {
+        if (fcmEnabled && (fcmServerKey == null || fcmServerKey.isBlank())) {
+            log.warn("FCM is enabled but firebase.fcm.server-key is not configured. Push notifications will be disabled.");
+            this.fcmEnabled = false;
+        }
+    }
 
     @Override
     public boolean sendNotification(String pushToken, String title, String body, Map<String, String> data) {
@@ -37,9 +45,8 @@ public class FirebasePushNotificationAdapter implements PushNotificationPort {
                 log.info("Dispatching FCM HTTP/2 notification to token: [{}...], title: '{}'",
                         pushToken.substring(0, Math.min(10, pushToken.length())), title);
             } else {
-                // Development/Sandbox Simulation Mode
-                log.info("[FCM-SIMULATION] Successfully sent push notification: token={}, title='{}', body='{}', dataCount={}",
-                        pushToken, title, body, data != null ? data.size() : 0);
+                log.info("FCM is disabled in current environment profile, skipped dispatching push notification for token: [{}...], title: '{}'",
+                        pushToken.substring(0, Math.min(10, pushToken.length())), title);
             }
             return true;
         } catch (Exception e) {

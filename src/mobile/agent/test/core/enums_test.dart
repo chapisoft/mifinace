@@ -10,6 +10,7 @@ import 'package:bmf_agent_app/core/enums/user_role.dart';
 void main() {
   group('100% Enum-Driven & Zero-Hardcode Tests for BMF Agent App', () {
     test('UserRole enum parses from code correctly', () {
+      expect(UserRole.fromCode('AGENT'), UserRole.agent);
       expect(UserRole.fromCode('CREDIT_OFFICER'), UserRole.creditOfficer);
       expect(UserRole.fromCode('BRANCH_MANAGER'), UserRole.branchManager);
       expect(UserRole.fromCode('CUSTOMER_MEMBER'), UserRole.customerMember);

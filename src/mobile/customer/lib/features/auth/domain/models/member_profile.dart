@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 /// Entity representing an authenticated village borrower member profile.
 class MemberProfile extends Equatable {
   final String memberId;
+  final String customerCode;
   final String nrcFormatted;
   final String fullName;
   final String phone;
@@ -15,6 +16,7 @@ class MemberProfile extends Equatable {
 
   const MemberProfile({
     required this.memberId,
+    String? customerCode,
     required this.nrcFormatted,
     required this.fullName,
     required this.phone,
@@ -24,11 +26,12 @@ class MemberProfile extends Equatable {
     required this.loyaltyPoints,
     required this.hasActiveLoans,
     required this.isPinConfigured,
-  });
+  }) : customerCode = customerCode ?? memberId;
 
   Map<String, dynamic> toJson() {
     return {
       'memberId': memberId,
+      'customerCode': customerCode,
       'nrcFormatted': nrcFormatted,
       'fullName': fullName,
       'phone': phone,
@@ -43,22 +46,24 @@ class MemberProfile extends Equatable {
 
   factory MemberProfile.fromJson(Map<String, dynamic> json) {
     return MemberProfile(
-      memberId: json['memberId'] as String,
-      nrcFormatted: json['nrcFormatted'] as String,
-      fullName: json['fullName'] as String,
-      phone: json['phone'] as String,
-      centerName: json['centerName'] as String,
-      groupName: json['groupName'] as String,
-      totalSavingBalanceMmk: (json['totalSavingBalanceMmk'] as num).toDouble(),
-      loyaltyPoints: json['loyaltyPoints'] as int? ?? 0,
+      memberId: (json['memberId'] ?? json['userId'] ?? '').toString(),
+      customerCode: (json['customerCode'] ?? json['userId'] ?? json['memberId'] ?? '').toString(),
+      nrcFormatted: (json['nrcFormatted'] ?? json['nrcNumber'] ?? '').toString(),
+      fullName: (json['fullName'] ?? '').toString(),
+      phone: (json['phone'] ?? '').toString(),
+      centerName: (json['centerName'] ?? json['centerCode'] ?? '').toString(),
+      groupName: (json['groupName'] ?? json['groupCode'] ?? '').toString(),
+      totalSavingBalanceMmk: (json['totalSavingBalanceMmk'] as num?)?.toDouble() ?? 0.0,
+      loyaltyPoints: (json['loyaltyPoints'] as num?)?.toInt() ?? 0,
       hasActiveLoans: json['hasActiveLoans'] as bool? ?? false,
-      isPinConfigured: json['isPinConfigured'] as bool? ?? false,
+      isPinConfigured: json['isPinConfigured'] as bool? ?? true,
     );
   }
 
   @override
   List<Object?> get props => [
         memberId,
+        customerCode,
         nrcFormatted,
         fullName,
         phone,

@@ -34,7 +34,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -153,7 +152,7 @@ class CollectRepaymentUseCaseTest {
         assertEquals("HD-2026-001", response.getContractCode());
         assertEquals(new BigDecimal("59250.00"), response.getPaidAmount());
 
-        verify(distributedLockPort, never()).executeWithLock(anyString(), anyLong(), anyLong(), any(), any(Supplier.class));
+        verify(distributedLockPort, never()).executeWithLock(anyString(), anyLong(), anyLong(), any(TimeUnit.class), org.mockito.ArgumentMatchers.<Supplier<RepaymentReceiptResponse>>any());
     }
 
     @Test

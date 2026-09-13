@@ -35,6 +35,15 @@ class SecureStorageService {
     return _storage.read(key: AppConstants.jwtRefreshTokenKey);
   }
 
+  static const String _keyQuickActions = 'bmf_agent_quick_actions';
+
+  Future<void> saveQuickActions(List<String> actions) => write(_keyQuickActions, actions.join(','));
+  Future<List<String>?> getQuickActions() async {
+    final val = await read(_keyQuickActions);
+    if (val == null || val.isEmpty) return null;
+    return val.split(',').where((s) => s.isNotEmpty).toList();
+  }
+
   Future<void> clearAuthTokens() async {
     await _storage.delete(key: AppConstants.jwtAccessTokenKey);
     await _storage.delete(key: AppConstants.jwtRefreshTokenKey);

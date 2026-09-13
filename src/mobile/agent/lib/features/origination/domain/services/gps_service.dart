@@ -1,4 +1,4 @@
-import 'gps_location.dart';
+import '../models/gps_location.dart';
 
 /// Service interface for retrieving accurate field GPS coordinates.
 abstract class GpsService {

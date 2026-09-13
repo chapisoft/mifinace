@@ -1,3 +1,5 @@
+import '../l10n/app_localizations.dart';
+
 /// Risk types covered under BMF village mutual micro-insurance program.
 enum ClaimRiskType {
   illness(code: 'ILLNESS', label: 'Inpatient Hospitalization', myanmarLabel: 'ဖျားနာဆေးရုံတက်'),
@@ -26,3 +28,21 @@ enum ClaimRiskType {
     return ClaimRiskType.illness;
   }
 }
+
+extension ClaimRiskTypeL10n on ClaimRiskType {
+  String localizedName(AppLocalizations l10n) {
+    switch (this) {
+      case ClaimRiskType.illness:
+        return l10n.claimRiskIllness;
+      case ClaimRiskType.accident:
+        return l10n.claimRiskAccident;
+      case ClaimRiskType.naturalDisaster:
+        return l10n.claimRiskNaturalDisaster;
+      case ClaimRiskType.death:
+        return l10n.claimRiskDeath;
+      case ClaimRiskType.cropFailure:
+        return l10n.claimRiskCropFailure;
+    }
+  }
+}
+

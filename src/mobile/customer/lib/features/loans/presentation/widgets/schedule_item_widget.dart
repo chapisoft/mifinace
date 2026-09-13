@@ -117,6 +117,30 @@ class ScheduleItemWidget extends StatelessWidget {
                 ),
               ],
             ),
+            if (item.transactionId != null) ...[
+              const SizedBox(height: 8),
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                decoration: BoxDecoration(
+                  color: CustomerTheme.backgroundLight,
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Receipt Ref: ${item.transactionId}',
+                      style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: CustomerTheme.primaryNavy),
+                    ),
+                    Text(
+                      'Method: ${item.paymentMethod ?? "CASH"}',
+                      style: const TextStyle(fontSize: 10, color: CustomerTheme.textSecondary, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ],
         ),
       ),

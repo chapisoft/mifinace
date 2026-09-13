@@ -34,4 +34,9 @@ public interface RepaymentRepository {
      * Lấy danh sách giao dịch thu nợ do cán bộ thực hiện trong ngày.
      */
     List<RepaymentTransaction> findByCollectedByAndDate(String collectedBy, String date);
+
+    /**
+     * Lấy danh sách toàn bộ giao dịch của một khách hàng thành viên.
+     */
+    List<RepaymentTransaction> findByCustomerCode(String customerCode);
 }

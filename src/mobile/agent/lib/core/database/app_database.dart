@@ -28,7 +28,7 @@ class AppDatabase extends _$AppDatabase {
 
   AppDatabase(this.keyManager) : super(_openConnection(keyManager));
 
-  AppDatabase.forTesting(DatabaseConnection connection, this.keyManager) : super(connection);
+  AppDatabase.forTesting(super.connection, this.keyManager);
 
   @override
   int get schemaVersion => 1;

@@ -39,24 +39,6 @@ class _CollectRepaymentDialogState extends State<CollectRepaymentDialog> {
     super.dispose();
   }
 
-  String _getMethodLabel(AppLocalizations l10n, RepaymentMethod method) {
-    switch (method) {
-      case RepaymentMethod.cash:
-        return l10n.methodCash;
-      case RepaymentMethod.mmqr:
-        return l10n.methodMmqr;
-      case RepaymentMethod.kbzPay:
-        return l10n.methodKbzPay;
-      case RepaymentMethod.wavePay:
-        return l10n.methodWavePay;
-      case RepaymentMethod.ayaPay:
-        return 'AYA Pay';
-      case RepaymentMethod.mytelPay:
-        return 'MytelPay';
-      case RepaymentMethod.bankTransfer:
-        return 'Bank Transfer';
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -121,14 +103,18 @@ class _CollectRepaymentDialogState extends State<CollectRepaymentDialog> {
             ),
             const SizedBox(height: 8),
             DropdownButtonFormField<RepaymentMethod>(
-              value: _selectedMethod,
+              initialValue: _selectedMethod,
+              isExpanded: true,
               decoration: const InputDecoration(
                 contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
               ),
               items: RepaymentMethod.values.map((method) {
                 return DropdownMenuItem(
                   value: method,
-                  child: Text(_getMethodLabel(l10n, method)),
+                  child: Text(
+                    method.localizedName(l10n),
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 );
               }).toList(),
               onChanged: (val) {

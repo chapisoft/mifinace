@@ -1,6 +1,7 @@
 /Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-api/src/main/java/com/bmf/mobile/api/BffApplication.java
 /Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-api/src/main/java/com/bmf/mobile/api/config/VirtualThreadConfig.java
 /Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-api/src/main/java/com/bmf/mobile/api/controller/AuthController.java
+/Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-api/src/main/java/com/bmf/mobile/api/controller/BranchController.java
 /Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-api/src/main/java/com/bmf/mobile/api/controller/CashHandoverController.java
 /Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-api/src/main/java/com/bmf/mobile/api/controller/CustomerInsuranceController.java
 /Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-api/src/main/java/com/bmf/mobile/api/controller/CustomerLoanController.java

@@ -1,3 +1,5 @@
+import '../l10n/app_localizations.dart';
+
 /// Types of physical cash movements handled by field credit officers.
 enum CashTransactionType {
   loanRepayment(code: 'LOAN_REPAYMENT', label: 'Loan Installment Collection', myanmarLabel: 'ချေးငွေအရစ်ကျ ကောက်ခံငွေ'),
@@ -25,3 +27,19 @@ enum CashTransactionType {
     return CashTransactionType.loanRepayment;
   }
 }
+
+extension CashTransactionTypeL10n on CashTransactionType {
+  String localizedName(AppLocalizations l10n) {
+    switch (this) {
+      case CashTransactionType.loanRepayment:
+        return l10n.cashTxLoanRepayment;
+      case CashTransactionType.savingDeposit:
+        return l10n.cashTxSavingDeposit;
+      case CashTransactionType.savingOpen:
+        return l10n.cashTxSavingOpen;
+      case CashTransactionType.handoverToCashier:
+        return l10n.cashTxHandover;
+    }
+  }
+}
+

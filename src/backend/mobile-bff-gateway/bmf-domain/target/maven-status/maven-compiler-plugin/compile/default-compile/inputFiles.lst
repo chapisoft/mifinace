@@ -1,4 +1,5 @@
 /Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-domain/src/main/java/com/bmf/mobile/domain/constant/AppConstants.java
+/Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-domain/src/main/java/com/bmf/mobile/domain/entity/AppUser.java
 /Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-domain/src/main/java/com/bmf/mobile/domain/entity/CashHandover.java
 /Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-domain/src/main/java/com/bmf/mobile/domain/entity/CustomerLoanScheduleRecord.java
 /Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-domain/src/main/java/com/bmf/mobile/domain/entity/CustomerMember.java
@@ -37,11 +38,14 @@
 /Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-domain/src/main/java/com/bmf/mobile/domain/exception/BusinessException.java
 /Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-domain/src/main/java/com/bmf/mobile/domain/port/DistributedLockPort.java
 /Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-domain/src/main/java/com/bmf/mobile/domain/port/MmqrGeneratorPort.java
+/Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-domain/src/main/java/com/bmf/mobile/domain/port/OtpManagementPort.java
 /Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-domain/src/main/java/com/bmf/mobile/domain/port/PasswordEncoderPort.java
 /Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-domain/src/main/java/com/bmf/mobile/domain/port/PushNotificationPort.java
 /Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-domain/src/main/java/com/bmf/mobile/domain/port/RefreshTokenData.java
+/Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-domain/src/main/java/com/bmf/mobile/domain/port/StepUpTokenClaims.java
 /Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-domain/src/main/java/com/bmf/mobile/domain/port/TokenBlacklistPort.java
 /Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-domain/src/main/java/com/bmf/mobile/domain/port/TokenProviderPort.java
+/Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-domain/src/main/java/com/bmf/mobile/domain/repository/AppUserRepository.java
 /Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-domain/src/main/java/com/bmf/mobile/domain/repository/CashHandoverRepository.java
 /Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-domain/src/main/java/com/bmf/mobile/domain/repository/CustomerRepository.java
 /Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-domain/src/main/java/com/bmf/mobile/domain/repository/InsuranceClaimRepository.java

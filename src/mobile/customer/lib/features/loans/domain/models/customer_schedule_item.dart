@@ -16,6 +16,8 @@ class CustomerScheduleItem extends Equatable {
   final DateTime? paidDate;
   final int overdueDays;
   final DebtGroup debtGroup;
+  final String? transactionId;
+  final String? paymentMethod;
 
   const CustomerScheduleItem({
     required this.scheduleId,
@@ -30,6 +32,8 @@ class CustomerScheduleItem extends Equatable {
     this.paidDate,
     required this.overdueDays,
     required this.debtGroup,
+    this.transactionId,
+    this.paymentMethod,
   });
 
   Map<String, dynamic> toJson() {
@@ -46,23 +50,55 @@ class CustomerScheduleItem extends Equatable {
       'paidDate': paidDate?.toIso8601String(),
       'overdueDays': overdueDays,
       'debtGroup': debtGroup.code,
+      'transactionId': transactionId,
+      'paymentMethod': paymentMethod,
     };
   }
 
   factory CustomerScheduleItem.fromJson(Map<String, dynamic> json) {
+    final schedId = json['scheduleId']?.toString() ??
+        '${json['contractCode'] ?? 'HD'}_${json['periodNumber'] ?? json['kyThu'] ?? 1}';
+    final pNum = (json['periodNumber'] ?? json['kyThu'] as num?)?.toInt() ?? 1;
+
+    DateTime dDate = DateTime.now();
+    final rawDue = json['dueDate'] ?? json['ngayDenHan'];
+    if (rawDue != null) {
+      dDate = DateTime.tryParse(rawDue.toString()) ?? DateTime.now();
+    }
+
+    final pDue = (json['principalDueMmk'] ?? json['principalAmount'] ?? json['tienGoc'] as num?)?.toDouble() ?? 0.0;
+    final iDue = (json['interestDueMmk'] ?? json['interestAmount'] ?? json['tienLai'] as num?)?.toDouble() ?? 0.0;
+    final insDue = (json['insuranceFeeMmk'] ?? json['insuranceFee'] ?? json['phiBaoHiem'] as num?)?.toDouble() ?? 0.0;
+    final sDue = (json['savingFeeMmk'] ?? json['compulsorySaving'] ?? json['tietKiemBatBuoc'] as num?)?.toDouble() ?? 0.0;
+    final totDue = (json['totalDueMmk'] ?? json['totalAmount'] ?? json['tongTien'] as num?)?.toDouble() ?? (pDue + iDue + insDue + sDue);
+
+    final rawStatus = (json['status'] ?? json['trangThai'])?.toString();
+    final st = RepaymentStatus.fromCode(rawStatus);
+
+    DateTime? pDate;
+    final rawPaid = json['paidDate'] ?? json['collectedTime'];
+    if (rawPaid != null) {
+      pDate = DateTime.tryParse(rawPaid.toString());
+    }
+
+    final odDays = (json['overdueDays'] as num?)?.toInt() ?? 0;
+    final dg = DebtGroup.fromCode(json['debtGroup']?.toString());
+
     return CustomerScheduleItem(
-      scheduleId: json['scheduleId'] as String,
-      periodNumber: json['periodNumber'] as int,
-      dueDate: DateTime.parse(json['dueDate'] as String),
-      principalDueMmk: (json['principalDueMmk'] as num).toDouble(),
-      interestDueMmk: (json['interestDueMmk'] as num).toDouble(),
-      insuranceFeeMmk: (json['insuranceFeeMmk'] as num).toDouble(),
-      savingFeeMmk: (json['savingFeeMmk'] as num).toDouble(),
-      totalDueMmk: (json['totalDueMmk'] as num).toDouble(),
-      status: RepaymentStatus.fromCode(json['status'] as String?),
-      paidDate: json['paidDate'] != null ? DateTime.parse(json['paidDate'] as String) : null,
-      overdueDays: json['overdueDays'] as int? ?? 0,
-      debtGroup: DebtGroup.fromCode(json['debtGroup'] as String?),
+      scheduleId: schedId,
+      periodNumber: pNum,
+      dueDate: dDate,
+      principalDueMmk: pDue,
+      interestDueMmk: iDue,
+      insuranceFeeMmk: insDue,
+      savingFeeMmk: sDue,
+      totalDueMmk: totDue,
+      status: st,
+      paidDate: pDate,
+      overdueDays: odDays,
+      debtGroup: dg,
+      transactionId: json['transactionId']?.toString(),
+      paymentMethod: json['paymentMethod']?.toString(),
     );
   }
 
@@ -80,5 +116,7 @@ class CustomerScheduleItem extends Equatable {
         paidDate,
         overdueDays,
         debtGroup,
+        transactionId,
+        paymentMethod,
       ];
 }

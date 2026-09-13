@@ -18,4 +18,9 @@ public interface UserRepository {
      * Tìm kiếm người dùng theo mã định danh (UserId).
      */
     Optional<SysUser> findById(String userId);
+
+    /**
+     * Tìm kiếm người dùng theo số điện thoại (Phone).
+     */
+    Optional<SysUser> findByPhoneNumber(String phoneNumber);
 }

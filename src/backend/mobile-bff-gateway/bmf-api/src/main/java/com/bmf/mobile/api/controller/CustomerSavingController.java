@@ -40,16 +40,19 @@ public class CustomerSavingController {
     @PreAuthorize("hasRole('CUSTOMER')")
     @Operation(summary = "TASK-BFF-05.10: Khách hàng tra cứu danh sách sổ tiết kiệm và tổng lãi dồn tích thực tế")
     public ResponseEntity<ApiResponse<CustomerSavingOverviewResponse>> getCustomerSavings(Principal principal) {
-        String customerCode = principal != null ? principal.getName() : "CUST-DEFAULT";
+        if (principal == null || principal.getName() == null || principal.getName().isBlank()) {
+            throw new com.bmf.mobile.domain.exception.BusinessException(com.bmf.mobile.domain.enums.ErrorCode.ERR_UNAUTHORIZED);
+        }
+        String customerCode = principal.getName();
         List<SavingAccountResponse> accounts = manageSavingsUseCase.getMySavingAccounts(customerCode);
 
         BigDecimal totalBalance = accounts.stream()
                 .map(a -> a.getBalance() != null ? a.getBalance() : BigDecimal.ZERO)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+                .reduce(BigDecimal.ZERO, (a, b) -> a.add(b));
 
         BigDecimal totalAccruedInterest = accounts.stream()
                 .map(a -> a.getAccruedInterest() != null ? a.getAccruedInterest() : BigDecimal.ZERO)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+                .reduce(BigDecimal.ZERO, (a, b) -> a.add(b));
 
         CustomerSavingOverviewResponse overview = CustomerSavingOverviewResponse.builder()
                 .customerCode(customerCode)
@@ -70,7 +73,10 @@ public class CustomerSavingController {
             @Valid @RequestBody OpenSavingAccountRequest request,
             Principal principal) {
 
-        String customerCode = principal != null ? principal.getName() : "CUST-DEFAULT";
+        if (principal == null || principal.getName() == null || principal.getName().isBlank()) {
+            throw new com.bmf.mobile.domain.exception.BusinessException(com.bmf.mobile.domain.enums.ErrorCode.ERR_UNAUTHORIZED);
+        }
+        String customerCode = principal.getName();
         request.setCustomerCode(customerCode);
         SavingAccountResponse response = manageSavingsUseCase.openAccount(request, customerCode);
         String message = i18nService.getMessage("msg.saving.open.success");

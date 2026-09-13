@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:drift/drift.dart';
 import 'package:uuid/uuid.dart';
 import '../../../../core/database/app_database.dart';
-import '../../../../core/enums/saving_product_type.dart';
 import '../../../../core/enums/sync_status.dart';
 import '../../../../core/network/api_client.dart';
 import '../../../../core/utils/app_logger.dart';
@@ -25,67 +24,38 @@ class SavingRepositoryImpl implements SavingRepository {
     Uuid? uuid,
   })  : _apiClient = apiClient,
         _database = database,
-        _uuid = uuid ?? const Uuid() {
-    _initDemoVillageAccounts();
-  }
-
-  void _initDemoVillageAccounts() {
-    // Initial catalog of village center savings accounts (retrieved during daily pull sync)
-    _cachedAccounts.addAll([
-      SavingAccount(
-        accountId: 'SA001',
-        accountNumber: 'SAV-2026-00891',
-        centerCode: 'C001',
-        groupCode: 'G001',
-        customerName: 'Daw Khin Khin Win',
-        nrcFormatted: '12/DAGANA(N)123456',
-        phone: '09123456789',
-        productType: SavingProductType.compulsory,
-        balanceMmk: 250000.0,
-        interestRateAnnual: 10.0,
-        openedDate: DateTime(2025, 6, 1),
-        nomineeName: 'U Mg Mg',
-        nomineeNrc: '12/DAGANA(N)654321',
-        nomineeRelation: 'Spouse',
-      ),
-      SavingAccount(
-        accountId: 'SA002',
-        accountNumber: 'SAV-2026-00892',
-        centerCode: 'C001',
-        groupCode: 'G001',
-        customerName: 'Daw Nilar Myint',
-        nrcFormatted: '12/DAGANA(N)234567',
-        phone: '09234567890',
-        productType: SavingProductType.voluntary,
-        balanceMmk: 480000.0,
-        interestRateAnnual: 12.0,
-        openedDate: DateTime(2025, 8, 15),
-        nomineeName: 'Ko Aung Kyaw',
-        nomineeNrc: '12/DAGANA(N)765432',
-        nomineeRelation: 'Son',
-      ),
-      SavingAccount(
-        accountId: 'SA003',
-        accountNumber: 'SAV-2026-00910',
-        centerCode: 'C002',
-        groupCode: 'G003',
-        customerName: 'Daw Hla Hla Than',
-        nrcFormatted: '9/MAHAMA(N)345678',
-        phone: '09345678901',
-        productType: SavingProductType.fixedTerm,
-        balanceMmk: 1000000.0,
-        interestRateAnnual: 14.0,
-        openedDate: DateTime(2025, 1, 10),
-        nomineeName: 'Daw San San',
-        nomineeNrc: '9/MAHAMA(N)876543',
-        nomineeRelation: 'Mother',
-      ),
-    ]);
-  }
+        _uuid = uuid ?? const Uuid();
 
   @override
   Future<List<SavingAccount>> getSavingAccounts({String? centerCode, String? query}) async {
     AppLogger.debug('Fetching savings accounts (center: $centerCode, query: $query)', tag: 'SavingRepo');
+
+    if (_cachedAccounts.isEmpty) {
+      try {
+        final response = await _apiClient.get(
+          '/api/v1/savings',
+          queryParameters: {
+            if (centerCode != null && centerCode.isNotEmpty) 'centerCode': centerCode,
+            if (query != null && query.isNotEmpty) 'query': query,
+          },
+        );
+        if (response.statusCode == 200 && response.data != null) {
+          final dynamic body = response.data;
+          final List<dynamic> list = body is Map<String, dynamic> && body['data'] is List
+              ? body['data'] as List<dynamic>
+              : (body is List ? body : []);
+          final fetched = list
+              .whereType<Map<String, dynamic>>()
+              .map((item) => SavingAccount.fromJson(item))
+              .toList();
+          _cachedAccounts.clear();
+          _cachedAccounts.addAll(fetched);
+        }
+      } catch (e) {
+        AppLogger.warn('Remote savings accounts fetch failed or offline: $e', tag: 'SavingRepo');
+      }
+    }
+
     var result = List<SavingAccount>.from(_cachedAccounts);
 
     if (centerCode != null && centerCode.isNotEmpty) {
@@ -140,7 +110,7 @@ class SavingRepositoryImpl implements SavingRepository {
       LocalSyncQueueTableCompanion(
         queueId: Value(queueId),
         operationType: const Value('SAVING_DEPOSIT'),
-        entityId: Value(deposit.depositId),
+        aggregateId: Value(deposit.depositId),
         payloadJson: Value(payloadJson),
         idempotencyKey: Value(deposit.idempotencyKey),
         status: const Value('PENDING'),
@@ -151,8 +121,13 @@ class SavingRepositoryImpl implements SavingRepository {
     // 3. Attempt immediate online upload if network available
     try {
       final response = await _apiClient.post(
-        '/api/v1/mobile/savings/deposit',
-        data: updatedDeposit.toJson(),
+        '/api/v1/savings/collect',
+        data: {
+          'accountNumber': deposit.accountNumber,
+          'depositAmount': deposit.amountMmk,
+          'officerId': deposit.officerId,
+          'idempotencyKey': deposit.idempotencyKey,
+        },
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
         await _database.updateSyncQueueStatus(queueId, SyncStatus.completed);
@@ -184,13 +159,31 @@ class SavingRepositoryImpl implements SavingRepository {
       LocalSyncQueueTableCompanion(
         queueId: Value(queueId),
         operationType: const Value('SAVING_OPEN'),
-        entityId: Value(updatedAccount.accountId),
+        aggregateId: Value(updatedAccount.accountId),
         payloadJson: Value(payloadJson),
         idempotencyKey: Value(idempotencyKey),
         status: const Value('PENDING'),
         createdAt: Value(DateTime.now()),
       ),
     );
+
+    try {
+      final response = await _apiClient.post(
+        '/api/v1/savings/open',
+        data: {
+          'customerCode': account.customerName,
+          'productType': account.productType.code,
+          'initialDepositMmk': initialDepositMmk,
+          'idempotencyKey': idempotencyKey,
+        },
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        await _database.updateSyncQueueStatus(queueId, SyncStatus.completed);
+        AppLogger.info('Saving account open synced to core immediately: ${account.accountNumber}', tag: 'SavingRepo');
+      }
+    } catch (e) {
+      AppLogger.warn('Immediate Gateway upload failed. Account opening queued offline: $e', tag: 'SavingRepo');
+    }
 
     return updatedAccount;
   }

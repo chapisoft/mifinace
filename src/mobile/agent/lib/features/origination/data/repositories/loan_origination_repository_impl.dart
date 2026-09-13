@@ -6,8 +6,8 @@ import '../../../../core/enums/sync_operation.dart';
 import '../../../../core/enums/sync_status.dart';
 import '../../../../core/network/api_client.dart';
 import '../../../../core/utils/app_logger.dart';
-import '../models/loan_application.dart';
-import '../repositories/loan_origination_repository.dart';
+import '../../domain/models/loan_application.dart';
+import '../../domain/repositories/loan_origination_repository.dart';
 
 /// Implementation of [LoanOriginationRepository] persisting applications offline with Outbox pattern.
 class LoanOriginationRepositoryImpl implements LoanOriginationRepository {
@@ -35,7 +35,7 @@ class LoanOriginationRepositoryImpl implements LoanOriginationRepository {
       LocalSyncQueueTableCompanion(
         queueId: Value(queueId),
         operationType: const Value('LOAN_APPLICATION'),
-        entityId: Value(application.applicationId),
+        aggregateId: Value(application.applicationId),
         payloadJson: Value(payloadJson),
         idempotencyKey: Value(application.idempotencyKey),
         status: const Value('PENDING'),

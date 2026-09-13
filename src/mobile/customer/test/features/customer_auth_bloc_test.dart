@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:bmf_customer/core/security/secure_storage_service.dart';
+import 'package:bmf_customer/features/auth/domain/models/check_account_result.dart';
 import 'package:bmf_customer/features/auth/domain/models/member_profile.dart';
 import 'package:bmf_customer/features/auth/domain/repositories/customer_auth_repository.dart';
 import 'package:bmf_customer/features/auth/presentation/bloc/auth_bloc.dart';
@@ -90,36 +91,64 @@ void main() {
       );
     });
 
-    test('RequestOtpRequested emits AuthOtpSentState on valid phone & NRC', () async {
-      when(() => mockAuthRepository.requestRegistrationOtp(
-            nrcFormatted: '12/DAGAMA(N)098765',
-            phone: '09791234567',
-          )).thenAnswer((_) async => true);
+    test('CheckAccountRequested emits AuthAccountCheckedState on valid identifier', () async {
+      const mockResult = CheckAccountResult(
+        status: 'NOT_ACTIVATED',
+        identifier: '09791234567',
+        businessId: 'MBR-999',
+        userType: 'CUSTOMER',
+        fullName: 'Daw Khin Khin',
+        maskedPhone: '09*****4567',
+        nrcNumber: '12/DAGAMA(N)098765',
+        activated: false,
+        biometricEnabled: false,
+        pinLocked: false,
+      );
 
-      authBloc.add(const RequestOtpRequested(
-        nrcFormatted: '12/DAGAMA(N)098765',
-        phone: '09791234567',
-      ));
+      when(() => mockAuthRepository.checkAccount(identifier: '09791234567'))
+          .thenAnswer((_) async => mockResult);
+
+      authBloc.add(const CheckAccountRequested(identifier: '09791234567'));
 
       await expectLater(
         authBloc.stream,
         emitsInOrder([
           const AuthLoading(),
-          const AuthOtpSentState(nrcFormatted: '12/DAGAMA(N)098765', phone: '09791234567'),
+          const AuthAccountCheckedState(mockResult),
         ]),
       );
     });
 
-    test('RequestOtpRequested emits AuthError when repository throws', () async {
-      when(() => mockAuthRepository.requestRegistrationOtp(
-            nrcFormatted: '12/DAGAMA(N)098765',
-            phone: '09791234567',
-          )).thenThrow(Exception('SMS Gateway timeout'));
+    test('SendActivationOtpRequested emits AuthActivationOtpSentState on success', () async {
+      when(() => mockAuthRepository.sendActivationOtp(identifier: '09791234567'))
+          .thenAnswer((_) async => {
+                'identifier': '09791234567',
+                'maskedPhone': '09*****4567',
+                'expiresIn': 300,
+                'cooldownSeconds': 60,
+              });
 
-      authBloc.add(const RequestOtpRequested(
-        nrcFormatted: '12/DAGAMA(N)098765',
-        phone: '09791234567',
-      ));
+      authBloc.add(const SendActivationOtpRequested(identifier: '09791234567'));
+
+      await expectLater(
+        authBloc.stream,
+        emitsInOrder([
+          const AuthLoading(),
+          const AuthActivationOtpSentState(
+            identifier: '09791234567',
+            maskedPhone: '09*****4567',
+            expiresIn: 300,
+            cooldownSeconds: 60,
+          ),
+        ]),
+      );
+    });
+
+    test('SendActivationOtpRequested emits AuthError when repository throws', () async {
+      when(() => mockAuthRepository.sendActivationOtp(identifier: '09791234567'))
+          .thenThrow(Exception('SMS Gateway timeout'));
+
+      authBloc.add(const SendActivationOtpRequested(identifier: '09791234567'));
 
       await expectLater(
         authBloc.stream,
@@ -130,29 +159,14 @@ void main() {
       );
     });
 
-    test('VerifyOtpRequested emits AuthNeedsPinSetupState when pin not configured', () async {
-      const profileNoPin = MemberProfile(
-        memberId: 'MBR-999',
-        nrcFormatted: '12/DAGAMA(N)098765',
-        fullName: 'Daw Khin Khin',
-        phone: '09791234567',
-        centerName: 'Kyauktada Center 01',
-        groupName: 'Solidarity Group A',
-        totalSavingBalanceMmk: 0.0,
-        loyaltyPoints: 0,
-        hasActiveLoans: false,
-        isPinConfigured: false,
-      );
-
-      when(() => mockAuthRepository.verifyRegistrationOtp(
-            nrcFormatted: '12/DAGAMA(N)098765',
-            phone: '09791234567',
+    test('VerifyActivationOtpRequested emits AuthActivationOtpVerifiedState on valid OTP', () async {
+      when(() => mockAuthRepository.verifyActivationOtp(
+            identifier: '09791234567',
             otpCode: '123456',
-          )).thenAnswer((_) async => profileNoPin);
+          )).thenAnswer((_) async => 'STEP-UP-TOKEN-123');
 
-      authBloc.add(const VerifyOtpRequested(
-        nrcFormatted: '12/DAGAMA(N)098765',
-        phone: '09791234567',
+      authBloc.add(const VerifyActivationOtpRequested(
+        identifier: '09791234567',
         otpCode: '123456',
       ));
 
@@ -160,7 +174,10 @@ void main() {
         authBloc.stream,
         emitsInOrder([
           const AuthLoading(),
-          const AuthNeedsPinSetupState(profileNoPin),
+          const AuthActivationOtpVerifiedState(
+            identifier: '09791234567',
+            stepUpToken: 'STEP-UP-TOKEN-123',
+          ),
         ]),
       );
     });

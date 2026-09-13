@@ -1,16 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:bmf_customer/app/theme/customer_theme.dart';
-
-enum IncidentType {
-  hospitalization(label: 'Hospitalization / Medical Treatment', allowanceDailyMmk: 10000),
-  naturalDisaster(label: 'Flood / Fire / Natural Disaster', allowanceDailyMmk: 150000),
-  lossOfLife(label: 'Bereavement / Mutual Relief', allowanceDailyMmk: 300000);
-
-  final String label;
-  final double allowanceDailyMmk;
-
-  const IncidentType({required this.label, required this.allowanceDailyMmk});
-}
+import 'package:bmf_customer/core/l10n/customer_localizations.dart';
 
 /// Screen allowing borrowers to file mutual-aid insurance claim online.
 class ClaimSubmissionScreen extends StatefulWidget {
@@ -26,14 +16,22 @@ class _ClaimSubmissionScreenState extends State<ClaimSubmissionScreen> {
   final _formKey = GlobalKey<FormState>();
   final _hospitalController = TextEditingController();
   final _daysController = TextEditingController(text: '3');
-  IncidentType _selectedIncident = IncidentType.hospitalization;
+  int _selectedIncidentIndex = 0;
   bool _isSubmitting = false;
 
   @override
   Widget build(BuildContext context) {
+    final l10n = CustomerLocalizations.of(context);
+
+    final incidentOptions = [
+      l10n.illnessRisk,
+      l10n.accidentRisk,
+      l10n.naturalDisasterRisk,
+    ];
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Mutual Aid Claim'),
+        title: Text(l10n.mutualAidClaimTitle, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
         backgroundColor: CustomerTheme.primaryNavy,
         foregroundColor: Colors.white,
       ),
@@ -53,22 +51,22 @@ class _ClaimSubmissionScreenState extends State<ClaimSubmissionScreen> {
                   borderRadius: BorderRadius.circular(14),
                   border: Border.all(color: const Color(0xFFBFDBFE)),
                 ),
-                child: const Row(
+                child: Row(
                   children: [
-                    Icon(Icons.health_and_safety, color: CustomerTheme.primaryNavy, size: 28),
-                    SizedBox(width: 12),
+                    const Icon(Icons.health_and_safety, color: CustomerTheme.primaryNavy, size: 28),
+                    const SizedBox(width: 12),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'BMF Mutual Welfare Protection',
-                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: CustomerTheme.primaryNavy),
+                            l10n.medicalBenefitTitle,
+                            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13.5, color: CustomerTheme.primaryNavy),
                           ),
-                          SizedBox(height: 4),
+                          const SizedBox(height: 4),
                           Text(
-                            'Compulsory coverage covers hospital allowance and disaster relief for all active borrowers.',
-                            style: TextStyle(fontSize: 12, color: CustomerTheme.textSecondary),
+                            l10n.medicalBenefitDesc,
+                            style: const TextStyle(fontSize: 11.5, color: CustomerTheme.textSecondary),
                           ),
                         ],
                       ),
@@ -76,93 +74,86 @@ class _ClaimSubmissionScreenState extends State<ClaimSubmissionScreen> {
                   ],
                 ),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 20),
 
-              const Text(
-                'Incident Type',
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: CustomerTheme.textPrimary),
-              ),
-              const SizedBox(height: 8),
-              DropdownButtonFormField<IncidentType>(
-                value: _selectedIncident,
-                decoration: const InputDecoration(prefixIcon: Icon(Icons.category_outlined)),
-                items: IncidentType.values.map((t) {
-                  return DropdownMenuItem(value: t, child: Text(t.label, style: const TextStyle(fontSize: 14)));
-                }).toList(),
+              DropdownButtonFormField<int>(
+                initialValue: _selectedIncidentIndex,
+                isExpanded: true,
+                decoration: InputDecoration(
+                  labelText: l10n.menuInsuranceTitle,
+                  prefixIcon: const Icon(Icons.category_outlined),
+                ),
+                items: List.generate(incidentOptions.length, (i) {
+                  return DropdownMenuItem(
+                    value: i,
+                    child: Text(
+                      incidentOptions[i],
+                      style: const TextStyle(fontSize: 13),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  );
+                }),
                 onChanged: (v) {
-                  if (v != null) setState(() => _selectedIncident = v);
+                  if (v != null) setState(() => _selectedIncidentIndex = v);
                 },
               ),
-              const SizedBox(height: 18),
+              const SizedBox(height: 16),
 
-              const Text(
-                'Hospital / Clinic Name',
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: CustomerTheme.textPrimary),
-              ),
-              const SizedBox(height: 8),
               TextFormField(
                 controller: _hospitalController,
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.local_hospital_outlined),
-                  hintText: 'e.g. Township General Hospital',
+                decoration: InputDecoration(
+                  labelText: l10n.attachMedicalDocument,
+                  prefixIcon: const Icon(Icons.local_hospital_outlined),
+                  hintText: 'Township General Hospital',
                 ),
-                validator: (v) => v == null || v.trim().isEmpty ? 'Required field' : null,
+                validator: (v) => v == null || v.trim().isEmpty ? l10n.inputIdentifierRequired : null,
               ),
-              const SizedBox(height: 18),
+              const SizedBox(height: 16),
 
-              const Text(
-                'Duration of Hospitalization (Days)',
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: CustomerTheme.textPrimary),
-              ),
-              const SizedBox(height: 8),
               TextFormField(
                 controller: _daysController,
                 keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.calendar_today_outlined),
-                  hintText: 'e.g. 3',
-                  suffixText: 'Days',
+                decoration: InputDecoration(
+                  labelText: l10n.period,
+                  prefixIcon: const Icon(Icons.calendar_today_outlined),
+                  hintText: '3',
                 ),
-                validator: (v) => (int.tryParse(v ?? '') ?? 0) < 1 ? 'Minimum 1 day' : null,
+                validator: (v) => (int.tryParse(v ?? '') ?? 0) < 1 ? '1+' : null,
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 20),
 
-              // Upload Medical Documents Mock
-              const Text(
-                'Medical Proof / Village Leader Signature',
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: CustomerTheme.textPrimary),
-              ),
-              const SizedBox(height: 8),
+              // Upload Medical Documents
               Container(
                 width: double.infinity,
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  border: Border.all(color: CustomerTheme.borderSubtle, style: BorderStyle.solid),
+                  border: Border.all(color: CustomerTheme.borderSubtle),
                   borderRadius: BorderRadius.circular(12),
                   color: Colors.white,
                 ),
                 child: Column(
                   children: [
-                    const Icon(Icons.cloud_upload_outlined, size: 40, color: CustomerTheme.primaryNavy),
+                    const Icon(Icons.cloud_upload_outlined, size: 36, color: CustomerTheme.primaryNavy),
                     const SizedBox(height: 8),
-                    const Text('Attach Medical Record or Discharge Slip', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                    Text(l10n.attachMedicalDocument, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 12.5)),
                     const SizedBox(height: 4),
-                    Text('1 document attached (simulated)', style: TextStyle(fontSize: 11, color: CustomerTheme.statusCurrent)),
+                    Text(l10n.documentAttachedSimulated, style: const TextStyle(fontSize: 11, color: CustomerTheme.statusCurrent)),
                   ],
                 ),
               ),
-              const SizedBox(height: 32),
+              const SizedBox(height: 28),
 
               ElevatedButton(
-                onPressed: _isSubmitting ? null : _submitClaim,
+                onPressed: _isSubmitting ? null : () => _submitClaim(l10n),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: CustomerTheme.primaryNavy,
-                  minimumSize: const Size(double.infinity, 52),
+                  foregroundColor: Colors.white,
+                  minimumSize: const Size(double.infinity, 50),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                 ),
                 child: _isSubmitting
                     ? const CircularProgressIndicator(color: Colors.white)
-                    : const Text('Submit Insurance Claim', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white)),
+                    : Text(l10n.submitInsuranceClaim, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
               ),
             ],
           ),
@@ -171,7 +162,7 @@ class _ClaimSubmissionScreenState extends State<ClaimSubmissionScreen> {
     );
   }
 
-  void _submitClaim() {
+  void _submitClaim(CustomerLocalizations l10n) {
     if (_formKey.currentState?.validate() ?? false) {
       setState(() => _isSubmitting = true);
       Future.delayed(const Duration(milliseconds: 600), () {
@@ -180,9 +171,11 @@ class _ClaimSubmissionScreenState extends State<ClaimSubmissionScreen> {
         showDialog(
           context: context,
           builder: (ctx) => AlertDialog(
-            title: const Text('Claim Filed Successfully'),
-            content: const Text(
-              'Your mutual welfare claim reference is CLM-2026-0891. The township credit officer will review and disburse allowance within 48 hours.',
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            title: Text(l10n.claimFiledSuccess, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+            content: Text(
+              '${l10n.referenceNo}: CLM-2026-0891.\n${l10n.medicalBenefitDesc}',
+              style: const TextStyle(fontSize: 13),
             ),
             actions: [
               ElevatedButton(
@@ -190,8 +183,8 @@ class _ClaimSubmissionScreenState extends State<ClaimSubmissionScreen> {
                   Navigator.pop(ctx);
                   Navigator.pop(context);
                 },
-                style: ElevatedButton.styleFrom(backgroundColor: CustomerTheme.primaryNavy),
-                child: const Text('Done'),
+                style: ElevatedButton.styleFrom(backgroundColor: CustomerTheme.primaryNavy, foregroundColor: Colors.white),
+                child: Text(l10n.done),
               ),
             ],
           ),

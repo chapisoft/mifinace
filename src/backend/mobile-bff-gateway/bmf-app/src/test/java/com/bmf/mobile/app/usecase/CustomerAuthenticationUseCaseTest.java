@@ -39,6 +39,9 @@ class CustomerAuthenticationUseCaseTest {
     private CustomerRepository customerRepository;
 
     @Mock
+    private com.bmf.mobile.domain.repository.AppUserRepository appUserRepository;
+
+    @Mock
     private MobileDeviceRepository deviceRepository;
 
     @Mock
@@ -55,6 +58,7 @@ class CustomerAuthenticationUseCaseTest {
 
     private CustomerLoginRequest validRequest;
     private CustomerMember activeCustomer;
+    private com.bmf.mobile.domain.entity.AppUser activeAppUser;
 
     @BeforeEach
     void setUp() {
@@ -81,14 +85,27 @@ class CustomerAuthenticationUseCaseTest {
                 .active(true)
                 .createdTime(LocalDateTime.now())
                 .build();
+
+        activeAppUser = com.bmf.mobile.domain.entity.AppUser.builder()
+                .userId("APP-CUST-99001")
+                .userType(UserType.CUSTOMER)
+                .businessId("CUST-99001")
+                .identifierKey("12/DAGAMA(N)123456")
+                .fullName("Daw Khin Myint")
+                .pinHash("$2a$10$hashedPinSample123456")
+                .activated(true)
+                .status("ACTIVE")
+                .build();
     }
 
     @Test
-    @DisplayName("Đăng nhập Khách hàng thành công - Reset bộ đếm sai PIN và cấp Token")
+    @DisplayName("Đăng nhập Khách hàng thành công bằng Mã thành viên hoặc NRC - Reset bộ đếm sai PIN và cấp Token")
     void authenticateSuccessShouldResetPinFailuresAndReturnAuthResponse() {
         when(tokenBlacklistPort.isPinLocked("12/DAGAMA(N)123456")).thenReturn(false);
+        when(customerRepository.findByCustomerCode("12/DAGAMA(N)123456")).thenReturn(Optional.empty());
         when(customerRepository.findByNrcNumber("12/DAGAMA(N)123456")).thenReturn(Optional.of(activeCustomer));
-        when(passwordEncoderPort.matches("123456", activeCustomer.getPinHash())).thenReturn(true);
+        when(appUserRepository.findByBusinessId("CUST-99001", UserType.CUSTOMER)).thenReturn(Optional.of(activeAppUser));
+        when(passwordEncoderPort.matches("123456", activeAppUser.getPinHash())).thenReturn(true);
         when(deviceRepository.findByDeviceIdAndUserId("DEV-CUST-001", "CUST-99001")).thenReturn(Optional.empty());
         when(tokenProviderPort.generateAccessToken("CUST-99001", UserType.CUSTOMER, "DEV-CUST-001", PlatformType.ANDROID))
                 .thenReturn("MOCK_CUSTOMER_ACCESS_TOKEN");
@@ -105,10 +122,40 @@ class CustomerAuthenticationUseCaseTest {
         assertEquals("Daw Khin Myint", response.getFullName());
         assertEquals("GRP-YGN-01", response.getGroupCode());
 
+        verify(tokenBlacklistPort).resetPinFailure("CUST-99001");
         verify(tokenBlacklistPort).resetPinFailure("12/DAGAMA(N)123456");
+        verify(appUserRepository).recordLoginSuccess("APP-CUST-99001");
         verify(deviceRepository).save(any(MobileDevice.class));
         verify(tokenBlacklistPort).storeRefreshToken(
                 "MOCK_CUSTOMER_REFRESH_TOKEN", "CUST-99001", UserType.CUSTOMER, "DEV-CUST-001", PlatformType.ANDROID);
+    }
+
+    @Test
+    @DisplayName("Đăng nhập Khách hàng trực tiếp bằng Ma_ThanhVien (Username chính)")
+    void authenticateDirectCustomerCodeShouldSucceed() {
+        CustomerLoginRequest codeRequest = CustomerLoginRequest.builder()
+                .identifier("CUST-99001")
+                .pinCode("123456")
+                .deviceId("DEV-CUST-001")
+                .platform(PlatformType.ANDROID)
+                .build();
+
+        when(tokenBlacklistPort.isPinLocked("CUST-99001")).thenReturn(false);
+        when(customerRepository.findByCustomerCode("CUST-99001")).thenReturn(Optional.of(activeCustomer));
+        when(appUserRepository.findByBusinessId("CUST-99001", UserType.CUSTOMER)).thenReturn(Optional.of(activeAppUser));
+        when(passwordEncoderPort.matches("123456", activeAppUser.getPinHash())).thenReturn(true);
+        when(deviceRepository.findByDeviceIdAndUserId("DEV-CUST-001", "CUST-99001")).thenReturn(Optional.empty());
+        when(tokenProviderPort.generateAccessToken("CUST-99001", UserType.CUSTOMER, "DEV-CUST-001", PlatformType.ANDROID))
+                .thenReturn("MOCK_CUSTOMER_ACCESS_TOKEN");
+        when(tokenProviderPort.generateRefreshToken()).thenReturn("MOCK_CUSTOMER_REFRESH_TOKEN");
+        when(tokenProviderPort.getAccessTokenExpirationSeconds()).thenReturn(900L);
+
+        AuthResponse response = customerAuthenticationUseCase.authenticate(codeRequest);
+
+        assertNotNull(response);
+        assertEquals("CUST-99001", response.getUserId());
+        verify(customerRepository).findByCustomerCode("CUST-99001");
+        verify(customerRepository, never()).findByNrcNumber(any());
     }
 
     @Test
@@ -127,9 +174,11 @@ class CustomerAuthenticationUseCaseTest {
     @DisplayName("Đăng nhập Khách hàng thất bại - Nhập sai PIN lần thứ 3 (chưa đạt 5 lần)")
     void authenticateWrongPinShouldRecordFailureAndThrowCredentialsInvalid() {
         when(tokenBlacklistPort.isPinLocked("12/DAGAMA(N)123456")).thenReturn(false);
+        when(customerRepository.findByCustomerCode("12/DAGAMA(N)123456")).thenReturn(Optional.empty());
         when(customerRepository.findByNrcNumber("12/DAGAMA(N)123456")).thenReturn(Optional.of(activeCustomer));
-        when(passwordEncoderPort.matches("999999", activeCustomer.getPinHash())).thenReturn(false);
-        when(tokenBlacklistPort.recordPinFailure("12/DAGAMA(N)123456")).thenReturn(3L);
+        when(appUserRepository.findByBusinessId("CUST-99001", UserType.CUSTOMER)).thenReturn(Optional.of(activeAppUser));
+        when(passwordEncoderPort.matches("999999", activeAppUser.getPinHash())).thenReturn(false);
+        when(tokenBlacklistPort.recordPinFailure("CUST-99001")).thenReturn(3L);
 
         CustomerLoginRequest request = CustomerLoginRequest.builder()
                 .nrcNumber("12/DAGAMA(N)123456")
@@ -142,16 +191,19 @@ class CustomerAuthenticationUseCaseTest {
                 () -> customerAuthenticationUseCase.authenticate(request));
 
         assertEquals(ErrorCode.ERR_CREDENTIALS_INVALID, ex.getErrorCode());
-        verify(tokenBlacklistPort).recordPinFailure("12/DAGAMA(N)123456");
+        verify(tokenBlacklistPort).recordPinFailure("CUST-99001");
+        verify(appUserRepository).recordPinFailure("APP-CUST-99001", 3);
     }
 
     @Test
     @DisplayName("Đăng nhập Khách hàng thất bại - Nhập sai PIN chạm ngưỡng 5 lần -> Kích hoạt khóa tài khoản")
     void authenticateWrongPinFifthAttemptShouldThrowPinBlockedException() {
         when(tokenBlacklistPort.isPinLocked("12/DAGAMA(N)123456")).thenReturn(false);
+        when(customerRepository.findByCustomerCode("12/DAGAMA(N)123456")).thenReturn(Optional.empty());
         when(customerRepository.findByNrcNumber("12/DAGAMA(N)123456")).thenReturn(Optional.of(activeCustomer));
-        when(passwordEncoderPort.matches("999999", activeCustomer.getPinHash())).thenReturn(false);
-        when(tokenBlacklistPort.recordPinFailure("12/DAGAMA(N)123456")).thenReturn(5L);
+        when(appUserRepository.findByBusinessId("CUST-99001", UserType.CUSTOMER)).thenReturn(Optional.of(activeAppUser));
+        when(passwordEncoderPort.matches("999999", activeAppUser.getPinHash())).thenReturn(false);
+        when(tokenBlacklistPort.recordPinFailure("CUST-99001")).thenReturn(5L);
 
         CustomerLoginRequest request = CustomerLoginRequest.builder()
                 .nrcNumber("12/DAGAMA(N)123456")

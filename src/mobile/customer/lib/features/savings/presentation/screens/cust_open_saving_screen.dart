@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:bmf_customer/app/theme/customer_theme.dart';
+import 'package:bmf_customer/core/l10n/customer_localizations.dart';
 import 'package:bmf_customer/core/utils/currency_formatter.dart';
 import '../bloc/savings_bloc.dart';
 import '../bloc/savings_event.dart';
@@ -44,9 +45,11 @@ class _CustOpenSavingScreenState extends State<CustOpenSavingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = CustomerLocalizations.of(context);
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Subscribe High-Yield Deposit'),
+        title: Text(l10n.openSavingsPassbookTitle, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
         backgroundColor: CustomerTheme.primaryNavy,
         foregroundColor: Colors.white,
       ),
@@ -57,9 +60,11 @@ class _CustOpenSavingScreenState extends State<CustOpenSavingScreen> {
               context: context,
               barrierDismissible: false,
               builder: (ctx) => AlertDialog(
-                title: const Text('Passbook Opened!'),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                title: Text(l10n.passbookOpenedSuccess, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                 content: Text(
-                  'Your ${state.newAccount.tenureMonths}-month deposit account ${state.newAccount.accountNumber} is active with balance ${CurrencyFormatter.formatMmk(state.newAccount.balanceMmk)}.',
+                  '${l10n.referenceNo}: ${state.newAccount.accountNumber}\n${l10n.depositPrincipal}: ${CurrencyFormatter.formatMmk(state.newAccount.balanceMmk)}',
+                  style: const TextStyle(fontSize: 13),
                 ),
                 actions: [
                   ElevatedButton(
@@ -67,8 +72,8 @@ class _CustOpenSavingScreenState extends State<CustOpenSavingScreen> {
                       Navigator.pop(ctx);
                       context.pop();
                     },
-                    style: ElevatedButton.styleFrom(backgroundColor: CustomerTheme.primaryNavy),
-                    child: const Text('View Passbooks'),
+                    style: ElevatedButton.styleFrom(backgroundColor: CustomerTheme.primaryNavy, foregroundColor: Colors.white),
+                    child: Text(l10n.viewPassbooks),
                   ),
                 ],
               ),
@@ -89,115 +94,108 @@ class _CustOpenSavingScreenState extends State<CustOpenSavingScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Select Deposit Tenure',
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: CustomerTheme.textPrimary),
+                  Text(
+                    l10n.fixedTermSaving,
+                    style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: CustomerTheme.textPrimary),
                   ),
                   const SizedBox(height: 10),
                   Row(
                     children: [
-                      _buildTenureChip(3, '3 Months', '12% p.a.'),
+                      _buildTenureChip(3, '3 Mos', '12%'),
                       const SizedBox(width: 8),
-                      _buildTenureChip(6, '6 Months', '13% p.a.'),
+                      _buildTenureChip(6, '6 Mos', '13%'),
                       const SizedBox(width: 8),
-                      _buildTenureChip(12, '12 Months', '14% p.a.'),
+                      _buildTenureChip(12, '12 Mos', '14%'),
                     ],
-                  ),
-                  const SizedBox(height: 24),
-
-                  const Text(
-                    'Deposit Principal Amount (MMK)',
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: CustomerTheme.textPrimary),
-                  ),
-                  const SizedBox(height: 8),
-                  TextFormField(
-                    controller: _amountController,
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      prefixIcon: Icon(Icons.attach_money),
-                      hintText: 'e.g. 50,000',
-                      suffixText: 'MMK',
-                    ),
-                    validator: (v) {
-                      final val = double.tryParse(v?.replaceAll(',', '') ?? '');
-                      if (val == null || val < 10000) {
-                        return 'Minimum deposit is 10,000 MMK';
-                      }
-                      return null;
-                    },
-                    onChanged: (_) => setState(() {}),
                   ),
                   const SizedBox(height: 20),
 
-                  const Text(
-                    'Legal Beneficiary Name',
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: CustomerTheme.textPrimary),
-                  ),
-                  const SizedBox(height: 8),
                   TextFormField(
-                    controller: _beneficiaryController,
-                    decoration: const InputDecoration(
-                      prefixIcon: Icon(Icons.person_outline),
-                      hintText: 'Enter full legal name of heir / relative',
+                    controller: _amountController,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      labelText: l10n.depositPrincipal,
+                      prefixIcon: const Icon(Icons.savings_outlined),
+                      suffixText: 'MMK',
                     ),
+                    onChanged: (_) => setState(() {}),
                     validator: (v) {
-                      if (v == null || v.trim().isEmpty) {
-                        return 'Beneficiary name is required';
-                      }
+                      final val = double.tryParse(v?.replaceAll(',', '') ?? '') ?? 0;
+                      if (val < 10000) return 'Min: 10,000 MMK';
                       return null;
                     },
                   ),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 16),
+
+                  TextFormField(
+                    controller: _beneficiaryController,
+                    decoration: InputDecoration(
+                      labelText: l10n.welcomeMember,
+                      prefixIcon: const Icon(Icons.person_outline),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
 
                   // Profit Projection Card
                   Container(
                     width: double.infinity,
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: const Color(0xFFFEF3C7),
+                      color: CustomerTheme.statusCurrent.withAlpha(15),
                       borderRadius: BorderRadius.circular(14),
-                      border: Border.all(color: CustomerTheme.secondaryAmber),
+                      border: Border.all(color: CustomerTheme.statusCurrent.withAlpha(40)),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Row(
-                          children: [
-                            Icon(Icons.trending_up, color: Color(0xFF92400E)),
-                            SizedBox(width: 8),
-                            Text(
-                              'ESTIMATED MATURITY PROFIT',
-                              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF92400E)),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 10),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Text('Expected Profit at Maturity:', style: TextStyle(fontSize: 13)),
+                            Text(l10n.interestRatePerAnnum, style: const TextStyle(fontSize: 12, color: CustomerTheme.textSecondary)),
+                            Text('$_currentRate% / yr', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: CustomerTheme.statusCurrent)),
+                          ],
+                        ),
+                        const SizedBox(height: 6),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(l10n.expectedProfitAtMaturity, style: const TextStyle(fontSize: 12, color: CustomerTheme.textSecondary)),
                             Text(
                               '+${CurrencyFormatter.formatMmk(_estimatedProfit)}',
-                              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Color(0xFFB45309)),
+                              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: CustomerTheme.statusCurrent),
                             ),
                           ],
                         ),
                       ],
                     ),
                   ),
-
-                  const SizedBox(height: 32),
+                  const SizedBox(height: 28),
 
                   ElevatedButton(
-                    onPressed: isLoading ? null : _submitSubscription,
+                    onPressed: isLoading
+                        ? null
+                        : () {
+                            if (_formKey.currentState?.validate() ?? false) {
+                              final amount = double.tryParse(_amountController.text.replaceAll(',', '')) ?? 0.0;
+                              context.read<SavingsBloc>().add(
+                                    OpenSavingAccountRequested(
+                                      memberNrc: widget.memberNrc,
+                                      initialDepositMmk: amount,
+                                      tenureMonths: _selectedTenureMonths,
+                                      beneficiaryName: _beneficiaryController.text.trim(),
+                                    ),
+                                  );
+                            }
+                          },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: CustomerTheme.primaryNavy,
-                      minimumSize: const Size(double.infinity, 52),
+                      foregroundColor: Colors.white,
+                      minimumSize: const Size(double.infinity, 50),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                     ),
                     child: isLoading
-                      ? const CircularProgressIndicator(color: Colors.white)
-                      : const Text('Confirm & Subscribe', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white)),
+                        ? const CircularProgressIndicator(color: Colors.white)
+                        : Text(l10n.confirmAndSubscribe, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
                   ),
                 ],
               ),
@@ -210,37 +208,32 @@ class _CustOpenSavingScreenState extends State<CustOpenSavingScreen> {
 
   Widget _buildTenureChip(int months, String label, String rate) {
     final isSelected = _selectedTenureMonths == months;
-
     return Expanded(
       child: InkWell(
         onTap: () => setState(() => _selectedTenureMonths = months),
         borderRadius: BorderRadius.circular(12),
         child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+          padding: const EdgeInsets.symmetric(vertical: 12),
           decoration: BoxDecoration(
             color: isSelected ? CustomerTheme.primaryNavy : Colors.white,
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(
-              color: isSelected ? CustomerTheme.primaryNavy : CustomerTheme.borderSubtle,
-              width: isSelected ? 2 : 1,
-            ),
+            border: Border.all(color: isSelected ? CustomerTheme.primaryNavy : CustomerTheme.borderSubtle),
           ),
           child: Column(
             children: [
               Text(
                 label,
                 style: TextStyle(
-                  fontSize: 12,
                   fontWeight: FontWeight.bold,
+                  fontSize: 13,
                   color: isSelected ? Colors.white : CustomerTheme.textPrimary,
                 ),
               ),
-              const SizedBox(height: 4),
+              const SizedBox(height: 2),
               Text(
                 rate,
                 style: TextStyle(
                   fontSize: 11,
-                  fontWeight: FontWeight.w600,
                   color: isSelected ? CustomerTheme.secondaryAmber : CustomerTheme.textSecondary,
                 ),
               ),
@@ -249,19 +242,5 @@ class _CustOpenSavingScreenState extends State<CustOpenSavingScreen> {
         ),
       ),
     );
-  }
-
-  void _submitSubscription() {
-    if (_formKey.currentState?.validate() ?? false) {
-      final amount = double.parse(_amountController.text.replaceAll(',', ''));
-      context.read<SavingsBloc>().add(
-            OpenSavingAccountRequested(
-              memberNrc: widget.memberNrc,
-              initialDepositMmk: amount,
-              tenureMonths: _selectedTenureMonths,
-              beneficiaryName: _beneficiaryController.text.trim(),
-            ),
-          );
-    }
   }
 }

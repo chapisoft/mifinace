@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/cash/presentation/screens/cash_screen.dart';
 import '../../features/centers/presentation/screens/centers_screen.dart';
 import '../../features/collection/presentation/screens/collection_sheet_screen.dart';
-import '../../features/dashboard/presentation/screens/dashboard_screen.dart';
+import '../../features/dashboard/presentation/screens/agent_navigation_screen.dart';
+import '../../features/dashboard/presentation/screens/officer_account_screen.dart';
 import '../../features/insurance/presentation/screens/agent_claim_screen.dart';
 import '../../features/origination/presentation/screens/loan_application_screen.dart';
 import '../../features/printer/presentation/screens/printer_settings_screen.dart';
@@ -40,7 +40,12 @@ class AppRouter {
       GoRoute(
         path: dashboardRoute,
         name: 'dashboard',
-        builder: (context, state) => const DashboardScreen(),
+        builder: (context, state) => const AgentNavigationScreen(),
+      ),
+      GoRoute(
+        path: settingsRoute,
+        name: 'settings',
+        builder: (context, state) => const OfficerAccountScreen(),
       ),
       GoRoute(
         path: centersRoute,

@@ -43,7 +43,10 @@ public class SavingController {
             @Valid @RequestBody OpenSavingAccountRequest request,
             Principal principal) {
 
-        String createdBy = principal != null ? principal.getName() : "SYSTEM";
+        if (principal == null || principal.getName() == null || principal.getName().isBlank()) {
+            throw new com.bmf.mobile.domain.exception.BusinessException(com.bmf.mobile.domain.enums.ErrorCode.ERR_UNAUTHORIZED);
+        }
+        String createdBy = principal.getName();
         SavingAccountResponse response = manageSavingsUseCase.openAccount(request, createdBy);
         String message = i18nService.getMessage("msg.saving.open.success");
         return ResponseEntity.ok(ApiResponse.ok(response, message));
@@ -56,7 +59,10 @@ public class SavingController {
             @Valid @RequestBody CollectSavingDepositRequest request,
             Principal principal) {
 
-        String collectedBy = principal != null ? principal.getName() : "SYSTEM";
+        if (principal == null || principal.getName() == null || principal.getName().isBlank()) {
+            throw new com.bmf.mobile.domain.exception.BusinessException(com.bmf.mobile.domain.enums.ErrorCode.ERR_UNAUTHORIZED);
+        }
+        String collectedBy = principal.getName();
         SavingTransactionReceiptResponse receipt = manageSavingsUseCase.collectDeposit(request, collectedBy);
         String message = i18nService.getMessage("msg.saving.collected");
         return ResponseEntity.ok(ApiResponse.ok(receipt, message));
@@ -68,7 +74,10 @@ public class SavingController {
     public ResponseEntity<ApiResponse<List<SavingAccountResponse>>> getMyAccounts(
             Principal principal) {
 
-        String customerCode = principal != null ? principal.getName() : "SYSTEM";
+        if (principal == null || principal.getName() == null || principal.getName().isBlank()) {
+            throw new com.bmf.mobile.domain.exception.BusinessException(com.bmf.mobile.domain.enums.ErrorCode.ERR_UNAUTHORIZED);
+        }
+        String customerCode = principal.getName();
         List<SavingAccountResponse> accounts = manageSavingsUseCase.getMySavingAccounts(customerCode);
         String message = i18nService.getMessage("msg.common.success");
         return ResponseEntity.ok(ApiResponse.ok(accounts, message));

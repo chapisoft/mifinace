@@ -21,6 +21,9 @@ enum AppLanguage {
     required this.locale,
   });
 
+  String get displayName => englishName;
+  String get nativeName => languageName;
+
   static AppLanguage fromCode(String? code) {
     if (code == null) return AppLanguage.myanmar; // Default Myanmar for borrower app
     for (final l in AppLanguage.values) {

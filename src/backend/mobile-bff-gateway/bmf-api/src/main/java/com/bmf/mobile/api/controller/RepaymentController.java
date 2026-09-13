@@ -13,7 +13,6 @@ import com.bmf.mobile.app.usecase.BatchRepaymentSyncUseCase;
 import com.bmf.mobile.app.usecase.CollectRepaymentUseCase;
 import com.bmf.mobile.app.usecase.CustomerLoanQueryUseCase;
 import com.bmf.mobile.app.usecase.SyncRepaymentScheduleUseCase;
-import com.bmf.mobile.infra.security.UserPrincipal;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -21,7 +20,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -69,7 +67,10 @@ public class RepaymentController {
             @Valid @RequestBody CollectRepaymentRequest request,
             java.security.Principal principal) {
 
-        String collectedBy = principal != null ? principal.getName() : "SYSTEM";
+        if (principal == null || principal.getName() == null || principal.getName().isBlank()) {
+            throw new com.bmf.mobile.domain.exception.BusinessException(com.bmf.mobile.domain.enums.ErrorCode.ERR_UNAUTHORIZED);
+        }
+        String collectedBy = principal.getName();
         RepaymentReceiptResponse receipt = collectRepaymentUseCase.collect(request, collectedBy);
         String message = i18nService.getMessage("msg.repayment.collected");
         return ResponseEntity.ok(ApiResponse.ok(receipt, message));
@@ -82,7 +83,10 @@ public class RepaymentController {
             @Valid @RequestBody BatchRepaymentSyncRequest request,
             java.security.Principal principal) {
 
-        String collectedBy = principal != null ? principal.getName() : "SYSTEM";
+        if (principal == null || principal.getName() == null || principal.getName().isBlank()) {
+            throw new com.bmf.mobile.domain.exception.BusinessException(com.bmf.mobile.domain.enums.ErrorCode.ERR_UNAUTHORIZED);
+        }
+        String collectedBy = principal.getName();
         BatchSyncSummaryResponse summary = batchRepaymentSyncUseCase.syncBatch(request, collectedBy);
         String message = i18nService.getMessage("msg.repayment.sync.success");
         return ResponseEntity.ok(ApiResponse.ok(summary, message));
@@ -94,7 +98,10 @@ public class RepaymentController {
     public ResponseEntity<ApiResponse<CustomerLoanSummaryResponse>> getMyLoans(
             java.security.Principal principal) {
 
-        String customerCode = principal != null ? principal.getName() : "SYSTEM";
+        if (principal == null || principal.getName() == null || principal.getName().isBlank()) {
+            throw new com.bmf.mobile.domain.exception.BusinessException(com.bmf.mobile.domain.enums.ErrorCode.ERR_UNAUTHORIZED);
+        }
+        String customerCode = principal.getName();
         CustomerLoanSummaryResponse summary = customerLoanQueryUseCase.getLoanSummary(customerCode);
         String message = i18nService.getMessage("msg.common.success");
         return ResponseEntity.ok(ApiResponse.ok(summary, message));

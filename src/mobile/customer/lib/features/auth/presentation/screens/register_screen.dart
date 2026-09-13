@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import '../../../app/router/app_router.dart';
-import '../../../app/theme/customer_theme.dart';
+import '../../../../app/router/app_router.dart';
+import '../../../../app/theme/customer_theme.dart';
+import '../../../../core/l10n/customer_localizations.dart';
 import '../bloc/auth_bloc.dart';
 import '../bloc/auth_event.dart';
 import '../bloc/auth_state.dart';
 
-/// Screen allowing borrowers to register their mobile account using NRC and registered phone.
+/// Màn hình kích hoạt tài khoản ứng dụng di động cho thành viên BMF.
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
 
@@ -17,43 +18,53 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   final _formKey = GlobalKey<FormState>();
-
-  // Zero fake default values: text controllers start empty
-  final _nrcController = TextEditingController();
-  final _phoneController = TextEditingController();
+  final _identifierController = TextEditingController();
 
   @override
   void dispose() {
-    _nrcController.dispose();
-    _phoneController.dispose();
+    _identifierController.dispose();
     super.dispose();
   }
 
   void _submit() {
     if (!_formKey.currentState!.validate()) return;
+    final identifier = _identifierController.text.trim();
     context.read<CustomerAuthBloc>().add(
-          RequestOtpRequested(
-            nrcFormatted: _nrcController.text.trim(),
-            phone: _phoneController.text.trim(),
-          ),
+          SendActivationOtpRequested(identifier: identifier),
         );
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = CustomerLocalizations.of(context);
+
     return Scaffold(
+      backgroundColor: CustomerTheme.backgroundLight,
       appBar: AppBar(
-        title: const Text('Member Registration'),
+        title: Text(l10n.activateNow, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+        backgroundColor: CustomerTheme.primaryNavy,
+        foregroundColor: Colors.white,
+        elevation: 0,
       ),
       body: BlocConsumer<CustomerAuthBloc, CustomerAuthState>(
         listener: (context, state) {
-          if (state is AuthOtpSentState) {
+          if (state is AuthActivationOtpSentState) {
             context.push(
-              '${AppRouter.otpRoute}?nrc=${Uri.encodeComponent(state.nrcFormatted)}&phone=${Uri.encodeComponent(state.phone)}',
+              AppRouter.otpRoute,
+              extra: {
+                'identifier': state.identifier,
+                'maskedPhone': state.maskedPhone,
+                'purpose': 'ACTIVATION',
+              },
             );
           } else if (state is AuthError) {
+            final cleanMsg = state.errorMessage.replaceAll('Exception: ', '').trim();
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.errorMessage), backgroundColor: CustomerTheme.accentCrimson),
+              SnackBar(
+                content: Text(cleanMsg),
+                backgroundColor: CustomerTheme.accentCrimson,
+                behavior: SnackBarBehavior.floating,
+              ),
             );
           }
         },
@@ -71,63 +82,61 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     width: 72,
                     height: 72,
                     decoration: BoxDecoration(
-                      color: CustomerTheme.primaryNavy.withAlpha(20),
+                      color: CustomerTheme.primaryCyan.withAlpha(25),
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(Icons.person_add_outlined, size: 36, color: CustomerTheme.primaryNavy),
+                    child: const Icon(Icons.verified_user_outlined, size: 36, color: CustomerTheme.primaryCyan),
                   ),
                 ),
                 const SizedBox(height: 16),
-                const Text(
-                  'Register Your BMF Account',
+                Text(
+                  l10n.activateNow,
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: CustomerTheme.textPrimary),
+                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: CustomerTheme.textPrimary),
                 ),
                 const SizedBox(height: 8),
-                const Text(
-                  'Enter the NRC number and mobile number registered in your BMF loan agreement.',
+                Text(
+                  l10n.activateWithInfo,
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 13, color: CustomerTheme.textSecondary),
+                  style: const TextStyle(fontSize: 13, color: CustomerTheme.textSecondary),
                 ),
                 const SizedBox(height: 32),
 
-                // NRC Input
+                // Identifier Input
                 TextFormField(
-                  controller: _nrcController,
-                  decoration: const InputDecoration(
-                    labelText: 'Myanmar NRC Card *',
-                    hintText: 'e.g. 12/DAGANA(N)123456',
-                    prefixIcon: Icon(Icons.badge_outlined),
+                  controller: _identifierController,
+                  decoration: InputDecoration(
+                    labelText: l10n.memberIdOrPhoneOrNrc,
+                    hintText: '2150002 / 09448034049 / NRC',
+                    prefixIcon: const Icon(Icons.badge_outlined, color: CustomerTheme.primaryCyan),
                   ),
-                  validator: (val) => (val == null || val.trim().isEmpty) ? 'NRC Card is required' : null,
+                  validator: (val) => (val == null || val.trim().isEmpty)
+                      ? l10n.inputIdentifierRequired
+                      : null,
                 ),
-                const SizedBox(height: 16),
-
-                // Phone Input
-                TextFormField(
-                  controller: _phoneController,
-                  keyboardType: TextInputType.phone,
-                  decoration: const InputDecoration(
-                    labelText: 'Mobile Phone Number *',
-                    hintText: 'e.g. 09123456789',
-                    prefixIcon: Icon(Icons.phone_outlined),
-                  ),
-                  validator: (val) => (val == null || val.trim().isEmpty) ? 'Phone number is required' : null,
-                ),
-                const SizedBox(height: 32),
+                const SizedBox(height: 28),
 
                 ElevatedButton.icon(
                   icon: isLoading
                       ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2))
                       : const Icon(Icons.sms_outlined),
-                  label: Text(isLoading ? 'Sending SMS OTP...' : 'Send SMS OTP (SMS ပို့ရန်)'),
+                  label: Text(l10n.requestOtp),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: CustomerTheme.primaryCyan,
+                    foregroundColor: Colors.white,
+                    minimumSize: const Size(double.infinity, 50),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                  ),
                   onPressed: isLoading ? null : _submit,
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 20),
 
                 TextButton(
                   onPressed: () => context.go(AppRouter.loginPinRoute),
-                  child: const Text('Already registered? Log in with PIN'),
+                  child: Text(
+                    l10n.loginTitle,
+                    style: const TextStyle(fontWeight: FontWeight.bold, color: CustomerTheme.primaryCyan),
+                  ),
                 ),
               ],
             ),

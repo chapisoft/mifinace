@@ -45,10 +45,10 @@ void main() async {
   final authRepository = AuthRepositoryImpl(apiClient: apiClient, secureStorage: secureStorage);
   final authBloc = AuthBloc(authRepository: authRepository, biometricService: biometricService);
 
-  final centerRepository = CenterRepositoryImpl(apiClient: apiClient, database: database);
+  final centerRepository = CenterRepositoryImpl(apiClient: apiClient, db: database);
   final centerBloc = CenterBloc(centerRepository: centerRepository);
 
-  final collectionRepository = CollectionRepositoryImpl(apiClient: apiClient, database: database);
+  final collectionRepository = CollectionRepositoryImpl(apiClient: apiClient, db: database);
   final collectionBloc = CollectionBloc(collectionRepository: collectionRepository);
 
   // Initialize Bluetooth Printer Service & BLoC

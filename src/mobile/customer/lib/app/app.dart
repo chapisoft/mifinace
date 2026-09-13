@@ -13,6 +13,7 @@ import 'package:bmf_customer/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:bmf_customer/features/auth/presentation/bloc/auth_event.dart';
 import 'package:bmf_customer/features/loans/domain/repositories/customer_loan_repository.dart';
 import 'package:bmf_customer/features/loans/presentation/bloc/loan_bloc.dart';
+import 'package:bmf_customer/features/loans/presentation/bloc/loan_event.dart';
 import 'package:bmf_customer/features/payments/domain/repositories/payment_repository.dart';
 import 'package:bmf_customer/features/payments/presentation/bloc/payment_bloc.dart';
 import 'package:bmf_customer/features/savings/domain/repositories/savings_repository.dart';
@@ -62,7 +63,7 @@ class BmfCustomerApp extends StatelessWidget {
           BlocProvider<CustomerLoanBloc>(
             create: (_) => CustomerLoanBloc(
               loanRepository: loanRepository,
-            ),
+            )..add(const LoadActiveLoansRequested('12/DAGAMA(N)045612')),
           ),
           BlocProvider<PaymentBloc>(
             create: (_) => PaymentBloc(

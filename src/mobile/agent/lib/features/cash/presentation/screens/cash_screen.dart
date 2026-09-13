@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../app/theme/app_theme.dart';
 import '../../../../core/enums/cash_transaction_type.dart';
+import '../../../../core/l10n/app_localizations.dart';
 import '../../../../core/utils/currency_formatter.dart';
 import '../bloc/cash_bloc.dart';
 import '../bloc/cash_event.dart';
@@ -30,9 +31,11 @@ class _CashScreenState extends State<CashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Mobile Cash Management'),
+        title: Text(l10n.cashManagementTitle),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
@@ -63,7 +66,7 @@ class _CashScreenState extends State<CashScreen> {
           } else if (state is CashHandoverSuccessState) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text('Cash handover confirmed. Vault Reference: ${state.referenceId}'),
+                content: Text('${l10n.cashHandoverSuccess} (Ref: ${state.referenceId})'),
                 backgroundColor: AppTheme.accentTeal,
               ),
             );
@@ -86,7 +89,7 @@ class _CashScreenState extends State<CashScreen> {
             return ListView(
               padding: const EdgeInsets.all(16),
               children: [
-                // Warning Banner if exceeding safe limit (5,000,000 MMK)
+                // Warning Banner if exceeding safe limit
                 if (summary.isExceedingLimit)
                   Container(
                     margin: const EdgeInsets.only(bottom: 16),
@@ -104,13 +107,13 @@ class _CashScreenState extends State<CashScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text(
-                                'Safety Cash Limit Exceeded!',
-                                style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.accentCrimson, fontSize: 13),
+                              Text(
+                                l10n.safetyLimitExceeded,
+                                style: const TextStyle(fontWeight: FontWeight.bold, color: AppTheme.accentCrimson, fontSize: 13),
                               ),
                               const SizedBox(height: 2),
                               Text(
-                                'Physical cash held exceeds safe limit (${CurrencyFormatter.formatMmk(summary.safeLimitMmk)}). Please hand over to branch cashier or bank immediately.',
+                                '${l10n.safetyLimitWarning} (${CurrencyFormatter.formatMmk(summary.safeLimitMmk)})',
                                 style: const TextStyle(fontSize: 12, color: AppTheme.textPrimary),
                               ),
                             ],
@@ -128,9 +131,9 @@ class _CashScreenState extends State<CashScreen> {
                     padding: const EdgeInsets.all(20.0),
                     child: Column(
                       children: [
-                        const Text(
-                          'Current Physical Cash in Hand',
-                          style: TextStyle(fontSize: 13, color: AppTheme.textSecondary),
+                        Text(
+                          l10n.currentCashInHand,
+                          style: const TextStyle(fontSize: 13, color: AppTheme.textSecondary),
                         ),
                         const SizedBox(height: 6),
                         Text(
@@ -153,7 +156,7 @@ class _CashScreenState extends State<CashScreen> {
                                 ),
                                 child: Column(
                                   children: [
-                                    const Text('Loan Repayments', style: TextStyle(fontSize: 11, color: AppTheme.textSecondary)),
+                                    Text(l10n.loanRepayments, style: const TextStyle(fontSize: 11, color: AppTheme.textSecondary)),
                                     const SizedBox(height: 4),
                                     Text(
                                       CurrencyFormatter.formatMmk(summary.totalRepaymentMmk),
@@ -173,7 +176,7 @@ class _CashScreenState extends State<CashScreen> {
                                 ),
                                 child: Column(
                                   children: [
-                                    const Text('Savings Deposits', style: TextStyle(fontSize: 11, color: AppTheme.textSecondary)),
+                                    Text(l10n.savingsDeposits, style: const TextStyle(fontSize: 11, color: AppTheme.textSecondary)),
                                     const SizedBox(height: 4),
                                     Text(
                                       CurrencyFormatter.formatMmk(summary.totalSavingMmk),
@@ -194,7 +197,7 @@ class _CashScreenState extends State<CashScreen> {
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                           ),
                           icon: const Icon(Icons.qr_code_2),
-                          label: const Text('Hand Over Cash to Branch (QR Code)', style: TextStyle(fontWeight: FontWeight.bold)),
+                          label: Text(l10n.handoverToBranch, style: const TextStyle(fontWeight: FontWeight.bold)),
                           onPressed: summary.currentCashBalanceMmk > 0
                               ? () {
                                   context.read<CashBloc>().add(GenerateHandoverQrRequested(officerId: widget.officerId));
@@ -207,18 +210,18 @@ class _CashScreenState extends State<CashScreen> {
                 ),
 
                 const SizedBox(height: 20),
-                const Text(
-                  'Today Cash Transactions Breakdown',
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: AppTheme.textPrimary),
+                Text(
+                  l10n.todayCashTransactions,
+                  style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: AppTheme.textPrimary),
                 ),
                 const SizedBox(height: 10),
 
                 // Transactions List
                 if (summary.entries.isEmpty)
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 32),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 32),
                     child: Center(
-                      child: Text('No cash transactions recorded today.', style: TextStyle(color: AppTheme.textSecondary)),
+                      child: Text(l10n.noCashTransactions, style: const TextStyle(color: AppTheme.textSecondary)),
                     ),
                   )
                 else
@@ -248,7 +251,7 @@ class _CashScreenState extends State<CashScreen> {
                           ),
                           title: Text(entry.customerName, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
                           subtitle: Text(
-                            '${entry.transactionType.label} • Ref: ${entry.referenceId}',
+                            '${entry.transactionType.localizedName(l10n)} • Ref: ${entry.referenceId}',
                             style: const TextStyle(fontSize: 11, color: AppTheme.textSecondary),
                           ),
                           trailing: Text(

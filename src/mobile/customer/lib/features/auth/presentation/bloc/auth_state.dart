@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import '../../domain/models/check_account_result.dart';
 import '../../domain/models/member_profile.dart';
 
 abstract class CustomerAuthState extends Equatable {
@@ -16,23 +17,73 @@ class AuthLoading extends CustomerAuthState {
   const AuthLoading();
 }
 
-class AuthOtpSentState extends CustomerAuthState {
-  final String nrcFormatted;
-  final String phone;
+class AuthAccountCheckedState extends CustomerAuthState {
+  final CheckAccountResult account;
 
-  const AuthOtpSentState({required this.nrcFormatted, required this.phone});
+  const AuthAccountCheckedState(this.account);
 
   @override
-  List<Object?> get props => [nrcFormatted, phone];
+  List<Object?> get props => [account];
 }
 
-class AuthNeedsPinSetupState extends CustomerAuthState {
-  final MemberProfile profile;
+class AuthActivationOtpSentState extends CustomerAuthState {
+  final String identifier;
+  final String maskedPhone;
+  final int expiresIn;
+  final int cooldownSeconds;
 
-  const AuthNeedsPinSetupState(this.profile);
+  const AuthActivationOtpSentState({
+    required this.identifier,
+    required this.maskedPhone,
+    required this.expiresIn,
+    required this.cooldownSeconds,
+  });
 
   @override
-  List<Object?> get props => [profile];
+  List<Object?> get props => [identifier, maskedPhone, expiresIn, cooldownSeconds];
+}
+
+class AuthActivationOtpVerifiedState extends CustomerAuthState {
+  final String identifier;
+  final String stepUpToken;
+
+  const AuthActivationOtpVerifiedState({
+    required this.identifier,
+    required this.stepUpToken,
+  });
+
+  @override
+  List<Object?> get props => [identifier, stepUpToken];
+}
+
+class AuthForgotPinOtpSentState extends CustomerAuthState {
+  final String identifier;
+  final String maskedPhone;
+  final int expiresIn;
+  final int cooldownSeconds;
+
+  const AuthForgotPinOtpSentState({
+    required this.identifier,
+    required this.maskedPhone,
+    required this.expiresIn,
+    required this.cooldownSeconds,
+  });
+
+  @override
+  List<Object?> get props => [identifier, maskedPhone, expiresIn, cooldownSeconds];
+}
+
+class AuthForgotPinOtpVerifiedState extends CustomerAuthState {
+  final String identifier;
+  final String resetPinToken;
+
+  const AuthForgotPinOtpVerifiedState({
+    required this.identifier,
+    required this.resetPinToken,
+  });
+
+  @override
+  List<Object?> get props => [identifier, resetPinToken];
 }
 
 class AuthAuthenticated extends CustomerAuthState {

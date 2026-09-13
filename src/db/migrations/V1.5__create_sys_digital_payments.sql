@@ -33,7 +33,7 @@ BEGIN
     CREATE NONCLUSTERED INDEX IDX_PAYMENT_ORDER_LOAN
         ON SYS_PAYMENT_ORDER (Loan_Code, Status);
 
-    PRINT 'Đã tạo bảng SYS_PAYMENT_ORDER và các chỉ mục thành công.';
+    PRINT 'Created table SYS_PAYMENT_ORDER and indexes successfully.';
 END
 GO
 
@@ -59,6 +59,6 @@ BEGIN
     CREATE NONCLUSTERED INDEX IDX_WEBHOOK_LOG_TRACE
         ON SYS_PAYMENT_WEBHOOK_LOG (Trace_Id);
 
-    PRINT 'Đã tạo bảng SYS_PAYMENT_WEBHOOK_LOG và các chỉ mục thành công.';
+    PRINT 'Created table SYS_PAYMENT_WEBHOOK_LOG and indexes successfully.';
 END
 GO

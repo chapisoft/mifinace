@@ -6,7 +6,6 @@ import 'package:go_router/go_router.dart';
 import '../../../../app/router/app_router.dart';
 import '../../../../app/theme/app_theme.dart';
 import '../../../../core/enums/loan_purpose_type.dart';
-import '../../../../core/enums/survey_photo_type.dart';
 import '../../../../core/l10n/app_localizations.dart';
 import '../../../../core/utils/currency_formatter.dart';
 import '../../domain/models/gps_location.dart';
@@ -63,13 +62,13 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
     super.dispose();
   }
 
-  void _submitApplication() {
+  void _submitApplication(AppLocalizations l10n) {
     if (!_formKey.currentState!.validate()) return;
 
     if (_scannedNrc == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Please scan or enter a valid Myanmar NRC card.'),
+        SnackBar(
+          content: Text(l10n.nrcRequiredValidation),
           backgroundColor: AppTheme.accentCrimson,
         ),
       );
@@ -78,8 +77,8 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
 
     if (_acquiredGps == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Borrower residence GPS coordinates are required before submission.'),
+        SnackBar(
+          content: Text(l10n.gpsRequiredValidation),
           backgroundColor: AppTheme.accentCrimson,
         ),
       );
@@ -88,8 +87,8 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
 
     if (_signatureBytes == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Borrower e-Signature is required before submission.'),
+        SnackBar(
+          content: Text(l10n.signatureRequiredValidation),
           backgroundColor: AppTheme.accentCrimson,
         ),
       );
@@ -122,7 +121,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('New Loan Application'),
+        title: Text(l10n.newLoanApplication),
         actions: [
           IconButton(
             icon: const Icon(Icons.info_outline),
@@ -130,15 +129,10 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
               showDialog(
                 context: context,
                 builder: (ctx) => AlertDialog(
-                  title: const Text('Field Origination Guide'),
-                  content: const Text(
-                    '1. Verify customer identity via NRC card.\n'
-                    '2. Record GPS coordinates at borrower residence.\n'
-                    '3. Complete biometric e-Signature on screen.\n'
-                    '4. Application is encrypted locally & queued for server approval.',
-                  ),
+                  title: Text(l10n.originationGuide),
+                  content: Text(l10n.originationGuideText),
                   actions: [
-                    TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Got it')),
+                    TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.gotItButton)),
                   ],
                 ),
               );
@@ -153,11 +147,11 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
               context: context,
               barrierDismissible: false,
               builder: (dialogCtx) => AlertDialog(
-                title: const Row(
+                title: Row(
                   children: [
-                    Icon(Icons.check_circle, color: AppTheme.accentTeal, size: 28),
-                    SizedBox(width: 10),
-                    Text('Application Saved'),
+                    const Icon(Icons.check_circle, color: AppTheme.accentTeal, size: 28),
+                    const SizedBox(width: 10),
+                    Text(l10n.applicationSaved),
                   ],
                 ),
                 content: Text(
@@ -169,7 +163,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                       Navigator.of(dialogCtx).pop();
                       context.go(AppRouter.dashboardRoute);
                     },
-                    child: const Text('Back to Dashboard'),
+                    child: Text(l10n.backToDashboard),
                   ),
                 ],
               ),
@@ -203,53 +197,55 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Row(
+                        Row(
                           children: [
-                            CircleAvatar(
+                            const CircleAvatar(
                               backgroundColor: AppTheme.primaryNavy,
                               radius: 14,
                               child: Text('1', style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold)),
                             ),
-                            SizedBox(width: 10),
-                            Text(
-                              'Borrower & Loan Details',
-                              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: AppTheme.textPrimary),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: Text(
+                                l10n.borrowerDetails,
+                                style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: AppTheme.textPrimary),
+                              ),
                             ),
                           ],
                         ),
                         const SizedBox(height: 16),
                         TextFormField(
                           controller: _nameController,
-                          decoration: const InputDecoration(
-                            labelText: 'Borrower Full Name *',
-                            hintText: 'e.g. Daw Khin Khin Win',
-                            prefixIcon: Icon(Icons.person_outline),
+                          decoration: InputDecoration(
+                            labelText: l10n.borrowerFullName,
+                            hintText: l10n.borrowerFullNameHint,
+                            prefixIcon: const Icon(Icons.person_outline),
                           ),
-                          validator: (val) => (val == null || val.trim().isEmpty) ? 'Full Name is required' : null,
+                          validator: (val) => (val == null || val.trim().isEmpty) ? l10n.borrowerFullNameRequired : null,
                         ),
                         const SizedBox(height: 12),
                         TextFormField(
                           controller: _phoneController,
                           keyboardType: TextInputType.phone,
-                          decoration: const InputDecoration(
-                            labelText: 'Phone Number *',
-                            hintText: 'e.g. 09123456789',
-                            prefixIcon: Icon(Icons.phone_outlined),
+                          decoration: InputDecoration(
+                            labelText: l10n.phoneNumber,
+                            hintText: l10n.phoneNumberHint,
+                            prefixIcon: const Icon(Icons.phone_outlined),
                           ),
-                          validator: (val) => (val == null || val.trim().isEmpty) ? 'Phone number is required' : null,
+                          validator: (val) => (val == null || val.trim().isEmpty) ? l10n.phoneNumberRequired : null,
                         ),
                         const SizedBox(height: 12),
                         TextFormField(
                           controller: _amountController,
                           keyboardType: TextInputType.number,
-                          decoration: const InputDecoration(
-                            labelText: 'Requested Loan Amount (MMK) *',
-                            prefixIcon: Icon(Icons.money),
+                          decoration: InputDecoration(
+                            labelText: l10n.requestedLoanAmount,
+                            prefixIcon: const Icon(Icons.money),
                           ),
                           validator: (val) {
-                            if (val == null || val.isEmpty) return 'Loan amount is required';
+                            if (val == null || val.isEmpty) return l10n.requestedLoanAmountRequired;
                             final num = double.tryParse(val.replaceAll(',', ''));
-                            if (num == null || num < 100000) return 'Minimum loan amount is 100,000 MMK';
+                            if (num == null || num < 100000) return l10n.minLoanAmountValidation;
                             return null;
                           },
                         ),
@@ -257,33 +253,44 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                         Row(
                           children: [
                             Expanded(
+                              flex: 4,
                               child: DropdownButtonFormField<int>(
-                                value: _selectedTermMonths,
-                                decoration: const InputDecoration(
-                                  labelText: 'Loan Term',
-                                  contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                                isExpanded: true,
+                                initialValue: _selectedTermMonths,
+                                decoration: InputDecoration(
+                                  labelText: l10n.loanTerm,
+                                  contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                                 ),
                                 items: const [
-                                  DropdownMenuItem(value: 6, child: Text('6 Months')),
-                                  DropdownMenuItem(value: 12, child: Text('12 Months')),
-                                  DropdownMenuItem(value: 18, child: Text('18 Months')),
-                                  DropdownMenuItem(value: 24, child: Text('24 Months')),
+                                  DropdownMenuItem(value: 6, child: Text('6 Mos', overflow: TextOverflow.ellipsis)),
+                                  DropdownMenuItem(value: 12, child: Text('12 Mos', overflow: TextOverflow.ellipsis)),
+                                  DropdownMenuItem(value: 18, child: Text('18 Mos', overflow: TextOverflow.ellipsis)),
+                                  DropdownMenuItem(value: 24, child: Text('24 Mos', overflow: TextOverflow.ellipsis)),
                                 ],
                                 onChanged: (val) {
                                   if (val != null) setState(() => _selectedTermMonths = val);
                                 },
                               ),
                             ),
-                            const SizedBox(width: 12),
+                            const SizedBox(width: 10),
                             Expanded(
+                              flex: 6,
                               child: DropdownButtonFormField<LoanPurposeType>(
-                                value: _selectedPurpose,
-                                decoration: const InputDecoration(
-                                  labelText: 'Purpose',
-                                  contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                                isExpanded: true,
+                                initialValue: _selectedPurpose,
+                                decoration: InputDecoration(
+                                  labelText: l10n.purpose,
+                                  contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                                 ),
                                 items: LoanPurposeType.values.map((p) {
-                                  return DropdownMenuItem(value: p, child: Text(p.name));
+                                  return DropdownMenuItem(
+                                    value: p,
+                                    child: Text(
+                                      p.name,
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 1,
+                                    ),
+                                  );
                                 }).toList(),
                                 onChanged: (val) {
                                   if (val != null) setState(() => _selectedPurpose = val);
@@ -311,17 +318,19 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Row(
+                        Row(
                           children: [
-                            CircleAvatar(
+                            const CircleAvatar(
                               backgroundColor: AppTheme.primaryNavy,
                               radius: 14,
                               child: Text('2', style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold)),
                             ),
-                            SizedBox(width: 10),
-                            Text(
-                              'Myanmar NRC Card Verification',
-                              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: AppTheme.textPrimary),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: Text(
+                                l10n.stepIdentityNrc,
+                                style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: AppTheme.textPrimary),
+                              ),
                             ),
                           ],
                         ),
@@ -350,17 +359,19 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Row(
+                        Row(
                           children: [
-                            CircleAvatar(
+                            const CircleAvatar(
                               backgroundColor: AppTheme.primaryNavy,
                               radius: 14,
                               child: Text('3', style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold)),
                             ),
-                            SizedBox(width: 10),
-                            Text(
-                              'Field Residence GPS Survey',
-                              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: AppTheme.textPrimary),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: Text(
+                                l10n.stepGpsSurvey,
+                                style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: AppTheme.textPrimary),
+                              ),
                             ),
                           ],
                         ),
@@ -385,14 +396,14 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      _acquiredGps != null ? 'Village Geolocation Recorded' : 'GPS Coordinates Pending',
+                                      _acquiredGps != null ? l10n.gpsRecordedLabel : l10n.gpsPendingLabel,
                                       style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
                                     ),
                                     const SizedBox(height: 2),
                                     Text(
                                       _acquiredGps != null
                                           ? 'LAT: ${_acquiredGps!.latitude.toStringAsFixed(6)} • LON: ${_acquiredGps!.longitude.toStringAsFixed(6)} (±${_acquiredGps!.accuracy}m)'
-                                          : 'Tap the location icon to record field coordinates',
+                                          : l10n.gpsPromptTap,
                                       style: const TextStyle(fontSize: 12, color: AppTheme.textSecondary),
                                     ),
                                   ],
@@ -412,7 +423,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                                     );
                                   });
                                   ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(content: Text('Field GPS coordinates recorded successfully.')),
+                                    SnackBar(content: Text(l10n.gpsRecordedSuccess)),
                                   );
                                 },
                               ),
@@ -438,17 +449,19 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Row(
+                        Row(
                           children: [
-                            CircleAvatar(
+                            const CircleAvatar(
                               backgroundColor: AppTheme.primaryNavy,
                               radius: 14,
                               child: Text('4', style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold)),
                             ),
-                            SizedBox(width: 10),
-                            Text(
-                              'Borrower e-Signature (လက်မှတ်)',
-                              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: AppTheme.textPrimary),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: Text(
+                                l10n.stepSignature,
+                                style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: AppTheme.textPrimary),
+                              ),
                             ),
                           ],
                         ),
@@ -483,10 +496,10 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                         )
                       : const Icon(Icons.assignment_turned_in, size: 20),
                   label: Text(
-                    isSubmitting ? 'Encrypting & Saving...' : 'Submit Loan Application',
+                    isSubmitting ? l10n.savingApplication : l10n.submitApplication,
                     style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
-                  onPressed: isSubmitting ? null : _submitApplication,
+                  onPressed: isSubmitting ? null : () => _submitApplication(l10n),
                 ),
                 const SizedBox(height: 24),
               ],

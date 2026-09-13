@@ -5,6 +5,7 @@ com/bmf/mobile/infra/config/SecurityConfig.class
 com/bmf/mobile/infra/security/JwtProperties.class
 com/bmf/mobile/infra/payment/MmqrGeneratorService.class
 com/bmf/mobile/infra/persistence/JdbcLoanRepository.class
+com/bmf/mobile/infra/persistence/JdbcAppUserRepository.class
 com/bmf/mobile/infra/scheduler/OutboxEventProcessor.class
 com/bmf/mobile/infra/persistence/JdbcPaymentOrderRepository.class
 com/bmf/mobile/infra/persistence/JdbcUserRepository.class
@@ -18,6 +19,7 @@ com/bmf/mobile/infra/persistence/JdbcInsuranceClaimRepository.class
 com/bmf/mobile/infra/security/JwtTokenProvider.class
 com/bmf/mobile/infra/notification/FirebasePushNotificationAdapter.class
 com/bmf/mobile/infra/config/OpenApiConfig.class
+com/bmf/mobile/infra/security/OtpManagementAdapter$OtpSessionData.class
 com/bmf/mobile/infra/config/ShedLockConfig$InMemoryLockProvider.class
 com/bmf/mobile/infra/persistence/JdbcPaymentWebhookLogRepository.class
 com/bmf/mobile/infra/lock/RedissonDistributedLockAdapter.class
@@ -25,8 +27,10 @@ com/bmf/mobile/infra/persistence/JdbcMobileDeviceRepository.class
 com/bmf/mobile/infra/persistence/JdbcCustomerRepository.class
 com/bmf/mobile/infra/config/I18nConfig.class
 com/bmf/mobile/infra/security/TokenBlacklistService.class
+com/bmf/mobile/infra/security/OtpManagementAdapter$OtpSessionData$OtpSessionDataBuilder.class
 com/bmf/mobile/infra/config/DataSourceConfig.class
 com/bmf/mobile/infra/config/ShedLockConfig.class
 com/bmf/mobile/infra/persistence/JdbcLoanApplicationRepository.class
 com/bmf/mobile/infra/security/BCryptPasswordEncoderAdapter.class
 com/bmf/mobile/infra/config/ShedLockConfig$InMemoryLockProvider$1.class
+com/bmf/mobile/infra/security/OtpManagementAdapter.class

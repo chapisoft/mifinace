@@ -8,6 +8,7 @@
       "version": "1.0.0+1",
       "dependencies": [
         "connectivity_plus",
+        "crypto",
         "dio",
         "drift",
         "equatable",
@@ -32,6 +33,15 @@
         "flutter_test",
         "mockito",
         "mocktail"
+      ]
+    },
+    {
+      "name": "mocktail",
+      "version": "1.0.5",
+      "dependencies": [
+        "collection",
+        "matcher",
+        "test_api"
       ]
     },
     {
@@ -140,6 +150,13 @@
         "stream_channel",
         "test_api",
         "vector_math"
+      ]
+    },
+    {
+      "name": "crypto",
+      "version": "3.0.7",
+      "dependencies": [
+        "typed_data"
       ]
     },
     {
@@ -332,6 +349,22 @@
       ]
     },
     {
+      "name": "matcher",
+      "version": "0.12.20",
+      "dependencies": [
+        "async",
+        "meta",
+        "stack_trace",
+        "term_glyph",
+        "test_api"
+      ]
+    },
+    {
+      "name": "collection",
+      "version": "1.19.1",
+      "dependencies": []
+    },
+    {
       "name": "source_gen",
       "version": "4.3.0",
       "dependencies": [
@@ -348,19 +381,8 @@
     },
     {
       "name": "meta",
-      "version": "1.19.0",
+      "version": "1.18.3",
       "dependencies": []
-    },
-    {
-      "name": "matcher",
-      "version": "0.12.20",
-      "dependencies": [
-        "async",
-        "meta",
-        "stack_trace",
-        "term_glyph",
-        "test_api"
-      ]
     },
     {
       "name": "dart_style",
@@ -375,11 +397,6 @@
         "source_span",
         "yaml"
       ]
-    },
-    {
-      "name": "collection",
-      "version": "1.19.1",
-      "dependencies": []
     },
     {
       "name": "code_builder",
@@ -550,13 +567,6 @@
       ]
     },
     {
-      "name": "crypto",
-      "version": "3.0.7",
-      "dependencies": [
-        "typed_data"
-      ]
-    },
-    {
       "name": "convert",
       "version": "3.1.2",
       "dependencies": [
@@ -718,7 +728,7 @@
     },
     {
       "name": "vector_math",
-      "version": "2.4.2",
+      "version": "2.4.0",
       "dependencies": []
     },
     {
@@ -738,6 +748,13 @@
       "version": "1.3.3",
       "dependencies": [
         "clock",
+        "collection"
+      ]
+    },
+    {
+      "name": "typed_data",
+      "version": "1.4.0",
+      "dependencies": [
         "collection"
       ]
     },
@@ -1004,13 +1021,6 @@
       ]
     },
     {
-      "name": "typed_data",
-      "version": "1.4.0",
-      "dependencies": [
-        "collection"
-      ]
-    },
-    {
       "name": "pubspec_parse",
       "version": "1.6.0",
       "dependencies": [
@@ -1032,33 +1042,32 @@
     },
     {
       "name": "native_toolchain_c",
-      "version": "0.19.4",
+      "version": "0.19.2",
       "dependencies": [
         "code_assets",
         "glob",
         "hooks",
         "logging",
         "meta",
-        "process",
         "pub_semver"
       ]
     },
     {
       "name": "code_assets",
-      "version": "2.0.0",
+      "version": "1.2.1",
       "dependencies": [
         "collection",
-        "hooks",
-        "logging"
+        "hooks"
       ]
     },
     {
       "name": "hooks",
-      "version": "2.2.0",
+      "version": "2.0.2",
       "dependencies": [
         "collection",
         "crypto",
         "logging",
+        "meta",
         "pub_semver",
         "record_use",
         "yaml"
@@ -1134,7 +1143,7 @@
     },
     {
       "name": "objective_c",
-      "version": "9.6.0",
+      "version": "9.5.0",
       "dependencies": [
         "code_assets",
         "collection",
@@ -1185,17 +1194,8 @@
       ]
     },
     {
-      "name": "process",
-      "version": "5.0.6",
-      "dependencies": [
-        "file",
-        "path",
-        "platform"
-      ]
-    },
-    {
       "name": "record_use",
-      "version": "1.1.1",
+      "version": "0.6.0",
       "dependencies": [
         "collection",
         "meta",
@@ -1229,15 +1229,6 @@
       "dependencies": [
         "collection",
         "meta"
-      ]
-    },
-    {
-      "name": "mocktail",
-      "version": "1.0.5",
-      "dependencies": [
-        "collection",
-        "matcher",
-        "test_api"
       ]
     }
   ],

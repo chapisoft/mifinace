@@ -17,5 +17,11 @@ spring:
     username: sa
     password: ""
 
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:schema.sql
+
 server:
   port: 0
+

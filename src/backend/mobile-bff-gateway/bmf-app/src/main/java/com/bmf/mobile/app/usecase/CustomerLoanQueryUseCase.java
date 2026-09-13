@@ -40,7 +40,7 @@ public class CustomerLoanQueryUseCase {
         BigDecimal totalOutstandingPrincipal = schedules.stream()
                 .filter(s -> !RepaymentStatus.SETTLED.name().equalsIgnoreCase(s.getStatus()))
                 .map(s -> s.getPrincipalAmount() != null ? s.getPrincipalAmount() : BigDecimal.ZERO)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+                .reduce(BigDecimal.ZERO, (a, b) -> a.add(b));
 
         int totalPeriodsPaid = (int) schedules.stream()
                 .filter(s -> RepaymentStatus.SETTLED.name().equalsIgnoreCase(s.getStatus()))

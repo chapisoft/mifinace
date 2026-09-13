@@ -3,17 +3,14 @@ package com.bmf.mobile.api;
 import com.bmf.mobile.app.scheduler.LoanDueReminderJob;
 import com.bmf.mobile.app.usecase.LoanDueReminderUseCase;
 import com.bmf.mobile.app.worker.NotificationOutboxWorker;
-import com.bmf.mobile.domain.entity.GroupScheduleRecord;
 import com.bmf.mobile.domain.entity.MobileDevice;
 import com.bmf.mobile.domain.entity.OutboxEvent;
 import com.bmf.mobile.domain.enums.AggregateType;
-import com.bmf.mobile.domain.enums.DeviceStatus;
 import com.bmf.mobile.domain.enums.OutboxEventType;
 import com.bmf.mobile.domain.enums.OutboxStatus;
 import com.bmf.mobile.domain.enums.PlatformType;
 import com.bmf.mobile.domain.enums.UserType;
 import com.bmf.mobile.domain.port.PushNotificationPort;
-import com.bmf.mobile.domain.repository.LoanRepository;
 import com.bmf.mobile.domain.repository.MobileDeviceRepository;
 import com.bmf.mobile.domain.repository.OutboxEventRepository;
 import net.javacrumbs.shedlock.core.LockProvider;
@@ -24,10 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -52,9 +46,6 @@ public class OutboxNotificationWorkerTests {
 
     @Autowired
     private MobileDeviceRepository mobileDeviceRepository;
-
-    @Autowired
-    private LoanRepository loanRepository;
 
     @Autowired
     private PushNotificationPort pushNotificationPort;

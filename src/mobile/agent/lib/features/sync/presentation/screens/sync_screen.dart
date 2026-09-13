@@ -114,13 +114,13 @@ class _SyncScreenState extends State<SyncScreen> {
                           ),
                           Container(width: 1, height: 40, color: AppTheme.borderSubtle),
                           _SyncStatBox(
-                            label: 'Synced',
+                            label: l10n.statSynced,
                             count: summary?.syncedCount ?? 0,
                             color: AppTheme.accentTeal,
                           ),
                           Container(width: 1, height: 40, color: AppTheme.borderSubtle),
                           _SyncStatBox(
-                            label: 'Failed',
+                            label: l10n.statFailed,
                             count: summary?.failedCount ?? 0,
                             color: (summary?.failedCount ?? 0) > 0 ? AppTheme.accentCrimson : AppTheme.textSecondary,
                           ),
@@ -175,27 +175,25 @@ class _SyncScreenState extends State<SyncScreen> {
                   borderRadius: BorderRadius.circular(10),
                   side: const BorderSide(color: AppTheme.borderSubtle),
                 ),
-                child: const Padding(
-                  padding: EdgeInsets.all(14),
+                child: Padding(
+                  padding: const EdgeInsets.all(14),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         children: [
-                          Icon(Icons.info_outline, size: 18, color: AppTheme.primaryNavy),
-                          SizedBox(width: 8),
+                          const Icon(Icons.info_outline, size: 18, color: AppTheme.primaryNavy),
+                          const SizedBox(width: 8),
                           Text(
-                            'Offline-First Operating Guidelines',
-                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppTheme.primaryNavy),
+                            l10n.offlineGuidelinesTitle,
+                            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppTheme.primaryNavy),
                           ),
                         ],
                       ),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       Text(
-                        '1. Repayments collected in remote villages are encrypted in SQLCipher AES-256 local database with UUIDv4 idempotency keys.\n'
-                        '2. Once cellular data/Wi-Fi is detected, the engine automatically pushes offline transactions in batches of 50.\n'
-                        '3. Printed receipts with local transaction IDs are legally binding and reconcilable upon server sync.',
-                        style: TextStyle(fontSize: 12, color: AppTheme.textSecondary, height: 1.4),
+                        l10n.offlineGuidelinesText,
+                        style: const TextStyle(fontSize: 12, color: AppTheme.textSecondary, height: 1.4),
                       ),
                     ],
                   ),

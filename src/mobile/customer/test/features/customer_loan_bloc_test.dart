@@ -20,6 +20,7 @@ void main() {
     CustomerLoan(
       loanId: 'LN-2026-001',
       contractCode: 'AGRI-KYA-001',
+      customerCode: 'CUST-001',
       loanType: LoanType.agricultureSeasonal,
       disbursedAmountMmk: 500000.0,
       totalRepaidMmk: 200000.0,

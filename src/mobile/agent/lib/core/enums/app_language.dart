@@ -15,6 +15,8 @@ enum AppLanguage {
 
   const AppLanguage(this.languageCode, this.displayName, this.nativeName);
 
+  String get code => languageCode;
+
   Locale get locale => Locale(languageCode);
 
   static AppLanguage fromCode(String? code) {

@@ -110,6 +110,15 @@ public class JdbcRepaymentRepository implements RepaymentRepository {
                 .list();
     }
 
+    @Override
+    public List<RepaymentTransaction> findByCustomerCode(String customerCode) {
+        String sql = "SELECT * FROM dbo.SYS_REPAYMENT_TRANSACTION WHERE Customer_Code = :customerCode ORDER BY Collected_Time DESC";
+        return jdbcClient.sql(sql)
+                .param("customerCode", customerCode)
+                .query(this::mapRowToTransaction)
+                .list();
+    }
+
     private RepaymentTransaction mapRowToTransaction(java.sql.ResultSet rs, int rowNum) throws java.sql.SQLException {
         return RepaymentTransaction.builder()
                 .transactionId(rs.getString("Transaction_ID"))

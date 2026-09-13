@@ -38,7 +38,7 @@ class InsuranceClaimRepositoryImpl implements InsuranceClaimRepository {
       LocalSyncQueueTableCompanion(
         queueId: Value(queueId),
         operationType: const Value('INSURANCE_CLAIM'),
-        entityId: Value(claim.claimId),
+        aggregateId: Value(claim.claimId),
         payloadJson: Value(payloadJson),
         idempotencyKey: Value(claim.idempotencyKey),
         status: const Value('PENDING'),

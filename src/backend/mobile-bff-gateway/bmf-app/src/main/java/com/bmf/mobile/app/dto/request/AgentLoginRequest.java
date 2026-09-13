@@ -9,23 +9,39 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
- * Request đăng nhập cho Cán bộ tín dụng (Loan Officer / Agent).
+ * Request đăng nhập cho Agent (Trưởng nhóm / Trưởng cụm).
+ * Agent là Khách hàng trong KH_THANHVIEN được giao vai trò Trưởng nhóm/cụm,
+ * đăng nhập bằng Mã thành viên (hoặc NRC/SĐT) và mã PIN 6 số.
  */
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString(exclude = {"pinCode", "password"})
 public class AgentLoginRequest {
 
-    @NotBlank(message = "{validation.auth.username.notBlank}")
-    @Size(max = 64, message = "{validation.auth.username.size}")
+    /**
+     * Mã thành viên (Ma_ThanhVien), Số thẻ NRC, hoặc Số điện thoại.
+     */
+    private String identifier;
+
+    /**
+     * Tương thích với trường username cũ.
+     */
     private String username;
 
-    @NotBlank(message = "{validation.auth.password.notBlank}")
-    @Size(max = 128, message = "{validation.auth.password.size}")
+    /**
+     * Mã PIN bảo mật 6 số.
+     */
+    private String pinCode;
+
+    /**
+     * Tương thích với trường password cũ.
+     */
     private String password;
 
     @NotBlank(message = "{validation.device.deviceId.notBlank}")
@@ -50,4 +66,24 @@ public class AgentLoginRequest {
 
     @Size(max = 512, message = "{validation.device.publicKey.size}")
     private String publicKey;
+
+    public String getEffectiveIdentifier() {
+        if (identifier != null && !identifier.isBlank()) {
+            return identifier;
+        }
+        if (username != null && !username.isBlank()) {
+            return username;
+        }
+        return "";
+    }
+
+    public String getEffectivePin() {
+        if (pinCode != null && !pinCode.isBlank()) {
+            return pinCode;
+        }
+        if (password != null && !password.isBlank()) {
+            return password;
+        }
+        return "";
+    }
 }

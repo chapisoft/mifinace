@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../app/theme/app_theme.dart';
+import '../../../../core/l10n/app_localizations.dart';
 import '../../domain/models/nrc_data.dart';
 import '../../domain/services/nrc_parser.dart';
 
@@ -19,7 +20,7 @@ class NrcScannerWidget extends StatefulWidget {
 class _NrcScannerWidgetState extends State<NrcScannerWidget> {
   final TextEditingController _nrcController = TextEditingController();
   NrcData? _parsedNrc;
-  String? _errorMessage;
+  bool _hasInvalidFormat = false;
 
   @override
   void initState() {
@@ -39,7 +40,7 @@ class _NrcScannerWidgetState extends State<NrcScannerWidget> {
     if (text.isEmpty) {
       setState(() {
         _parsedNrc = null;
-        _errorMessage = null;
+        _hasInvalidFormat = false;
       });
       return;
     }
@@ -48,21 +49,19 @@ class _NrcScannerWidgetState extends State<NrcScannerWidget> {
     setState(() {
       if (parsed != null) {
         _parsedNrc = parsed;
-        _errorMessage = null;
+        _hasInvalidFormat = false;
         widget.onNrcCaptured(parsed);
       } else {
         _parsedNrc = null;
-        if (text.length >= 8) {
-          _errorMessage = 'Invalid Myanmar NRC format. Example: 12/DAGANA(N)123456';
-        } else {
-          _errorMessage = null;
-        }
+        _hasInvalidFormat = text.length >= 8;
       }
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -104,7 +103,7 @@ class _NrcScannerWidgetState extends State<NrcScannerWidget> {
                       Text(
                         _parsedNrc != null
                             ? _parsedNrc!.fullNrcFormatted
-                            : 'Position NRC in frame\n(မှတ်ပုံတင် ကတ်ပြားအား ထားပါ)',
+                            : l10n.positionNrcInFrame,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: _parsedNrc != null ? Colors.white : Colors.white70,
@@ -125,13 +124,13 @@ class _NrcScannerWidgetState extends State<NrcScannerWidget> {
         TextField(
           controller: _nrcController,
           decoration: InputDecoration(
-            labelText: 'Myanmar NRC Number',
-            hintText: 'e.g. 12/DAGANA(N)123456 or ၁၂/ဒဂန(နိုင်)၁၂၃၄၅၆',
+            labelText: l10n.nrcInputLabel,
+            hintText: l10n.nrcInputHint,
             prefixIcon: const Icon(Icons.badge_outlined),
             suffixIcon: _parsedNrc != null
                 ? const Icon(Icons.check_circle, color: AppTheme.accentTeal)
                 : null,
-            errorText: _errorMessage,
+            errorText: _hasInvalidFormat ? l10n.invalidNrcFormat : null,
             contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           ),
         ),

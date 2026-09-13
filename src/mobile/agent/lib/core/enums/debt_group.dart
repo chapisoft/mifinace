@@ -50,4 +50,11 @@ enum DebtGroup {
     if (overdueDays <= 180) return DebtGroup.doubtful;
     return DebtGroup.loss;
   }
+
+  static DebtGroup fromCode(String code) {
+    return DebtGroup.values.firstWhere(
+      (e) => e.code.toUpperCase() == code.toUpperCase(),
+      orElse: () => DebtGroup.standard,
+    );
+  }
 }

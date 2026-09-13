@@ -40,7 +40,10 @@ public class CustomerInsuranceController {
     @PreAuthorize("hasRole('CUSTOMER')")
     @Operation(summary = "Khách hàng tra cứu bảng quyền lợi bảo hiểm tương hỗ")
     public ResponseEntity<ApiResponse<CustomerInsuranceBenefitResponse>> getBenefits(Principal principal) {
-        String customerCode = principal != null ? principal.getName() : "CUST-DEFAULT";
+        if (principal == null || principal.getName() == null || principal.getName().isBlank()) {
+            throw new com.bmf.mobile.domain.exception.BusinessException(com.bmf.mobile.domain.enums.ErrorCode.ERR_UNAUTHORIZED);
+        }
+        String customerCode = principal.getName();
         CustomerInsuranceBenefitResponse response = customerBenefitQueryUseCase.getInsuranceBenefits(customerCode);
         String message = i18nService.getMessage("msg.common.success");
         return ResponseEntity.ok(ApiResponse.ok(response, message));
@@ -53,7 +56,10 @@ public class CustomerInsuranceController {
             @Valid @RequestBody SubmitInsuranceClaimRequest request,
             Principal principal) {
 
-        String customerCode = principal != null ? principal.getName() : "CUST-DEFAULT";
+        if (principal == null || principal.getName() == null || principal.getName().isBlank()) {
+            throw new com.bmf.mobile.domain.exception.BusinessException(com.bmf.mobile.domain.enums.ErrorCode.ERR_UNAUTHORIZED);
+        }
+        String customerCode = principal.getName();
         request.setCustomerCode(customerCode);
         InsuranceClaimResponse response = submitInsuranceClaimUseCase.submitClaim(request, customerCode);
         String message = i18nService.getMessage("msg.insurance.claim.submitted");

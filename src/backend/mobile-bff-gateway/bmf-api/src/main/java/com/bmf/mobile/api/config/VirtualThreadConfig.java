@@ -18,6 +18,7 @@ import java.util.concurrent.Executors;
 public class VirtualThreadConfig {
 
     @Bean
+    @SuppressWarnings("null")
     public AsyncTaskExecutor applicationTaskExecutor() {
         log.info("Initializing Java 21 Virtual Threads Async Task Executor");
         return new TaskExecutorAdapter(Executors.newVirtualThreadPerTaskExecutor());

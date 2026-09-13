@@ -40,7 +40,7 @@ class _RandomNumericKeypadState extends State<RandomNumericKeypad> {
       children: [
         for (int row = 0; row < 3; row++)
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 6),
+            padding: const EdgeInsets.symmetric(vertical: 3),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -50,28 +50,32 @@ class _RandomNumericKeypadState extends State<RandomNumericKeypad> {
             ),
           ),
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 6),
+          padding: const EdgeInsets.symmetric(vertical: 3),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               // Bottom Left: Biometric or empty
               if (widget.showBiometric && widget.onBiometricPressed != null)
-                IconButton(
-                  icon: const Icon(Icons.fingerprint, size: 36, color: CustomerTheme.primaryNavy),
-                  onPressed: widget.onBiometricPressed,
+                SizedBox(
+                  width: 58,
+                  height: 58,
+                  child: IconButton(
+                    icon: const Icon(Icons.fingerprint, size: 30, color: CustomerTheme.primaryNavy),
+                    onPressed: widget.onBiometricPressed,
+                  ),
                 )
               else
-                const SizedBox(width: 72, height: 72),
+                const SizedBox(width: 58, height: 58),
 
               // Bottom Center: 10th digit
               _buildKeyButton(_digits[9].toString()),
 
               // Bottom Right: Delete backspace
               SizedBox(
-                width: 72,
-                height: 72,
+                width: 58,
+                height: 58,
                 child: IconButton(
-                  icon: const Icon(Icons.backspace_outlined, size: 28, color: CustomerTheme.textSecondary),
+                  icon: const Icon(Icons.backspace_outlined, size: 24, color: CustomerTheme.textSecondary),
                   onPressed: widget.onDeletePressed,
                 ),
               ),
@@ -84,28 +88,28 @@ class _RandomNumericKeypadState extends State<RandomNumericKeypad> {
 
   Widget _buildKeyButton(String text) {
     return Container(
-      width: 72,
-      height: 72,
+      width: 58,
+      height: 58,
       decoration: BoxDecoration(
         color: CustomerTheme.surfaceWhite,
         shape: BoxShape.circle,
         border: Border.all(color: CustomerTheme.borderSubtle, width: 1.5),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withAlpha(8),
+            color: Colors.black.withAlpha(6),
             blurRadius: 4,
             offset: const Offset(0, 2),
           ),
         ],
       ),
       child: InkWell(
-        borderRadius: BorderRadius.circular(36),
+        borderRadius: BorderRadius.circular(29),
         onTap: () => widget.onKeyPressed(text),
         child: Center(
           child: Text(
             text,
             style: const TextStyle(
-              fontSize: 26,
+              fontSize: 22,
               fontWeight: FontWeight.bold,
               color: CustomerTheme.primaryNavy,
             ),

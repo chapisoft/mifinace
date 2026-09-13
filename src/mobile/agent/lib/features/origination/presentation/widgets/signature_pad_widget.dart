@@ -2,6 +2,7 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import '../../../../app/theme/app_theme.dart';
+import '../../../../core/l10n/app_localizations.dart';
 
 /// Interactive Touch Signature Pad for field borrower e-Signature capture.
 class SignaturePadWidget extends StatefulWidget {
@@ -61,6 +62,8 @@ class _SignaturePadWidgetState extends State<SignaturePadWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -102,10 +105,10 @@ class _SignaturePadWidgetState extends State<SignaturePadWidget> {
 
                 // Baseline guideline & hint text
                 if (!hasSignature)
-                  const Center(
+                  Center(
                     child: Text(
-                      'Sign here with finger / stylus (လက်မှတ်ရေးထိုးပါ)',
-                      style: TextStyle(color: AppTheme.textSecondary, fontSize: 13),
+                      l10n.signHerePrompt,
+                      style: const TextStyle(color: AppTheme.textSecondary, fontSize: 13),
                     ),
                   ),
 
@@ -128,7 +131,7 @@ class _SignaturePadWidgetState extends State<SignaturePadWidget> {
           children: [
             TextButton.icon(
               icon: const Icon(Icons.clear, size: 16),
-              label: const Text('Clear Signature', style: TextStyle(fontSize: 12)),
+              label: Text(l10n.clearSignature, style: const TextStyle(fontSize: 12)),
               onPressed: hasSignature ? _clear : null,
             ),
           ],

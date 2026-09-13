@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.bmf.mobile.api.OutboxNotificationWorkerTests" time="0.385" tests="7" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.bmf.mobile.api.OutboxNotificationWorkerTests" time="0.529" tests="7" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
@@ -14,7 +14,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="VN"/>
     <property name="sun.boot.library.path" value="/Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home/lib"/>
-    <property name="sun.java.command" value="/Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-api/target/surefire/surefirebooter-20260911133917797_38.jar /Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-api/target/surefire 2026-09-11T13-39-15_054-jvmRun1 surefire-20260911133917797_36tmp surefire_2-20260911133917797_37tmp"/>
+    <property name="sun.java.command" value="/Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-api/target/surefire/surefirebooter-20260912000246833_39.jar /Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-api/target/surefire 2026-09-12T00-02-41_095-jvmRun1 surefire-20260912000246833_37tmp surefire_2-20260912000246833_38tmp"/>
     <property name="http.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="/Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-api/target/test-classes:/Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-api/target/classes:/Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-domain/target/classes:/Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-app/target/classes:/Users/micro/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.17.2/jackson-databind-2.17.2.jar:/Users/micro/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.17.2/jackson-annotations-2.17.2.jar:/Users/micro/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.17.2/jackson-core-2.17.2.jar:/Users/micro/.m2/repository/org/springframework/spring-tx/6.1.12/spring-tx-6.1.12.jar:/Users/micro/.m2/repository/org/springframework/spring-beans/6.1.12/spring-beans-6.1.12.jar:/Users/micro/.m2/repository/net/javacrumbs/shedlock/shedlock-spring/5.14.0/shedlock-spring-5.14.0.jar:/Users/micro/.m2/repository/net/javacrumbs/shedlock/shedlock-core/5.14.0/shedlock-core-5.14.0.jar:/Users/micro/.m2/repository/org/springframework/spring-context/6.1.12/spring-context-6.1.12.jar:/Users/micro/.m2/repository/io/swagger/core/v3/swagger-annotations/2.2.22/swagger-annotations-2.2.22.jar:/Users/micro/.m2/repository/org/mapstruct/mapstruct/1.6.0/mapstruct-1.6.0.jar:/Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-infra/target/classes:/Users/micro/.m2/repository/org/springframework/boot/spring-boot-starter-jdbc/3.3.3/spring-boot-starter-jdbc-3.3.3.jar:/Users/micro/.m2/repository/com/zaxxer/HikariCP/5.1.0/HikariCP-5.1.0.jar:/Users/micro/.m2/repository/org/springframework/spring-jdbc/6.1.12/spring-jdbc-6.1.12.jar:/Users/micro/.m2/repository/com/microsoft/sqlserver/mssql-jdbc/12.6.1.jre11/mssql-jdbc-12.6.1.jre11.jar:/Users/micro/.m2/repository/com/google/zxing/core/3.5.3/core-3.5.3.jar:/Users/micro/.m2/repository/com/google/zxing/javase/3.5.3/javase-3.5.3.jar:/Users/micro/.m2/repository/com/beust/jcommander/1.82/jcommander-1.82.jar:/Users/micro/.m2/repository/com/github/jai-imageio/jai-imageio-core/1.4.0/jai-imageio-core-1.4.0.jar:/Users/micro/.m2/repository/org/redisson/redisson-spring-boot-starter/3.35.0/redisson-spring-boot-starter-3.35.0.jar:/Users/micro/.m2/repository/org/springframework/boot/spring-boot-starter-data-redis/3.3.3/spring-boot-starter-data-redis-3.3.3.jar:/Users/micro/.m2/repository/org/redisson/redisson/3.35.0/redisson-3.35.0.jar:/Users/micro/.m2/repository/io/netty/netty-common/4.1.112.Final/netty-common-4.1.112.Final.jar:/Users/micro/.m2/repository/io/netty/netty-codec/4.1.112.Final/netty-codec-4.1.112.Final.jar:/Users/micro/.m2/repository/io/netty/netty-buffer/4.1.112.Final/netty-buffer-4.1.112.Final.jar:/Users/micro/.m2/repository/io/netty/netty-transport/4.1.112.Final/netty-transport-4.1.112.Final.jar:/Users/micro/.m2/repository/io/netty/netty-resolver/4.1.112.Final/netty-resolver-4.1.112.Final.jar:/Users/micro/.m2/repository/io/netty/netty-resolver-dns/4.1.112.Final/netty-resolver-dns-4.1.112.Final.jar:/Users/micro/.m2/repository/io/netty/netty-codec-dns/4.1.112.Final/netty-codec-dns-4.1.112.Final.jar:/Users/micro/.m2/repository/io/netty/netty-handler/4.1.112.Final/netty-handler-4.1.112.Final.jar:/Users/micro/.m2/repository/io/netty/netty-transport-native-unix-common/4.1.112.Final/netty-transport-native-unix-common-4.1.112.Final.jar:/Users/micro/.m2/repository/javax/cache/cache-api/1.1.1/cache-api-1.1.1.jar:/Users/micro/.m2/repository/io/projectreactor/reactor-core/3.6.9/reactor-core-3.6.9.jar:/Users/micro/.m2/repository/org/reactivestreams/reactive-streams/1.0.4/reactive-streams-1.0.4.jar:/Users/micro/.m2/repository/io/reactivex/rxjava3/rxjava/3.1.9/rxjava-3.1.9.jar:/Users/micro/.m2/repository/com/esotericsoftware/kryo/5.6.0/kryo-5.6.0.jar:/Users/micro/.m2/repository/com/esotericsoftware/reflectasm/1.11.9/reflectasm-1.11.9.jar:/Users/micro/.m2/repository/com/esotericsoftware/minlog/1.3.1/minlog-1.3.1.jar:/Users/micro/.m2/repository/com/fasterxml/jackson/dataformat/jackson-dataformat-yaml/2.17.2/jackson-dataformat-yaml-2.17.2.jar:/Users/micro/.m2/repository/org/jodd/jodd-util/6.2.2/jodd-util-6.2.2.jar:/Users/micro/.m2/repository/org/redisson/redisson-spring-data-33/3.35.0/redisson-spring-data-33-3.35.0.jar:/Users/micro/.m2/repository/net/javacrumbs/shedlock/shedlock-provider-redis-spring/5.14.0/shedlock-provider-redis-spring-5.14.0.jar:/Users/micro/.m2/repository/org/springframework/data/spring-data-redis/3.3.3/spring-data-redis-3.3.3.jar:/Users/micro/.m2/repository/org/springframework/data/spring-data-keyvalue/3.3.3/spring-data-keyvalue-3.3.3.jar:/Users/micro/.m2/repository/org/springframework/data/spring-data-commons/3.3.3/spring-data-commons-3.3.3.jar:/Users/micro/.m2/repository/org/springframework/spring-oxm/6.1.12/spring-oxm-6.1.12.jar:/Users/micro/.m2/repository/org/springframework/spring-context-support/6.1.12/spring-context-support-6.1.12.jar:/Users/micro/.m2/repository/io/jsonwebtoken/jjwt-api/0.12.6/jjwt-api-0.12.6.jar:/Users/micro/.m2/repository/io/jsonwebtoken/jjwt-impl/0.12.6/jjwt-impl-0.12.6.jar:/Users/micro/.m2/repository/io/jsonwebtoken/jjwt-jackson/0.12.6/jjwt-jackson-0.12.6.jar:/Users/micro/.m2/repository/org/springframework/boot/spring-boot-starter-web/3.3.3/spring-boot-starter-web-3.3.3.jar:/Users/micro/.m2/repository/org/springframework/boot/spring-boot-starter/3.3.3/spring-boot-starter-3.3.3.jar:/Users/micro/.m2/repository/org/springframework/boot/spring-boot/3.3.3/spring-boot-3.3.3.jar:/Users/micro/.m2/repository/org/springframework/boot/spring-boot-autoconfigure/3.3.3/spring-boot-autoconfigure-3.3.3.jar:/Users/micro/.m2/repository/org/springframework/boot/spring-boot-starter-logging/3.3.3/spring-boot-starter-logging-3.3.3.jar:/Users/micro/.m2/repository/ch/qos/logback/logback-classic/1.5.7/logback-classic-1.5.7.jar:/Users/micro/.m2/repository/ch/qos/logback/logback-core/1.5.7/logback-core-1.5.7.jar:/Users/micro/.m2/repository/org/apache/logging/log4j/log4j-to-slf4j/2.23.1/log4j-to-slf4j-2.23.1.jar:/Users/micro/.m2/repository/org/apache/logging/log4j/log4j-api/2.23.1/log4j-api-2.23.1.jar:/Users/micro/.m2/repository/org/slf4j/jul-to-slf4j/2.0.16/jul-to-slf4j-2.0.16.jar:/Users/micro/.m2/repository/jakarta/annotation/jakarta.annotation-api/2.1.1/jakarta.annotation-api-2.1.1.jar:/Users/micro/.m2/repository/org/yaml/snakeyaml/2.2/snakeyaml-2.2.jar:/Users/micro/.m2/repository/org/springframework/boot/spring-boot-starter-json/3.3.3/spring-boot-starter-json-3.3.3.jar:/Users/micro/.m2/repository/com/fasterxml/jackson/datatype/jackson-datatype-jdk8/2.17.2/jackson-datatype-jdk8-2.17.2.jar:/Users/micro/.m2/repository/com/fasterxml/jackson/datatype/jackson-datatype-jsr310/2.17.2/jackson-datatype-jsr310-2.17.2.jar:/Users/micro/.m2/repository/com/fasterxml/jackson/module/jackson-module-parameter-names/2.17.2/jackson-module-parameter-names-2.17.2.jar:/Users/micro/.m2/repository/org/springframework/boot/spring-boot-starter-tomcat/3.3.3/spring-boot-starter-tomcat-3.3.3.jar:/Users/micro/.m2/repository/org/apache/tomcat/embed/tomcat-embed-core/10.1.28/tomcat-embed-core-10.1.28.jar:/Users/micro/.m2/repository/org/apache/tomcat/embed/tomcat-embed-websocket/10.1.28/tomcat-embed-websocket-10.1.28.jar:/Users/micro/.m2/repository/org/springframework/spring-web/6.1.12/spring-web-6.1.12.jar:/Users/micro/.m2/repository/org/springframework/spring-webmvc/6.1.12/spring-webmvc-6.1.12.jar:/Users/micro/.m2/repository/org/springframework/spring-expression/6.1.12/spring-expression-6.1.12.jar:/Users/micro/.m2/repository/org/springframework/boot/spring-boot-starter-validation/3.3.3/spring-boot-starter-validation-3.3.3.jar:/Users/micro/.m2/repository/org/apache/tomcat/embed/tomcat-embed-el/10.1.28/tomcat-embed-el-10.1.28.jar:/Users/micro/.m2/repository/org/hibernate/validator/hibernate-validator/8.0.1.Final/hibernate-validator-8.0.1.Final.jar:/Users/micro/.m2/repository/jakarta/validation/jakarta.validation-api/3.0.2/jakarta.validation-api-3.0.2.jar:/Users/micro/.m2/repository/org/jboss/logging/jboss-logging/3.5.3.Final/jboss-logging-3.5.3.Final.jar:/Users/micro/.m2/repository/com/fasterxml/classmate/1.7.0/classmate-1.7.0.jar:/Users/micro/.m2/repository/org/springframework/boot/spring-boot-starter-actuator/3.3.3/spring-boot-starter-actuator-3.3.3.jar:/Users/micro/.m2/repository/org/springframework/boot/spring-boot-actuator-autoconfigure/3.3.3/spring-boot-actuator-autoconfigure-3.3.3.jar:/Users/micro/.m2/repository/org/springframework/boot/spring-boot-actuator/3.3.3/spring-boot-actuator-3.3.3.jar:/Users/micro/.m2/repository/io/micrometer/micrometer-observation/1.13.3/micrometer-observation-1.13.3.jar:/Users/micro/.m2/repository/io/micrometer/micrometer-commons/1.13.3/micrometer-commons-1.13.3.jar:/Users/micro/.m2/repository/io/micrometer/micrometer-jakarta9/1.13.3/micrometer-jakarta9-1.13.3.jar:/Users/micro/.m2/repository/io/micrometer/micrometer-core/1.13.3/micrometer-core-1.13.3.jar:/Users/micro/.m2/repository/org/hdrhistogram/HdrHistogram/2.2.2/HdrHistogram-2.2.2.jar:/Users/micro/.m2/repository/org/latencyutils/LatencyUtils/2.0.3/LatencyUtils-2.0.3.jar:/Users/micro/.m2/repository/org/springframework/boot/spring-boot-starter-security/3.3.3/spring-boot-starter-security-3.3.3.jar:/Users/micro/.m2/repository/org/springframework/spring-aop/6.1.12/spring-aop-6.1.12.jar:/Users/micro/.m2/repository/org/springframework/security/spring-security-config/6.3.3/spring-security-config-6.3.3.jar:/Users/micro/.m2/repository/org/springframework/security/spring-security-web/6.3.3/spring-security-web-6.3.3.jar:/Users/micro/.m2/repository/org/springdoc/springdoc-openapi-starter-webmvc-ui/2.6.0/springdoc-openapi-starter-webmvc-ui-2.6.0.jar:/Users/micro/.m2/repository/org/springdoc/springdoc-openapi-starter-webmvc-api/2.6.0/springdoc-openapi-starter-webmvc-api-2.6.0.jar:/Users/micro/.m2/repository/org/springdoc/springdoc-openapi-starter-common/2.6.0/springdoc-openapi-starter-common-2.6.0.jar:/Users/micro/.m2/repository/io/swagger/core/v3/swagger-core-jakarta/2.2.22/swagger-core-jakarta-2.2.22.jar:/Users/micro/.m2/repository/org/apache/commons/commons-lang3/3.14.0/commons-lang3-3.14.0.jar:/Users/micro/.m2/repository/io/swagger/core/v3/swagger-annotations-jakarta/2.2.22/swagger-annotations-jakarta-2.2.22.jar:/Users/micro/.m2/repository/io/swagger/core/v3/swagger-models-jakarta/2.2.22/swagger-models-jakarta-2.2.22.jar:/Users/micro/.m2/repository/org/webjars/swagger-ui/5.17.14/swagger-ui-5.17.14.jar:/Users/micro/.m2/repository/co/elastic/logging/logback-ecs-encoder/1.6.0/logback-ecs-encoder-1.6.0.jar:/Users/micro/.m2/repository/co/elastic/logging/ecs-logging-core/1.6.0/ecs-logging-core-1.6.0.jar:/Users/micro/.m2/repository/org/projectlombok/lombok/1.18.34/lombok-1.18.34.jar:/Users/micro/.m2/repository/org/springframework/boot/spring-boot-starter-test/3.3.3/spring-boot-starter-test-3.3.3.jar:/Users/micro/.m2/repository/org/springframework/boot/spring-boot-test/3.3.3/spring-boot-test-3.3.3.jar:/Users/micro/.m2/repository/org/springframework/boot/spring-boot-test-autoconfigure/3.3.3/spring-boot-test-autoconfigure-3.3.3.jar:/Users/micro/.m2/repository/com/jayway/jsonpath/json-path/2.9.0/json-path-2.9.0.jar:/Users/micro/.m2/repository/org/slf4j/slf4j-api/2.0.16/slf4j-api-2.0.16.jar:/Users/micro/.m2/repository/jakarta/xml/bind/jakarta.xml.bind-api/4.0.2/jakarta.xml.bind-api-4.0.2.jar:/Users/micro/.m2/repository/jakarta/activation/jakarta.activation-api/2.1.3/jakarta.activation-api-2.1.3.jar:/Users/micro/.m2/repository/net/minidev/json-smart/2.5.1/json-smart-2.5.1.jar:/Users/micro/.m2/repository/net/minidev/accessors-smart/2.5.1/accessors-smart-2.5.1.jar:/Users/micro/.m2/repository/org/ow2/asm/asm/9.6/asm-9.6.jar:/Users/micro/.m2/repository/org/assertj/assertj-core/3.25.3/assertj-core-3.25.3.jar:/Users/micro/.m2/repository/net/bytebuddy/byte-buddy/1.14.19/byte-buddy-1.14.19.jar:/Users/micro/.m2/repository/org/awaitility/awaitility/4.2.2/awaitility-4.2.2.jar:/Users/micro/.m2/repository/org/hamcrest/hamcrest/2.2/hamcrest-2.2.jar:/Users/micro/.m2/repository/org/junit/jupiter/junit-jupiter/5.10.3/junit-jupiter-5.10.3.jar:/Users/micro/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.10.3/junit-jupiter-api-5.10.3.jar:/Users/micro/.m2/repository/org/opentest4j/opentest4j/1.3.0/opentest4j-1.3.0.jar:/Users/micro/.m2/repository/org/junit/platform/junit-platform-commons/1.10.3/junit-platform-commons-1.10.3.jar:/Users/micro/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/Users/micro/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.10.3/junit-jupiter-params-5.10.3.jar:/Users/micro/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.10.3/junit-jupiter-engine-5.10.3.jar:/Users/micro/.m2/repository/org/junit/platform/junit-platform-engine/1.10.3/junit-platform-engine-1.10.3.jar:/Users/micro/.m2/repository/org/mockito/mockito-core/5.11.0/mockito-core-5.11.0.jar:/Users/micro/.m2/repository/net/bytebuddy/byte-buddy-agent/1.14.19/byte-buddy-agent-1.14.19.jar:/Users/micro/.m2/repository/org/objenesis/objenesis/3.3/objenesis-3.3.jar:/Users/micro/.m2/repository/org/mockito/mockito-junit-jupiter/5.11.0/mockito-junit-jupiter-5.11.0.jar:/Users/micro/.m2/repository/org/skyscreamer/jsonassert/1.5.3/jsonassert-1.5.3.jar:/Users/micro/.m2/repository/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar:/Users/micro/.m2/repository/org/springframework/spring-core/6.1.12/spring-core-6.1.12.jar:/Users/micro/.m2/repository/org/springframework/spring-jcl/6.1.12/spring-jcl-6.1.12.jar:/Users/micro/.m2/repository/org/springframework/spring-test/6.1.12/spring-test-6.1.12.jar:/Users/micro/.m2/repository/org/xmlunit/xmlunit-core/2.9.1/xmlunit-core-2.9.1.jar:/Users/micro/.m2/repository/org/springframework/security/spring-security-test/6.3.3/spring-security-test-6.3.3.jar:/Users/micro/.m2/repository/org/springframework/security/spring-security-core/6.3.3/spring-security-core-6.3.3.jar:/Users/micro/.m2/repository/org/springframework/security/spring-security-crypto/6.3.3/spring-security-crypto-6.3.3.jar:/Users/micro/.m2/repository/com/h2database/h2/2.2.224/h2-2.2.224.jar:"/>
@@ -34,7 +34,7 @@
     <property name="FILE_LOG_CHARSET" value="UTF-8"/>
     <property name="java.awt.headless" value="true"/>
     <property name="apple.awt.application.name" value="ForkedBooter"/>
-    <property name="surefire.real.class.path" value="/Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-api/target/surefire/surefirebooter-20260911133917797_38.jar"/>
+    <property name="surefire.real.class.path" value="/Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-api/target/surefire/surefirebooter-20260912000246833_39.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="java.runtime.version" value="21.0.11+9-LTS-211"/>
@@ -52,7 +52,7 @@
     <property name="user.dir" value="/Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-api"/>
     <property name="os.arch" value="aarch64"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
-    <property name="PID" value="77289"/>
+    <property name="PID" value="84416"/>
     <property name="CONSOLE_LOG_CHARSET" value="UTF-8"/>
     <property name="native.encoding" value="UTF-8"/>
     <property name="java.library.path" value="/Users/micro/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:."/>
@@ -65,7 +65,7 @@
     <property name="java.class.version" value="65.0"/>
     <property name="LOGGED_APPLICATION_NAME" value="[bmf-mobile-bff-gateway-test] "/>
   </properties>
-  <testcase name="testOutboxWorkerSavingDepositedEvent" classname="com.bmf.mobile.api.OutboxNotificationWorkerTests" time="0.016">
+  <testcase name="testOutboxWorkerSavingDepositedEvent" classname="com.bmf.mobile.api.OutboxNotificationWorkerTests" time="0.025">
     <system-out><![CDATA[
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -76,189 +76,84 @@
 
  :: Spring Boot ::                (v3.3.3)
 
-2026-09-11 13:39:23.212 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.a.OutboxNotificationWorkerTests&amp#27;[0;39m [] - Starting OutboxNotificationWorkerTests using Java 21.0.11 with PID 77289 (started by micro in /Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-api)
-2026-09-11 13:39:23.213 [main] &amp#27;[39mDEBUG&amp#27;[0;39m &amp#27;[36mc.b.m.a.OutboxNotificationWorkerTests&amp#27;[0;39m [] - Running with Spring Boot v3.3.3, Spring v6.1.12
-2026-09-11 13:39:23.213 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.a.OutboxNotificationWorkerTests&amp#27;[0;39m [] - The following 1 profile is active: "test"
-2026-09-11 13:39:23.385 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.api.config.VirtualThreadConfig&amp#27;[0;39m [] - Initializing Java 21 Virtual Threads Async Task Executor
-2026-09-11 13:39:23.385 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.api.config.VirtualThreadConfig&amp#27;[0;39m [] - Enabling Java 21 Virtual Threads for Tomcat Protocol Handler
-2026-09-11 13:39:23.407 [main] &amp#27;[31mWARN &amp#27;[0;39m &amp#27;[36mo.s.b.a.s.s.UserDetailsServiceAutoConfiguration&amp#27;[0;39m [] - 
+2026-09-12 00:02:52.991 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.a.OutboxNotificationWorkerTests&amp#27;[0;39m [] - Starting OutboxNotificationWorkerTests using Java 21.0.11 with PID 84416 (started by micro in /Users/micro/Source/erp/mifinace/src/backend/mobile-bff-gateway/bmf-api)
+2026-09-12 00:02:52.991 [main] &amp#27;[39mDEBUG&amp#27;[0;39m &amp#27;[36mc.b.m.a.OutboxNotificationWorkerTests&amp#27;[0;39m [] - Running with Spring Boot v3.3.3, Spring v6.1.12
+2026-09-12 00:02:52.991 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.a.OutboxNotificationWorkerTests&amp#27;[0;39m [] - The following 1 profile is active: "test"
+2026-09-12 00:02:53.174 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mcom.zaxxer.hikari.HikariDataSource&amp#27;[0;39m [] - BMF-HikariCP-Pool - Starting...
+2026-09-12 00:02:53.174 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mcom.zaxxer.hikari.pool.HikariPool&amp#27;[0;39m [] - BMF-HikariCP-Pool - Added connection conn30: url=jdbc:h2:mem:bmf_test_db user=SA
+2026-09-12 00:02:53.175 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mcom.zaxxer.hikari.HikariDataSource&amp#27;[0;39m [] - BMF-HikariCP-Pool - Start completed.
+2026-09-12 00:02:53.223 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.api.config.VirtualThreadConfig&amp#27;[0;39m [] - Initializing Java 21 Virtual Threads Async Task Executor
+2026-09-12 00:02:53.223 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.api.config.VirtualThreadConfig&amp#27;[0;39m [] - Enabling Java 21 Virtual Threads for Tomcat Protocol Handler
+2026-09-12 00:02:53.261 [main] &amp#27;[31mWARN &amp#27;[0;39m &amp#27;[36mo.s.b.a.s.s.UserDetailsServiceAutoConfiguration&amp#27;[0;39m [] - 
 
-Using generated security password: abaebcb3-e904-4336-8c85-505e6b3816cc
+Using generated security password: 44895fec-b214-4147-806e-8c696101520f
 
 This generated password is for development use only. Your security configuration must be updated before running your application in production.
 
-2026-09-11 13:39:23.408 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mo.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer&amp#27;[0;39m [] - Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
-2026-09-11 13:39:23.456 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mo.s.b.a.e.web.EndpointLinksResolver&amp#27;[0;39m [] - Exposing 3 endpoints beneath base path '/actuator'
-2026-09-11 13:39:23.471 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.infra.config.ShedLockConfig&amp#27;[0;39m [] - Configuring InMemoryLockProvider for ShedLock (single-node/testing mode)
-2026-09-11 13:39:23.528 [scheduling-1] &amp#27;[39mDEBUG&amp#27;[0;39m &amp#27;[36mc.b.m.i.p.JdbcOutboxEventRepository&amp#27;[0;39m [] - Querying pending Outbox events from memory fallback: PreparedStatementCallback; bad SQL grammar [SELECT TOP (?) Event_ID, Aggregate_Type, Aggregate_ID, Event_Type, Payload_JSON,
-                    Status, Retry_Count, Max_Retries, Error_Message, Created_Time,
-                    Processed_Time, Sent_Time
-FROM dbo.SYS_OUTBOX_EVENT WITH (READPAST)
-WHERE Status = 'PENDING' AND Retry_Count < Max_Retries
-ORDER BY Event_ID ASC
-]
-2026-09-11 13:39:23.542 [scheduling-1] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mcom.zaxxer.hikari.HikariDataSource&amp#27;[0;39m [] - BMF-HikariCP-Pool - Starting...
-2026-09-11 13:39:23.542 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.a.OutboxNotificationWorkerTests&amp#27;[0;39m [] - Started OutboxNotificationWorkerTests in 0.341 seconds (process running for 5.724)
-2026-09-11 13:39:23.543 [scheduling-1] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mcom.zaxxer.hikari.pool.HikariPool&amp#27;[0;39m [] - BMF-HikariCP-Pool - Added connection conn30: url=jdbc:h2:mem:bmf_test_db user=SA
-2026-09-11 13:39:23.543 [scheduling-1] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mcom.zaxxer.hikari.HikariDataSource&amp#27;[0;39m [] - BMF-HikariCP-Pool - Start completed.
-2026-09-11 13:39:23.543 [scheduling-1] &amp#27;[39mDEBUG&amp#27;[0;39m &amp#27;[36mc.b.m.i.p.JdbcOutboxEventRepository&amp#27;[0;39m [] - Querying pending Outbox events from memory fallback: PreparedStatementCallback; bad SQL grammar [SELECT TOP (?) Event_ID, Aggregate_Type, Aggregate_ID, Event_Type, Payload_JSON,
-                    Status, Retry_Count, Max_Retries, Error_Message, Created_Time,
-                    Processed_Time, Sent_Time
-FROM dbo.SYS_OUTBOX_EVENT WITH (READPAST)
-WHERE Status = 'PENDING' AND Retry_Count < Max_Retries
-ORDER BY Event_ID ASC
-]
-2026-09-11 13:39:23.544 [scheduling-1] &amp#27;[39mDEBUG&amp#27;[0;39m &amp#27;[36mc.b.m.i.p.JdbcOutboxEventRepository&amp#27;[0;39m [] - Querying pending Outbox events from memory fallback: PreparedStatementCallback; bad SQL grammar [SELECT TOP (?) Event_ID, Aggregate_Type, Aggregate_ID, Event_Type, Payload_JSON,
-                    Status, Retry_Count, Max_Retries, Error_Message, Created_Time,
-                    Processed_Time, Sent_Time
-FROM dbo.SYS_OUTBOX_EVENT WITH (READPAST)
-WHERE Status = 'PENDING' AND Retry_Count < Max_Retries
-ORDER BY Event_ID ASC
-]
-2026-09-11 13:39:23.548 [main] &amp#27;[39mDEBUG&amp#27;[0;39m &amp#27;[36mc.b.m.i.p.JdbcMobileDeviceRepository&amp#27;[0;39m [] - Database unavailable, saved mobile device in memory store: deviceId=DEV-OUTBOX-99001, userId=KH-99001
-2026-09-11 13:39:23.549 [main] &amp#27;[31mWARN &amp#27;[0;39m &amp#27;[36mc.b.m.i.p.JdbcOutboxEventRepository&amp#27;[0;39m [] - Database unavailable, saved Outbox event to in-memory store: eventId=1001, aggregateId=SAV-BMF-889900, error=PreparedStatementCallback; bad SQL grammar [INSERT INTO dbo.SYS_OUTBOX_EVENT (Aggregate_Type, Aggregate_ID, Event_Type, Payload_JSON,
-                                  Status, Retry_Count, Max_Retries, Created_Time)
-VALUES (?, ?, ?, ?,
-        ?, ?, ?, ?)
-]
-2026-09-11 13:39:23.550 [main] &amp#27;[39mDEBUG&amp#27;[0;39m &amp#27;[36mc.b.m.i.p.JdbcOutboxEventRepository&amp#27;[0;39m [] - Querying pending Outbox events from memory fallback: PreparedStatementCallback; bad SQL grammar [SELECT TOP (?) Event_ID, Aggregate_Type, Aggregate_ID, Event_Type, Payload_JSON,
-                    Status, Retry_Count, Max_Retries, Error_Message, Created_Time,
-                    Processed_Time, Sent_Time
-FROM dbo.SYS_OUTBOX_EVENT WITH (READPAST)
-WHERE Status = 'PENDING' AND Retry_Count < Max_Retries
-ORDER BY Event_ID ASC
-]
-2026-09-11 13:39:23.550 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.a.w.NotificationOutboxWorker&amp#27;[0;39m [] - NotificationOutboxWorker fetched 1 pending events for processing
-2026-09-11 13:39:23.554 [main] &amp#27;[39mDEBUG&amp#27;[0;39m &amp#27;[36mc.b.m.i.p.JdbcMobileDeviceRepository&amp#27;[0;39m [] - Querying active devices from memory fallback: PreparedStatementCallback; bad SQL grammar [SELECT Device_ID, User_ID, User_Type, Platform, Device_Name, OS_Version, App_Version,
-       Push_Token, Public_Key, Is_Active, Last_Active_Time, Created_Time, Updated_Time
-FROM dbo.SYS_MOBILE_DEVICE
-WHERE User_ID = ? AND User_Type = ? AND Is_Active = 1
-]
-2026-09-11 13:39:23.555 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.i.n.FirebasePushNotificationAdapter&amp#27;[0;39m [] - [FCM-SIMULATION] Successfully sent push notification: token=fcm_token_sample_myanmar_customer_99001, title='စုဆောင်းငွေ ထည့်သွင်းခြင်း အောင်မြင်ပါသည် / Savings Deposited', body='စုဆောင်းငွေ ကျပ် 20,000 MMK အောင်မြင်စွာ ထည့်သွင်းပြီးပါပြီ။ / Savings deposit received: 20,000 MMK', dataCount=4
-2026-09-11 13:39:23.555 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.i.n.FirebasePushNotificationAdapter&amp#27;[0;39m [] - FCM Batch dispatch completed: total=1, success=1
-2026-09-11 13:39:23.555 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.a.w.NotificationOutboxWorker&amp#27;[0;39m [] - Batch push notification completed: dispatched 1 messages out of 1
-2026-09-11 13:39:23.556 [main] &amp#27;[39mDEBUG&amp#27;[0;39m &amp#27;[36mc.b.m.i.p.JdbcOutboxEventRepository&amp#27;[0;39m [] - Database unavailable, updated Outbox event status in memory: eventId=1001, status=SENT
-2026-09-11 13:39:23.556 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.a.w.NotificationOutboxWorker&amp#27;[0;39m [] - Marked Outbox event as SENT: eventId=1001, eventType=SAVING_DEPOSITED
+2026-09-12 00:02:53.261 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mo.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer&amp#27;[0;39m [] - Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2026-09-12 00:02:53.334 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mo.s.b.a.e.web.EndpointLinksResolver&amp#27;[0;39m [] - Exposing 3 endpoints beneath base path '/actuator'
+2026-09-12 00:02:53.355 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.infra.config.ShedLockConfig&amp#27;[0;39m [] - Configuring InMemoryLockProvider for ShedLock (single-node/testing mode)
+2026-09-12 00:02:53.444 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.a.OutboxNotificationWorkerTests&amp#27;[0;39m [] - Started OutboxNotificationWorkerTests in 0.465 seconds (process running for 6.593)
+2026-09-12 00:02:53.455 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.i.p.JdbcMobileDeviceRepository&amp#27;[0;39m [] - Saved mobile device to database: deviceId=DEV-OUTBOX-99001, userId=KH-99001
+2026-09-12 00:02:53.460 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.i.p.JdbcOutboxEventRepository&amp#27;[0;39m [] - Saved Outbox event to database: eventId=1, aggregateType=SAVING, aggregateId=SAV-BMF-889900, eventType=SAVING_DEPOSITED
+2026-09-12 00:02:53.460 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.a.w.NotificationOutboxWorker&amp#27;[0;39m [] - NotificationOutboxWorker fetched 1 pending events for processing
+2026-09-12 00:02:53.464 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.i.n.FirebasePushNotificationAdapter&amp#27;[0;39m [] - FCM is disabled in current environment profile, skipped dispatching push notification for token: [fcm_token_...], title: 'စုဆောင်းငွေ ထည့်သွင်းခြင်း အောင်မြင်ပါသည် / Savings Deposited'
+2026-09-12 00:02:53.465 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.i.n.FirebasePushNotificationAdapter&amp#27;[0;39m [] - FCM Batch dispatch completed: total=1, success=1
+2026-09-12 00:02:53.465 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.a.w.NotificationOutboxWorker&amp#27;[0;39m [] - Batch push notification completed: dispatched 1 messages out of 1
+2026-09-12 00:02:53.466 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.i.p.JdbcOutboxEventRepository&amp#27;[0;39m [] - Updated Outbox event status in database: eventId=1, status=SENT
+2026-09-12 00:02:53.467 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.a.w.NotificationOutboxWorker&amp#27;[0;39m [] - Marked Outbox event as SENT: eventId=1, eventType=SAVING_DEPOSITED
 ]]></system-out>
   </testcase>
-  <testcase name="testOutboxWorkerPaymentReceivedEvent" classname="com.bmf.mobile.api.OutboxNotificationWorkerTests" time="0.004">
-    <system-out><![CDATA[2026-09-11 13:39:23.562 [main] &amp#27;[39mDEBUG&amp#27;[0;39m &amp#27;[36mc.b.m.i.p.JdbcMobileDeviceRepository&amp#27;[0;39m [] - Database unavailable, saved mobile device in memory store: deviceId=DEV-OUTBOX-99001, userId=KH-99001
-2026-09-11 13:39:23.562 [main] &amp#27;[31mWARN &amp#27;[0;39m &amp#27;[36mc.b.m.i.p.JdbcOutboxEventRepository&amp#27;[0;39m [] - Database unavailable, saved Outbox event to in-memory store: eventId=1002, aggregateId=LN-BMF-2026-0099, error=PreparedStatementCallback; bad SQL grammar [INSERT INTO dbo.SYS_OUTBOX_EVENT (Aggregate_Type, Aggregate_ID, Event_Type, Payload_JSON,
-                                  Status, Retry_Count, Max_Retries, Created_Time)
-VALUES (?, ?, ?, ?,
-        ?, ?, ?, ?)
-]
-2026-09-11 13:39:23.562 [main] &amp#27;[39mDEBUG&amp#27;[0;39m &amp#27;[36mc.b.m.i.p.JdbcOutboxEventRepository&amp#27;[0;39m [] - Querying pending Outbox events from memory fallback: PreparedStatementCallback; bad SQL grammar [SELECT TOP (?) Event_ID, Aggregate_Type, Aggregate_ID, Event_Type, Payload_JSON,
-                    Status, Retry_Count, Max_Retries, Error_Message, Created_Time,
-                    Processed_Time, Sent_Time
-FROM dbo.SYS_OUTBOX_EVENT WITH (READPAST)
-WHERE Status = 'PENDING' AND Retry_Count < Max_Retries
-ORDER BY Event_ID ASC
-]
-2026-09-11 13:39:23.562 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.a.w.NotificationOutboxWorker&amp#27;[0;39m [] - NotificationOutboxWorker fetched 1 pending events for processing
-2026-09-11 13:39:23.562 [main] &amp#27;[39mDEBUG&amp#27;[0;39m &amp#27;[36mc.b.m.i.p.JdbcMobileDeviceRepository&amp#27;[0;39m [] - Querying active devices from memory fallback: PreparedStatementCallback; bad SQL grammar [SELECT Device_ID, User_ID, User_Type, Platform, Device_Name, OS_Version, App_Version,
-       Push_Token, Public_Key, Is_Active, Last_Active_Time, Created_Time, Updated_Time
-FROM dbo.SYS_MOBILE_DEVICE
-WHERE User_ID = ? AND User_Type = ? AND Is_Active = 1
-]
-2026-09-11 13:39:23.563 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.i.n.FirebasePushNotificationAdapter&amp#27;[0;39m [] - [FCM-SIMULATION] Successfully sent push notification: token=fcm_token_sample_myanmar_customer_99001, title='ချေးငွေအရစ်ကျ လက်ခံရရှိပါသည် / Repayment Received', body='အရစ်ကျအမှတ် (3) အတွက် ကျပ် 55,000 MMK ပေးသွင်းမှု အောင်မြင်ပါသည်။ / Repayment for period 3 received: 55,000 MMK', dataCount=4
-2026-09-11 13:39:23.563 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.i.n.FirebasePushNotificationAdapter&amp#27;[0;39m [] - FCM Batch dispatch completed: total=1, success=1
-2026-09-11 13:39:23.563 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.a.w.NotificationOutboxWorker&amp#27;[0;39m [] - Batch push notification completed: dispatched 1 messages out of 1
-2026-09-11 13:39:23.563 [main] &amp#27;[39mDEBUG&amp#27;[0;39m &amp#27;[36mc.b.m.i.p.JdbcOutboxEventRepository&amp#27;[0;39m [] - Database unavailable, updated Outbox event status in memory: eventId=1002, status=SENT
-2026-09-11 13:39:23.563 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.a.w.NotificationOutboxWorker&amp#27;[0;39m [] - Marked Outbox event as SENT: eventId=1002, eventType=PAYMENT_RECEIVED
+  <testcase name="testOutboxWorkerPaymentReceivedEvent" classname="com.bmf.mobile.api.OutboxNotificationWorkerTests" time="0.005">
+    <system-out><![CDATA[2026-09-12 00:02:53.473 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.i.p.JdbcMobileDeviceRepository&amp#27;[0;39m [] - Saved mobile device to database: deviceId=DEV-OUTBOX-99001, userId=KH-99001
+2026-09-12 00:02:53.474 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.i.p.JdbcOutboxEventRepository&amp#27;[0;39m [] - Saved Outbox event to database: eventId=2, aggregateType=LOAN, aggregateId=LN-BMF-2026-0099, eventType=PAYMENT_RECEIVED
+2026-09-12 00:02:53.474 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.a.w.NotificationOutboxWorker&amp#27;[0;39m [] - NotificationOutboxWorker fetched 1 pending events for processing
+2026-09-12 00:02:53.475 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.i.n.FirebasePushNotificationAdapter&amp#27;[0;39m [] - FCM is disabled in current environment profile, skipped dispatching push notification for token: [fcm_token_...], title: 'ချေးငွေအရစ်ကျ လက်ခံရရှိပါသည် / Repayment Received'
+2026-09-12 00:02:53.475 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.i.n.FirebasePushNotificationAdapter&amp#27;[0;39m [] - FCM Batch dispatch completed: total=1, success=1
+2026-09-12 00:02:53.475 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.a.w.NotificationOutboxWorker&amp#27;[0;39m [] - Batch push notification completed: dispatched 1 messages out of 1
+2026-09-12 00:02:53.475 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.i.p.JdbcOutboxEventRepository&amp#27;[0;39m [] - Updated Outbox event status in database: eventId=2, status=SENT
+2026-09-12 00:02:53.475 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.a.w.NotificationOutboxWorker&amp#27;[0;39m [] - Marked Outbox event as SENT: eventId=2, eventType=PAYMENT_RECEIVED
 ]]></system-out>
   </testcase>
-  <testcase name="testLoanDueReminderJobExecution" classname="com.bmf.mobile.api.OutboxNotificationWorkerTests" time="0.007">
-    <system-out><![CDATA[2026-09-11 13:39:23.566 [main] &amp#27;[39mDEBUG&amp#27;[0;39m &amp#27;[36mc.b.m.i.p.JdbcMobileDeviceRepository&amp#27;[0;39m [] - Database unavailable, saved mobile device in memory store: deviceId=DEV-OUTBOX-99001, userId=KH-99001
-2026-09-11 13:39:23.568 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.a.scheduler.LoanDueReminderJob&amp#27;[0;39m [] - Starting Daily Loan Due Reminder Job at 08:00 AM Myanmar Time
-2026-09-11 13:39:23.568 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.a.u.LoanDueReminderUseCase&amp#27;[0;39m [] - Starting scan for due loans between 2026-09-12 and 2026-09-14
-2026-09-11 13:39:23.569 [main] &amp#27;[31mWARN &amp#27;[0;39m &amp#27;[36mc.b.m.i.p.JdbcLoanRepository&amp#27;[0;39m [] - Database query for due schedules failed, returning fallback mock/empty list: PreparedStatementCallback; bad SQL grammar [SELECT l.Ma_HopDong, h.Ma_ThanhVien, k.Ten_ThanhVien, h.Ma_To, l.Ky_Thu,
-       l.Tien_Goc, l.Tien_Lai, l.Phi_BaoHiem, l.TietKiem_BatBuoc, l.Tong_Tien,
-       l.Ngay_DenHan, l.Trang_Thai
-FROM dbo.TD_LICH_THUNO l
-INNER JOIN dbo.TD_HOPDONG h ON l.Ma_HopDong = h.Ma_HopDong
-INNER JOIN dbo.KH_THANHVIEN k ON h.Ma_ThanhVien = k.Ma_ThanhVien
-WHERE l.Ngay_DenHan >= ? AND l.Ngay_DenHan <= ?
-  AND (l.Trang_Thai IS NULL OR l.Trang_Thai NOT IN ('SETTLED', 'PAID'))
-ORDER BY l.Ngay_DenHan ASC, k.Ten_ThanhVien ASC
-]
-2026-09-11 13:39:23.569 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.a.u.LoanDueReminderUseCase&amp#27;[0;39m [] - No upcoming due loans found for reminder period [2026-09-12 - 2026-09-14]
-2026-09-11 13:39:23.569 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.a.scheduler.LoanDueReminderJob&amp#27;[0;39m [] - Daily Loan Due Reminder Job completed successfully: created 0 reminders
+  <testcase name="testLoanDueReminderJobExecution" classname="com.bmf.mobile.api.OutboxNotificationWorkerTests" time="0.008">
+    <system-out><![CDATA[2026-09-12 00:02:53.479 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.i.p.JdbcMobileDeviceRepository&amp#27;[0;39m [] - Saved mobile device to database: deviceId=DEV-OUTBOX-99001, userId=KH-99001
+2026-09-12 00:02:53.482 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.a.scheduler.LoanDueReminderJob&amp#27;[0;39m [] - Starting Daily Loan Due Reminder Job at 08:00 AM Myanmar Time
+2026-09-12 00:02:53.482 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.a.u.LoanDueReminderUseCase&amp#27;[0;39m [] - Starting scan for due loans between 2026-09-13 and 2026-09-15
+2026-09-12 00:02:53.484 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.a.u.LoanDueReminderUseCase&amp#27;[0;39m [] - No upcoming due loans found for reminder period [2026-09-13 - 2026-09-15]
+2026-09-12 00:02:53.484 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.a.scheduler.LoanDueReminderJob&amp#27;[0;39m [] - Daily Loan Due Reminder Job completed successfully: created 0 reminders
 ]]></system-out>
   </testcase>
-  <testcase name="testLoanDueReminderUseCaseScanning" classname="com.bmf.mobile.api.OutboxNotificationWorkerTests" time="0.003">
-    <system-out><![CDATA[2026-09-11 13:39:23.572 [main] &amp#27;[39mDEBUG&amp#27;[0;39m &amp#27;[36mc.b.m.i.p.JdbcMobileDeviceRepository&amp#27;[0;39m [] - Database unavailable, saved mobile device in memory store: deviceId=DEV-OUTBOX-99001, userId=KH-99001
-2026-09-11 13:39:23.573 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.a.u.LoanDueReminderUseCase&amp#27;[0;39m [] - Starting scan for due loans between 2026-09-12 and 2026-09-14
-2026-09-11 13:39:23.573 [main] &amp#27;[31mWARN &amp#27;[0;39m &amp#27;[36mc.b.m.i.p.JdbcLoanRepository&amp#27;[0;39m [] - Database query for due schedules failed, returning fallback mock/empty list: PreparedStatementCallback; bad SQL grammar [SELECT l.Ma_HopDong, h.Ma_ThanhVien, k.Ten_ThanhVien, h.Ma_To, l.Ky_Thu,
-       l.Tien_Goc, l.Tien_Lai, l.Phi_BaoHiem, l.TietKiem_BatBuoc, l.Tong_Tien,
-       l.Ngay_DenHan, l.Trang_Thai
-FROM dbo.TD_LICH_THUNO l
-INNER JOIN dbo.TD_HOPDONG h ON l.Ma_HopDong = h.Ma_HopDong
-INNER JOIN dbo.KH_THANHVIEN k ON h.Ma_ThanhVien = k.Ma_ThanhVien
-WHERE l.Ngay_DenHan >= ? AND l.Ngay_DenHan <= ?
-  AND (l.Trang_Thai IS NULL OR l.Trang_Thai NOT IN ('SETTLED', 'PAID'))
-ORDER BY l.Ngay_DenHan ASC, k.Ten_ThanhVien ASC
-]
-2026-09-11 13:39:23.573 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.a.u.LoanDueReminderUseCase&amp#27;[0;39m [] - No upcoming due loans found for reminder period [2026-09-12 - 2026-09-14]
+  <testcase name="testLoanDueReminderUseCaseScanning" classname="com.bmf.mobile.api.OutboxNotificationWorkerTests" time="0.004">
+    <system-out><![CDATA[2026-09-12 00:02:53.488 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.i.p.JdbcMobileDeviceRepository&amp#27;[0;39m [] - Saved mobile device to database: deviceId=DEV-OUTBOX-99001, userId=KH-99001
+2026-09-12 00:02:53.488 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.a.u.LoanDueReminderUseCase&amp#27;[0;39m [] - Starting scan for due loans between 2026-09-13 and 2026-09-15
+2026-09-12 00:02:53.488 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.a.u.LoanDueReminderUseCase&amp#27;[0;39m [] - No upcoming due loans found for reminder period [2026-09-13 - 2026-09-15]
 ]]></system-out>
   </testcase>
-  <testcase name="testOutboxWorkerSavingWithdrawnEvent" classname="com.bmf.mobile.api.OutboxNotificationWorkerTests" time="0.003">
-    <system-out><![CDATA[2026-09-11 13:39:23.575 [main] &amp#27;[39mDEBUG&amp#27;[0;39m &amp#27;[36mc.b.m.i.p.JdbcMobileDeviceRepository&amp#27;[0;39m [] - Database unavailable, saved mobile device in memory store: deviceId=DEV-OUTBOX-99001, userId=KH-99001
-2026-09-11 13:39:23.576 [main] &amp#27;[31mWARN &amp#27;[0;39m &amp#27;[36mc.b.m.i.p.JdbcOutboxEventRepository&amp#27;[0;39m [] - Database unavailable, saved Outbox event to in-memory store: eventId=1003, aggregateId=SAV-BMF-889900, error=PreparedStatementCallback; bad SQL grammar [INSERT INTO dbo.SYS_OUTBOX_EVENT (Aggregate_Type, Aggregate_ID, Event_Type, Payload_JSON,
-                                  Status, Retry_Count, Max_Retries, Created_Time)
-VALUES (?, ?, ?, ?,
-        ?, ?, ?, ?)
-]
-2026-09-11 13:39:23.576 [main] &amp#27;[39mDEBUG&amp#27;[0;39m &amp#27;[36mc.b.m.i.p.JdbcOutboxEventRepository&amp#27;[0;39m [] - Querying pending Outbox events from memory fallback: PreparedStatementCallback; bad SQL grammar [SELECT TOP (?) Event_ID, Aggregate_Type, Aggregate_ID, Event_Type, Payload_JSON,
-                    Status, Retry_Count, Max_Retries, Error_Message, Created_Time,
-                    Processed_Time, Sent_Time
-FROM dbo.SYS_OUTBOX_EVENT WITH (READPAST)
-WHERE Status = 'PENDING' AND Retry_Count < Max_Retries
-ORDER BY Event_ID ASC
-]
-2026-09-11 13:39:23.576 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.a.w.NotificationOutboxWorker&amp#27;[0;39m [] - NotificationOutboxWorker fetched 1 pending events for processing
-2026-09-11 13:39:23.576 [main] &amp#27;[39mDEBUG&amp#27;[0;39m &amp#27;[36mc.b.m.i.p.JdbcMobileDeviceRepository&amp#27;[0;39m [] - Querying active devices from memory fallback: PreparedStatementCallback; bad SQL grammar [SELECT Device_ID, User_ID, User_Type, Platform, Device_Name, OS_Version, App_Version,
-       Push_Token, Public_Key, Is_Active, Last_Active_Time, Created_Time, Updated_Time
-FROM dbo.SYS_MOBILE_DEVICE
-WHERE User_ID = ? AND User_Type = ? AND Is_Active = 1
-]
-2026-09-11 13:39:23.576 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.i.n.FirebasePushNotificationAdapter&amp#27;[0;39m [] - [FCM-SIMULATION] Successfully sent push notification: token=fcm_token_sample_myanmar_customer_99001, title='စုဆောင်းငွေ ထုတ်ယူခြင်း အောင်မြင်ပါသည် / Savings Withdrawn', body='စုဆောင်းငွေ ကျပ် 10,000 MMK အောင်မြင်စွာ ထုတ်ယူပြီးပါပြီ။ / Savings withdrawal completed: 10,000 MMK', dataCount=4
-2026-09-11 13:39:23.576 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.i.n.FirebasePushNotificationAdapter&amp#27;[0;39m [] - FCM Batch dispatch completed: total=1, success=1
-2026-09-11 13:39:23.576 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.a.w.NotificationOutboxWorker&amp#27;[0;39m [] - Batch push notification completed: dispatched 1 messages out of 1
-2026-09-11 13:39:23.576 [main] &amp#27;[39mDEBUG&amp#27;[0;39m &amp#27;[36mc.b.m.i.p.JdbcOutboxEventRepository&amp#27;[0;39m [] - Database unavailable, updated Outbox event status in memory: eventId=1003, status=SENT
-2026-09-11 13:39:23.576 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.a.w.NotificationOutboxWorker&amp#27;[0;39m [] - Marked Outbox event as SENT: eventId=1003, eventType=SAVING_WITHDRAWN
+  <testcase name="testOutboxWorkerSavingWithdrawnEvent" classname="com.bmf.mobile.api.OutboxNotificationWorkerTests" time="0.005">
+    <system-out><![CDATA[2026-09-12 00:02:53.492 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.i.p.JdbcMobileDeviceRepository&amp#27;[0;39m [] - Saved mobile device to database: deviceId=DEV-OUTBOX-99001, userId=KH-99001
+2026-09-12 00:02:53.492 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.i.p.JdbcOutboxEventRepository&amp#27;[0;39m [] - Saved Outbox event to database: eventId=3, aggregateType=SAVING, aggregateId=SAV-BMF-889900, eventType=SAVING_WITHDRAWN
+2026-09-12 00:02:53.493 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.a.w.NotificationOutboxWorker&amp#27;[0;39m [] - NotificationOutboxWorker fetched 1 pending events for processing
+2026-09-12 00:02:53.493 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.i.n.FirebasePushNotificationAdapter&amp#27;[0;39m [] - FCM is disabled in current environment profile, skipped dispatching push notification for token: [fcm_token_...], title: 'စုဆောင်းငွေ ထုတ်ယူခြင်း အောင်မြင်ပါသည် / Savings Withdrawn'
+2026-09-12 00:02:53.493 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.i.n.FirebasePushNotificationAdapter&amp#27;[0;39m [] - FCM Batch dispatch completed: total=1, success=1
+2026-09-12 00:02:53.493 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.a.w.NotificationOutboxWorker&amp#27;[0;39m [] - Batch push notification completed: dispatched 1 messages out of 1
+2026-09-12 00:02:53.494 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.i.p.JdbcOutboxEventRepository&amp#27;[0;39m [] - Updated Outbox event status in database: eventId=3, status=SENT
+2026-09-12 00:02:53.494 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.a.w.NotificationOutboxWorker&amp#27;[0;39m [] - Marked Outbox event as SENT: eventId=3, eventType=SAVING_WITHDRAWN
 ]]></system-out>
   </testcase>
-  <testcase name="testOutboxWorkerLoanDisbursedEvent" classname="com.bmf.mobile.api.OutboxNotificationWorkerTests" time="0.003">
-    <system-out><![CDATA[2026-09-11 13:39:23.579 [main] &amp#27;[39mDEBUG&amp#27;[0;39m &amp#27;[36mc.b.m.i.p.JdbcMobileDeviceRepository&amp#27;[0;39m [] - Database unavailable, saved mobile device in memory store: deviceId=DEV-OUTBOX-99001, userId=KH-99001
-2026-09-11 13:39:23.579 [main] &amp#27;[31mWARN &amp#27;[0;39m &amp#27;[36mc.b.m.i.p.JdbcOutboxEventRepository&amp#27;[0;39m [] - Database unavailable, saved Outbox event to in-memory store: eventId=1004, aggregateId=LN-BMF-2026-0099, error=PreparedStatementCallback; bad SQL grammar [INSERT INTO dbo.SYS_OUTBOX_EVENT (Aggregate_Type, Aggregate_ID, Event_Type, Payload_JSON,
-                                  Status, Retry_Count, Max_Retries, Created_Time)
-VALUES (?, ?, ?, ?,
-        ?, ?, ?, ?)
-]
-2026-09-11 13:39:23.579 [main] &amp#27;[39mDEBUG&amp#27;[0;39m &amp#27;[36mc.b.m.i.p.JdbcOutboxEventRepository&amp#27;[0;39m [] - Querying pending Outbox events from memory fallback: PreparedStatementCallback; bad SQL grammar [SELECT TOP (?) Event_ID, Aggregate_Type, Aggregate_ID, Event_Type, Payload_JSON,
-                    Status, Retry_Count, Max_Retries, Error_Message, Created_Time,
-                    Processed_Time, Sent_Time
-FROM dbo.SYS_OUTBOX_EVENT WITH (READPAST)
-WHERE Status = 'PENDING' AND Retry_Count < Max_Retries
-ORDER BY Event_ID ASC
-]
-2026-09-11 13:39:23.580 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.a.w.NotificationOutboxWorker&amp#27;[0;39m [] - NotificationOutboxWorker fetched 1 pending events for processing
-2026-09-11 13:39:23.580 [main] &amp#27;[39mDEBUG&amp#27;[0;39m &amp#27;[36mc.b.m.i.p.JdbcMobileDeviceRepository&amp#27;[0;39m [] - Querying active devices from memory fallback: PreparedStatementCallback; bad SQL grammar [SELECT Device_ID, User_ID, User_Type, Platform, Device_Name, OS_Version, App_Version,
-       Push_Token, Public_Key, Is_Active, Last_Active_Time, Created_Time, Updated_Time
-FROM dbo.SYS_MOBILE_DEVICE
-WHERE User_ID = ? AND User_Type = ? AND Is_Active = 1
-]
-2026-09-11 13:39:23.580 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.i.n.FirebasePushNotificationAdapter&amp#27;[0;39m [] - [FCM-SIMULATION] Successfully sent push notification: token=fcm_token_sample_myanmar_customer_99001, title='ချေးငွေထုတ်ပေးခြင်း အောင်မြင်ပါသည် / Loan Disbursed', body='စာချုပ်အမှတ် LN-BMF-2026-0099 အတွက် ကျပ် 500,000 MMK အောင်မြင်စွာ ထုတ်ပေးပြီးပါပြီ။ / Loan LN-BMF-2026-0099 disbursed successfully: 500,000 MMK', dataCount=4
-2026-09-11 13:39:23.580 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.i.n.FirebasePushNotificationAdapter&amp#27;[0;39m [] - FCM Batch dispatch completed: total=1, success=1
-2026-09-11 13:39:23.580 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.a.w.NotificationOutboxWorker&amp#27;[0;39m [] - Batch push notification completed: dispatched 1 messages out of 1
-2026-09-11 13:39:23.580 [main] &amp#27;[39mDEBUG&amp#27;[0;39m &amp#27;[36mc.b.m.i.p.JdbcOutboxEventRepository&amp#27;[0;39m [] - Database unavailable, updated Outbox event status in memory: eventId=1004, status=SENT
-2026-09-11 13:39:23.580 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.a.w.NotificationOutboxWorker&amp#27;[0;39m [] - Marked Outbox event as SENT: eventId=1004, eventType=LOAN_DISBURSED
+  <testcase name="testOutboxWorkerLoanDisbursedEvent" classname="com.bmf.mobile.api.OutboxNotificationWorkerTests" time="0.005">
+    <system-out><![CDATA[2026-09-12 00:02:53.498 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.i.p.JdbcMobileDeviceRepository&amp#27;[0;39m [] - Saved mobile device to database: deviceId=DEV-OUTBOX-99001, userId=KH-99001
+2026-09-12 00:02:53.498 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.i.p.JdbcOutboxEventRepository&amp#27;[0;39m [] - Saved Outbox event to database: eventId=4, aggregateType=LOAN, aggregateId=LN-BMF-2026-0099, eventType=LOAN_DISBURSED
+2026-09-12 00:02:53.498 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.a.w.NotificationOutboxWorker&amp#27;[0;39m [] - NotificationOutboxWorker fetched 1 pending events for processing
+2026-09-12 00:02:53.499 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.i.n.FirebasePushNotificationAdapter&amp#27;[0;39m [] - FCM is disabled in current environment profile, skipped dispatching push notification for token: [fcm_token_...], title: 'ချေးငွေထုတ်ပေးခြင်း အောင်မြင်ပါသည် / Loan Disbursed'
+2026-09-12 00:02:53.499 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.i.n.FirebasePushNotificationAdapter&amp#27;[0;39m [] - FCM Batch dispatch completed: total=1, success=1
+2026-09-12 00:02:53.499 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.a.w.NotificationOutboxWorker&amp#27;[0;39m [] - Batch push notification completed: dispatched 1 messages out of 1
+2026-09-12 00:02:53.499 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.i.p.JdbcOutboxEventRepository&amp#27;[0;39m [] - Updated Outbox event status in database: eventId=4, status=SENT
+2026-09-12 00:02:53.499 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.a.w.NotificationOutboxWorker&amp#27;[0;39m [] - Marked Outbox event as SENT: eventId=4, eventType=LOAN_DISBURSED
 ]]></system-out>
   </testcase>
-  <testcase name="testPushNotificationPortDirectDispatch" classname="com.bmf.mobile.api.OutboxNotificationWorkerTests" time="0.002">
-    <system-out><![CDATA[2026-09-11 13:39:23.583 [main] &amp#27;[39mDEBUG&amp#27;[0;39m &amp#27;[36mc.b.m.i.p.JdbcMobileDeviceRepository&amp#27;[0;39m [] - Database unavailable, saved mobile device in memory store: deviceId=DEV-OUTBOX-99001, userId=KH-99001
-2026-09-11 13:39:23.583 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.i.n.FirebasePushNotificationAdapter&amp#27;[0;39m [] - [FCM-SIMULATION] Successfully sent push notification: token=fcm_token_sample_myanmar_customer_99001, title='မင်္ဂလာပါ / Hello', body='စမ်းသပ်မှု အောင်မြင်ပါသည် / Test successful', dataCount=0
+  <testcase name="testPushNotificationPortDirectDispatch" classname="com.bmf.mobile.api.OutboxNotificationWorkerTests" time="0.003">
+    <system-out><![CDATA[2026-09-12 00:02:53.503 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.i.p.JdbcMobileDeviceRepository&amp#27;[0;39m [] - Saved mobile device to database: deviceId=DEV-OUTBOX-99001, userId=KH-99001
+2026-09-12 00:02:53.503 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.b.m.i.n.FirebasePushNotificationAdapter&amp#27;[0;39m [] - FCM is disabled in current environment profile, skipped dispatching push notification for token: [fcm_token_...], title: 'မင်္ဂလာပါ / Hello'
 ]]></system-out>
   </testcase>
 </testsuite>
